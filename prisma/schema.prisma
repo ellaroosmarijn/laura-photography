@@ -10,32 +10,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Customer {
-  id    Int     @id @default(autoincrement())
-  
-  events Event[] 
+model Event {
+  id     Int      @id @default(autoincrement())
+  name   String
+  // cover_image Media
+  expiry DateTime @db.Date
+
+  scenes      Scene[]
+  share_links ShareLink[]
 }
 
-model Event {
-  id    Int     @id @default(autoincrement())
-  customer_id Int
+model Scene {
+  id       Int    @id @default(autoincrement())
+  event_id Int
+  name     String
 
-  customer Customer @relation(references: [id], fields: [customer_id], onDelete: Cascade, onUpdate: Cascade)
-
-  media Media[]
+  events Event   @relation(references: [id], fields: [event_id], onDelete: Cascade, onUpdate: Cascade)
+  media  Media[]
 }
 
 model Media {
-  id    Int     @id @default(autoincrement())
-  event_id Int
+  id                  Int    @id @default(autoincrement())
+  image_order         Int
+  web_resolution_url  String @unique
+  high_resolution_url String @unique
+  scene_id            Int
 
-  event Event @relation(references: [id], fields: [event_id], onDelete: Cascade, onUpdate: cascade)
+  scenes Scene @relation(references: [id], fields: [scene_id], onDelete: Cascade, onUpdate: Cascade)
 }
 
-
 model ShareLink {
-  id Int @id
-  event_id Int
+  id        Int      @id
+  createdAt DateTime @default(now())
+  expiry    DateTime @db.Date
+  event_id  Int
 
-  event Event @relation(references: [id], fields: [event_id], onDelete: Cascade. onUpdate: Cascade)
+  event Event @relation(references: [id], fields: [event_id], onDelete: Cascade, onUpdate: Cascade)
 }
