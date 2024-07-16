@@ -21,7 +21,8 @@
     "vitest": "^2.0.2"
   },
   "dependencies": {
-    "@prisma/client": "^5.15.1"
+    "@prisma/client": "^5.15.1",
+    "dotenv": "^16.4.5"
   },
   "prettier": {}
 }
