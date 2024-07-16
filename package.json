@@ -4,15 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "vitest --run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test": "vitest run -c vitest.unit.config.ts",
+    "test:watch": "vitest -c vitest.unit.config.ts",
+    "test:coverage": "vitest run -c vitest.unit.config.ts --coverage",
+    "test:e2e": "vitest run -c vitest.e2e.config.ts",
+    "test:e2e:watch": "vitest -c vitest.e2e.config.ts",
+    "test:e2e:coverage": "vitest run -c vitest.e2e.config.ts --coverage",
+    "test:create-prisma-environment": "pnpm link ./prisma/vitest-environment-prisma",
+    "test:install-prisma-environment": "pnpm link vitest-environment-prisma",
+    "pretest:e2e": "pnpm test:create-prisma-environment && pnpm test:install-prisma-environment"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.14.10",
+    "@vitest/coverage-v8": "^2.0.3",
     "prisma": "^5.15.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.16.2",
