@@ -6,4 +6,8 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    dependencies:
+      laura-photography-database:
+        specifier: link:/Users/ellarobinson/Code/laura-photography-database
+        version: link:../..
