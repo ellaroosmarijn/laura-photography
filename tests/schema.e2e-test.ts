@@ -22,61 +22,69 @@ const prisma = new PrismaClient()
 // conjoin or composite key checks uniqueness of two fields combined e.g. custimer cannot have two events
 // with same name, but another customer can have an event with that name
 
+const eventData = {
+    name: 'Ellen & Dave, Davenport House',
+    expiry: new Date("2100-12-12T00:00:00.000Z")
+};
+
+const sceneData = {
+    name: 'dinner'
+};
+
+const createEvent = async () => {
+    return await prisma.event.create({
+        data: eventData,
+    });
+};
+
+const createScene = async (eventId: number) => {
+    return await prisma.scene.create({
+        data: {
+            ...sceneData,
+            event_id: eventId,
+        },
+    });
+};
 
 beforeEach(async () => {
+    await prisma.media.deleteMany();
     await prisma.scene.deleteMany();
     await prisma.event.deleteMany();
 });
 
 afterEach(async () => {
+    await prisma.media.deleteMany();
     await prisma.scene.deleteMany();
     await prisma.event.deleteMany();
 });
 
-
 test("should create and retrieve an event by name", async () => {
-    const createdEvent = await prisma.event.create({
-        data: {
-            name: 'Ellen & Dave, Davenport House',
-            expiry: "2100-12-12T00:00:00.000Z"
-        },
-    })
+    const createdEvent = await createEvent();
 
     const fetchedEvent = await prisma.event.findFirst({
         where: {
-            name: 'Ellen & Dave, Davenport House',
+            name: eventData.name,
         },
     });
 
     expect(fetchedEvent).not.toBeNull();
     expect(fetchedEvent?.name).toBe(createdEvent.name);
-    expect(fetchedEvent?.expiry.toISOString()).toBe(new Date(createdEvent.expiry).toISOString());
-})
+    expect(fetchedEvent?.expiry.toISOString()).toBe(eventData.expiry.toISOString());
+});
 
 test("should create and retrieve a scene by name and verify it belongs to the event", async () => {
-    const createdEvent = await prisma.event.create({
-        data: {
-            name: 'Ellen & Dave, Davenport House',
-            expiry: new Date("2100-12-12T00:00:00.000Z")
-        },
-    });
-
-    const createdScene = await prisma.scene.create({
-        data: {
-            name: 'dinner',
-            event_id: createdEvent.id,
-        },
-    });
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
 
     const fetchedScene = await prisma.scene.findFirst({
         where: {
-            name: 'dinner',
+            name: sceneData.name,
         },
     });
 
     expect(fetchedScene).not.toBeNull();
     expect(fetchedScene?.name).toBe(createdScene.name);
-    expect(fetchedScene?.event_id).toBe(createdScene.event_id);
+    expect(fetchedScene?.event_id).toBe(createdEvent.id);
 
     const fetchedEventWithScenes = await prisma.event.findUnique({
         where: {
@@ -89,23 +97,12 @@ test("should create and retrieve a scene by name and verify it belongs to the ev
 
     expect(fetchedEventWithScenes).not.toBeNull();
     expect(fetchedEventWithScenes?.scenes).toHaveLength(1);
-    expect(fetchedEventWithScenes?.scenes[0].name).toBe('dinner');
-})
+    expect(fetchedEventWithScenes?.scenes[0].name).toBe(sceneData.name);
+});
 
 test("should create and retrieve media and verify it belongs to the scene", async () => {
-    const createdEvent = await prisma.event.create({
-        data: {
-            name: 'Ellen & Dave, Davenport House',
-            expiry: new Date("2100-12-12T00:00:00.000Z")
-        },
-    });
-
-    const createdScene = await prisma.scene.create({
-        data: {
-            name: 'dinner',
-            event_id: createdEvent.id,
-        },
-    });
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
 
     const createdMedia = await prisma.media.create({
         data: {
