@@ -15,7 +15,7 @@ This database is designed to support Laura's wedding photography business, manag
 ## Setup
 1. Clone this repository
 2. Install dependencies: `pnpm install`
-3. 3. Set up your environment variables:
+3. Set up your environment variables:
 - Create a `.env` file in the root directory
 - Add your database URL:
   ```
