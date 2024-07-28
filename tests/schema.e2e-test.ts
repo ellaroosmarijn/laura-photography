@@ -5,8 +5,6 @@ const prisma = new PrismaClient()
 
 
 // TODO, test:
-// scene has a media and event has a scene.
-//
 // when delete an event, scene or media
 //
 // creating sharelink, checking it is valid, deleteing it, expiring (not in list when get list of all of them)
@@ -145,4 +143,37 @@ test("should create and retrieve media and verify it belongs to the scene", asyn
     expect(fetchedSceneWithMedia).not.toBeNull();
     expect(fetchedSceneWithMedia?.media).toHaveLength(1);
     expect(fetchedSceneWithMedia?.media[0].web_resolution_url).toBe(mediaData.web_resolution_url);
+});
+
+test("should delete an event and verify related scenes and media are also deleted", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    const createdMedia = await createMedia(createdScene.id);
+
+    await prisma.event.delete({
+        where: {
+            id: createdEvent.id,
+        },
+    });
+
+    const fetchedEvent = await prisma.event.findUnique({
+        where: {
+            id: createdEvent.id,
+        },
+    });
+    expect(fetchedEvent).toBeNull();
+
+    const fetchedScene = await prisma.scene.findUnique({
+        where: {
+            id: createdScene.id,
+        },
+    });
+    expect(fetchedScene).toBeNull();
+
+    const fetchedMedia = await prisma.media.findUnique({
+        where: {
+            id: createdMedia.id,
+        },
+    });
+    expect(fetchedMedia).toBeNull();
 });
