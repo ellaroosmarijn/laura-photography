@@ -31,6 +31,13 @@ const sceneData = {
     name: 'dinner'
 };
 
+const mediaData = {
+    image_order: 1,
+    web_resolution_url: 'http://example.com/web-res.jpg',
+    high_resolution_url: 'http://example.com/high-res.jpg'
+};
+
+
 const createEvent = async () => {
     return await prisma.event.create({
         data: eventData,
@@ -42,6 +49,15 @@ const createScene = async (eventId: number) => {
         data: {
             ...sceneData,
             event_id: eventId,
+        },
+    });
+};
+
+const createMedia = async (sceneId: number) => {
+    return await prisma.media.create({
+        data: {
+            ...mediaData,
+            scene_id: sceneId,
         },
     });
 };
@@ -103,19 +119,11 @@ test("should create and retrieve a scene by name and verify it belongs to the ev
 test("should create and retrieve media and verify it belongs to the scene", async () => {
     const createdEvent = await createEvent();
     const createdScene = await createScene(createdEvent.id);
-
-    const createdMedia = await prisma.media.create({
-        data: {
-            image_order: 1,
-            web_resolution_url: 'http://example.com/web-res.jpg',
-            high_resolution_url: 'http://example.com/high-res.jpg',
-            scene_id: createdScene.id,
-        },
-    });
+    const createdMedia = await createMedia(createdScene.id);
 
     const fetchedMedia = await prisma.media.findFirst({
         where: {
-            web_resolution_url: 'http://example.com/web-res.jpg',
+            web_resolution_url: mediaData.web_resolution_url,
         },
     });
 
@@ -136,5 +144,5 @@ test("should create and retrieve media and verify it belongs to the scene", asyn
 
     expect(fetchedSceneWithMedia).not.toBeNull();
     expect(fetchedSceneWithMedia?.media).toHaveLength(1);
-    expect(fetchedSceneWithMedia?.media[0].web_resolution_url).toBe('http://example.com/web-res.jpg');
+    expect(fetchedSceneWithMedia?.media[0].web_resolution_url).toBe(mediaData.web_resolution_url);
 });
