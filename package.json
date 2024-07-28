@@ -10,9 +10,8 @@
     "test:e2e": "vitest run -c vitest.e2e.config.ts",
     "test:e2e:watch": "vitest -c vitest.e2e.config.ts",
     "test:e2e:coverage": "vitest run -c vitest.e2e.config.ts --coverage",
-    "test:create-prisma-environment": "pnpm link ./prisma/vitest-environment-prisma",
-    "test:install-prisma-environment": "pnpm link vitest-environment-prisma",
-    "pretest:e2e": "pnpm test:create-prisma-environment && pnpm test:install-prisma-environment"
+    "test:install-prisma-environment": "pnpm link ./prisma/vitest-environment-prisma",
+    "pretest:e2e": "pnpm test:install-prisma-environment"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +19,6 @@
   "devDependencies": {
     "@types/node": "^20.14.10",
     "@vitest/coverage-v8": "^2.0.3",
-    "prisma": "^5.15.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3",
@@ -28,7 +26,6 @@
     "vitest": "^2.0.2"
   },
   "dependencies": {
-    "@prisma/client": "^5.15.1",
     "dotenv": "^16.4.5"
   },
   "prettier": {}
