@@ -177,3 +177,41 @@ test("should delete an event and verify related scenes and media are also delete
     });
     expect(fetchedMedia).toBeNull();
 });
+
+test("should delete a scene and verify related media are also deleted", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    const createdMedia = await createMedia(createdScene.id);
+
+    await prisma.scene.delete({
+        where: {
+            id: createdScene.id,
+        },
+    });
+
+    const fetchedScene = await prisma.scene.findUnique({
+        where: {
+            id: createdScene.id,
+        },
+    });
+    expect(fetchedScene).toBeNull();
+
+    const fetchedMedia = await prisma.media.findUnique({
+        where: {
+            id: createdMedia.id,
+        },
+    });
+    expect(fetchedMedia).toBeNull();
+
+    const fetchedEventWithScenes = await prisma.event.findUnique({
+        where: {
+            id: createdEvent.id,
+        },
+        include: {
+            scenes: true,
+        },
+    });
+
+    expect(fetchedEventWithScenes).not.toBeNull();
+    expect(fetchedEventWithScenes?.scenes).toHaveLength(0);
+});
