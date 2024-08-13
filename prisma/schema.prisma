@@ -36,7 +36,7 @@ model Media {
 }
 
 model ShareLink {
-  id        Int      @id
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   expiry    DateTime @db.Date
   event_id  Int
