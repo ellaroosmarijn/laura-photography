@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest';
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient()
 
@@ -33,6 +33,10 @@ const mediaData = {
     high_resolution_url: 'http://example.com/high-res.jpg'
 };
 
+const sharelinkData = {
+    createdAt: new Date("2023-12-31 23:59:59"),
+    expiry: new Date("2100-12-12T00:00:00.000Z")
+}
 
 const createEvent = async () => {
     return await prisma.event.create({
