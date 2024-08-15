@@ -1,6 +1,6 @@
 import { test, expect } from 'vitest';
 import { PrismaClient } from '@prisma/client';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, v6 as uuidv6 } from 'uuid';
 
 const prisma = new PrismaClient()
 
@@ -315,3 +315,32 @@ test("should delete a shareLink and verify it is removed from the event", async 
     expect(fetchedEventWithShareLink?.share_links).toHaveLength(0);
 });
 
+test("should not include expired shareLink in the list of valid shareLinks", async () => {
+    const createdEvent = await createEvent();
+
+    const expiredShareLinkData = {
+        createdAt: new Date("2023-12-31 23:59:59"),
+        expiry: new Date("2000-01-01T00:00:00.000Z"),
+        key: uuidv6(),
+    };
+
+    await prisma.shareLink.create({
+        data: {
+            ...expiredShareLinkData,
+            event_id: createdEvent.id,
+        }
+    });
+
+    const validShareLink = await createShareLink(createdEvent.id);
+
+    const activeShareLinks = await prisma.shareLink.findMany({
+        where: {
+            expiry: {
+                gt: new Date(),
+            },
+        },
+    });
+
+    expect(activeShareLinks).toHaveLength(1);
+    expect(activeShareLinks[0].key).toBe(validShareLink.key);
+});
