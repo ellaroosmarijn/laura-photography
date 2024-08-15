@@ -1,5 +1,6 @@
 import { test, expect } from 'vitest';
 import { PrismaClient } from '@prisma/client';
+import { v4 as uuidv4 } from 'uuid';
 
 const prisma = new PrismaClient()
 
@@ -35,7 +36,9 @@ const mediaData = {
 
 const sharelinkData = {
     createdAt: new Date("2023-12-31 23:59:59"),
-    expiry: new Date("2100-12-12T00:00:00.000Z")
+    expiry: new Date("2100-12-12T00:00:00.000Z"),
+    key: uuidv4()
+
 }
 
 const createEvent = async () => {
