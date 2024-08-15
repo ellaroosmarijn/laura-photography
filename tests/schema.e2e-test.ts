@@ -277,3 +277,35 @@ test("should delete media and verify it is removed from the scene", async () => 
     expect(fetchedSceneWithMedia).not.toBeNull();
     expect(fetchedSceneWithMedia?.media).toHaveLength(0);
 });
+
+test("should delete a shareLink and verify it is removed from the event", async () => {
+    const createdEvent = await createEvent();
+    const createdShareLink = await createShareLink(createdEvent.id);
+
+    await prisma.shareLink.delete({
+        where: {
+            key: createdShareLink.key,
+        }
+    })
+
+    const fetchedShareLink = await prisma.shareLink.findUnique({
+        where: {
+            key: createdShareLink.key,
+        },
+    });
+
+    expect(fetchedShareLink).toBeNull();
+
+    const fetchedEventWithShareLink = await prisma.event.findUnique({
+        where: {
+            id: createdEvent.id,
+        },
+        include: {
+            share_links: true,
+        },
+    });
+
+    expect(fetchedEventWithShareLink).not.toBeNull();
+    expect(fetchedEventWithShareLink?.share_links).toHaveLength(0);
+});
+
