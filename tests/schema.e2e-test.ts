@@ -65,6 +65,15 @@ const createMedia = async (sceneId: number) => {
     });
 };
 
+const createSharelink = async (eventId: number) => {
+    return await prisma.shareLink.create({
+        data: {
+            ...sharelinkData,
+            event_id: eventId,
+        }
+    })
+}
+
 beforeEach(async () => {
     await prisma.media.deleteMany();
     await prisma.scene.deleteMany();
@@ -148,6 +157,23 @@ test("should create and retrieve media and verify it belongs to the scene", asyn
     expect(fetchedSceneWithMedia).not.toBeNull();
     expect(fetchedSceneWithMedia?.media).toHaveLength(1);
     expect(fetchedSceneWithMedia?.media[0].web_resolution_url).toBe(mediaData.web_resolution_url);
+});
+
+test("should create and retrieve the sharelink, check it's validity & verify it belongs to the event", async () => {
+    const createdEvent = await createEvent();
+    const createdSharelink = await createSharelink(createdEvent.id);
+
+    const fetchedSharelink = await prisma.shareLink.findFirst({
+        where: {
+            key: createdSharelink.key,
+        },
+    });
+
+    expect(fetchedSharelink).not.toBeNull();
+    expect(fetchedSharelink?.createdAt).toStrictEqual(createdSharelink.createdAt);
+    expect(fetchedSharelink?.expiry).toStrictEqual(createdSharelink.expiry);
+    expect(fetchedSharelink?.key).toBe(createdSharelink.key);
+    expect(fetchedSharelink?.event_id).toBe(createdEvent.id);
 });
 
 test("should delete an event and verify related scenes and media are also deleted", async () => {
