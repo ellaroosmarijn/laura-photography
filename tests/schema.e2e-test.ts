@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 
 
 // TODO, test:
-// creating sharelink, checking it is valid, deleteing it, expiring (not in list when get list of all of them)
+// shareLink deletetion and expiry (not in list when get list of all of them)
 //
 // getting scenes and media if it is pulled
 //
@@ -34,7 +34,7 @@ const mediaData = {
     high_resolution_url: 'http://example.com/high-res.jpg'
 };
 
-const sharelinkData = {
+const shareLinkData = {
     createdAt: new Date("2023-12-31 23:59:59"),
     expiry: new Date("2100-12-12T00:00:00.000Z"),
     key: uuidv4()
@@ -65,10 +65,10 @@ const createMedia = async (sceneId: number) => {
     });
 };
 
-const createSharelink = async (eventId: number) => {
+const createShareLink = async (eventId: number) => {
     return await prisma.shareLink.create({
         data: {
-            ...sharelinkData,
+            ...shareLinkData,
             event_id: eventId,
         }
     })
@@ -159,21 +159,21 @@ test("should create and retrieve media and verify it belongs to the scene", asyn
     expect(fetchedSceneWithMedia?.media[0].web_resolution_url).toBe(mediaData.web_resolution_url);
 });
 
-test("should create and retrieve the sharelink, check it's validity & verify it belongs to the event", async () => {
+test("should create and retrieve the shareLink, check it's validity & verify it belongs to the event", async () => {
     const createdEvent = await createEvent();
-    const createdSharelink = await createSharelink(createdEvent.id);
+    const createdShareLink = await createShareLink(createdEvent.id);
 
-    const fetchedSharelink = await prisma.shareLink.findFirst({
+    const fetchedShareLink = await prisma.shareLink.findFirst({
         where: {
-            key: createdSharelink.key,
+            key: createdShareLink.key,
         },
     });
 
-    expect(fetchedSharelink).not.toBeNull();
-    expect(fetchedSharelink?.createdAt).toStrictEqual(createdSharelink.createdAt);
-    expect(fetchedSharelink?.expiry).toStrictEqual(createdSharelink.expiry);
-    expect(fetchedSharelink?.key).toBe(createdSharelink.key);
-    expect(fetchedSharelink?.event_id).toBe(createdEvent.id);
+    expect(fetchedShareLink).not.toBeNull();
+    expect(fetchedShareLink?.createdAt).toStrictEqual(createdShareLink.createdAt);
+    expect(fetchedShareLink?.expiry).toStrictEqual(createdShareLink.expiry);
+    expect(fetchedShareLink?.key).toBe(createdShareLink.key);
+    expect(fetchedShareLink?.event_id).toBe(createdEvent.id);
 });
 
 test("should delete an event and verify related scenes and media are also deleted", async () => {
