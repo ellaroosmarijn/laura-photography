@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 
 
 // TODO, test:
-// shareLink deletetion and expiry (not in list when get list of all of them)
+// shareLink expiry (not in list when get list of all of them)
 //
 // getting scenes and media if it is pulled
 //
@@ -176,10 +176,11 @@ test("should create and retrieve the shareLink, check it's validity & verify it 
     expect(fetchedShareLink?.event_id).toBe(createdEvent.id);
 });
 
-test("should delete an event and verify related scenes and media are also deleted", async () => {
+test("should delete an event and verify related scenes, media and shareLink are also deleted", async () => {
     const createdEvent = await createEvent();
     const createdScene = await createScene(createdEvent.id);
     const createdMedia = await createMedia(createdScene.id);
+    const createdShareLink = await createShareLink(createdEvent.id)
 
     await prisma.event.delete({
         where: {
@@ -207,6 +208,11 @@ test("should delete an event and verify related scenes and media are also delete
         },
     });
     expect(fetchedMedia).toBeNull();
+
+    const fetchedShareLink = await prisma.shareLink.findUnique({
+        where: { key: createdShareLink.key, },
+    })
+    expect(fetchedShareLink).toBeNull();
 });
 
 test("should delete a scene and verify related media are also deleted", async () => {
