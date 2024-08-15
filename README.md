@@ -42,6 +42,7 @@ To make changes to the database schema:
 1. Modify the `schema.prisma` file
 2. Run `npx prisma migrate dev` to create a new migration
 3. Commit the changes and the new migration files
+4. Run `npx prisma generate` to update your prisma client with the changes 
 
 ## Deployment
 When deploying to production:
