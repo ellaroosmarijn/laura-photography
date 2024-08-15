@@ -40,6 +40,9 @@ model ShareLink {
   createdAt DateTime @default(now())
   expiry    DateTime @db.Date
   event_id  Int
+  key       String @unique
+
+  @@index(fields: [key])
 
   event Event @relation(references: [id], fields: [event_id], onDelete: Cascade, onUpdate: Cascade)
 }
