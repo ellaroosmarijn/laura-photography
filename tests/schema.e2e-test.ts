@@ -6,13 +6,11 @@ const prisma = new PrismaClient()
 
 
 // TODO, test:
-// shareLink expiry (not in list when get list of all of them)
-//
 // getting scenes and media if it is pulled
 //
 // marking and unmarking media as selected
 //
-// soft deletions (setting date for deleted so it treats it as deleted and action cane be undone)
+// soft deletions (setting date for deleted so it treats it as deleted and action can be undone)
 //
 // can you save an event with the same name
 //
@@ -75,12 +73,14 @@ const createShareLink = async (eventId: number) => {
 }
 
 beforeEach(async () => {
+    await prisma.shareLink.deleteMany();
     await prisma.media.deleteMany();
     await prisma.scene.deleteMany();
     await prisma.event.deleteMany();
 });
 
 afterEach(async () => {
+    await prisma.shareLink.deleteMany();
     await prisma.media.deleteMany();
     await prisma.scene.deleteMany();
     await prisma.event.deleteMany();

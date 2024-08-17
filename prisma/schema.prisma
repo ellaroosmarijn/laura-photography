@@ -33,7 +33,6 @@ model Media {
   scene_id            Int
   selected           Boolean   @default(false)
 
-
   scenes Scene @relation(references: [id], fields: [scene_id], onDelete: Cascade, onUpdate: Cascade)
 }
 
