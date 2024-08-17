@@ -405,12 +405,7 @@ test("should retrieve only selected media", async () => {
     const createdEvent = await createEvent();
     const createdScene = await createScene(createdEvent.id);
     const createdMedia1 = await createMedia(createdScene.id);
-    const createdMedia2 = await prisma.media.create({
-        data: {
-            ...mediaData2,
-            scene_id: createdScene.id,
-        },
-    });
+    const createdMedia2 = await createMedia2(createdScene.id);
 
     await prisma.media.update({
         where: { id: createdMedia1.id },
@@ -432,12 +427,7 @@ test("should retrieve only unselected media", async () => {
     const createdEvent = await createEvent();
     const createdScene = await createScene(createdEvent.id);
     const createdMedia1 = await createMedia(createdScene.id);
-    const createdMedia2 = await prisma.media.create({
-        data: {
-            ...mediaData2,
-            scene_id: createdScene.id,
-        },
-    });
+    const createdMedia2 = await createMedia2(createdScene.id);
 
     await prisma.media.update({
         where: { id: createdMedia1.id },
