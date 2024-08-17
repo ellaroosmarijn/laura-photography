@@ -19,30 +19,34 @@ const prisma = new PrismaClient()
 
 const eventData = {
     name: 'Ellen & Dave, Davenport House',
-    expiry: new Date("2100-12-12T00:00:00.000Z")
+    expiry: new Date("2100-12-12T00:00:00.000Z"),
+    deleted_at: null
 };
 
 const sceneData = {
-    name: 'dinner'
+    name: 'dinner',
+    deleted_at: null
 };
 
 const mediaData = {
     image_order: 1,
     web_resolution_url: 'http://example.com/web-res.jpg',
-    high_resolution_url: 'http://example.com/high-res.jpg'
+    high_resolution_url: 'http://example.com/high-res.jpg',
+    deleted_at: null
 };
 
 const mediaData2 = {
     image_order: 2,
     web_resolution_url: 'http://example.com/web-res2.jpg',
-    high_resolution_url: 'http://example.com/high-res2.jpg'
+    high_resolution_url: 'http://example.com/high-res2.jpg',
+    deleted_at: null
 };
 
 const shareLinkData = {
     createdAt: new Date("2023-12-31 23:59:59"),
     expiry: new Date("2100-12-12T00:00:00.000Z"),
-    key: uuidv4()
-
+    key: uuidv4(),
+    deleted_at: null
 }
 
 const createEvent = async () => {
