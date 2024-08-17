@@ -562,3 +562,18 @@ test("should soft delete an event and verify it and related scenes, media, and s
     const fetchedShareLink = await fetchActiveShareLink(createdShareLink.key);
     expect(fetchedShareLink).toBeNull();
 });
+
+
+test("should soft delete a scene and verify it and related media are excluded from active queries", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    const createdMedia = await createMedia(createdScene.id);
+
+    await softDeleteScene(createdScene.id);
+
+    const fetchedScene = await fetchActiveScene(createdScene.id);
+    expect(fetchedScene).toBeNull();
+
+    const fetchedMedia = await fetchActiveMedia(createdMedia.id);
+    expect(fetchedMedia).toBeNull();
+});
