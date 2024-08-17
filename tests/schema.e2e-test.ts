@@ -32,6 +32,12 @@ const mediaData = {
     high_resolution_url: 'http://example.com/high-res.jpg'
 };
 
+const mediaData2 = {
+    image_order: 2,
+    web_resolution_url: 'http://example.com/web-res2.jpg',
+    high_resolution_url: 'http://example.com/high-res2.jpg'
+};
+
 const shareLinkData = {
     createdAt: new Date("2023-12-31 23:59:59"),
     expiry: new Date("2100-12-12T00:00:00.000Z"),
@@ -58,6 +64,15 @@ const createMedia = async (sceneId: number) => {
     return await prisma.media.create({
         data: {
             ...mediaData,
+            scene_id: sceneId,
+        },
+    });
+};
+
+const createMedia2 = async (sceneId: number) => {
+    return await prisma.media.create({
+        data: {
+            ...mediaData2,
             scene_id: sceneId,
         },
     });
