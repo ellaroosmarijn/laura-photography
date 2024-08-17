@@ -11,20 +11,22 @@ model Event {
   id     Int      @id @default(autoincrement())
   name   String
   expiry DateTime @db.Date
+  deleted_at DateTime?
 
   scenes      Scene[]
   share_links ShareLink[]
-  deleted_at DateTime?
 }
 
 model Scene {
   id       Int    @id @default(autoincrement())
-  event_id Int
   name     String
+  event_id Int
+  deleted_at DateTime?
 
   events Event   @relation(references: [id], fields: [event_id], onDelete: Cascade, onUpdate: Cascade)
   media  Media[]
-  deleted_at DateTime?
+
+  @@unique([event_id, name])
 }
 
 model Media {
@@ -33,10 +35,12 @@ model Media {
   web_resolution_url  String @unique
   high_resolution_url String @unique
   scene_id            Int
-  selected           Boolean   @default(false)
+  selected            Boolean   @default(false)
+  deleted_at          DateTime?
 
-  scenes Scene @relation(references: [id], fields: [scene_id], onDelete: Cascade, onUpdate: Cascade)
-  deleted_at         DateTime?
+  scenes Scene @relation(references: [id], fields: [scene_id], onDelete : Cascade, onUpdate: Cascade)
+
+  @@unique([scene_id, web_resolution_url, high_resolution_url])
 }
 
 model ShareLink {
@@ -45,9 +49,9 @@ model ShareLink {
   expiry    DateTime @db.Date
   event_id  Int
   key       String @unique
-
-  @@index(fields: [key])
+  deleted_at DateTime?
 
   event Event @relation(references: [id], fields: [event_id], onDelete: Cascade, onUpdate: Cascade)
-  deleted_at DateTime?
+
+  @@index(fields: [key])
 }
