@@ -344,3 +344,21 @@ test("should not include expired shareLink in the list of valid shareLinks", asy
     expect(activeShareLinks).toHaveLength(1);
     expect(activeShareLinks[0].key).toBe(validShareLink.key);
 });
+
+test("should mark media as selected", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    const createdMedia = await createMedia(createdScene.id);
+
+    await prisma.media.update({
+        where: { id: createdMedia.id },
+        data: { selected: true },
+    });
+
+    const fetchedMedia = await prisma.media.findUnique({
+        where: { id: createdMedia.id },
+    });
+
+    expect(fetchedMedia).not.toBeNull();
+    expect(fetchedMedia?.selected).toBe(true);
+});
