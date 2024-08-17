@@ -400,3 +400,30 @@ test("should unmark media as selected", async () => {
     expect(fetchedMedia).not.toBeNull();
     expect(fetchedMedia?.selected).toBe(false);
 });
+
+test("should retrieve only selected media", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    const createdMedia1 = await createMedia(createdScene.id);
+    const createdMedia2 = await prisma.media.create({
+        data: {
+            ...mediaData2,
+            scene_id: createdScene.id,
+        },
+    });
+
+    await prisma.media.update({
+        where: { id: createdMedia1.id },
+        data: { selected: true },
+    });
+
+    const selectedMedia = await prisma.media.findMany({
+        where: {
+            selected: true,
+        },
+    });
+
+    expect(selectedMedia).toHaveLength(1);
+    expect(selectedMedia[0].id).toBe(createdMedia1.id);
+    expect(selectedMedia[0].id).not.toBe(createdMedia2.id);
+});
