@@ -690,3 +690,16 @@ test("should restore a soft-deleted scene and verify related media are also rest
     const fetchedMedia = await fetchActiveMedia(createdMedia.id);
     expect(fetchedMedia).not.toBeNull();
 });
+
+test("should restore a soft-deleted media and verify it is restored correctly", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    const createdMedia = await createMedia(createdScene.id);
+
+    await softDeleteMedia(createdMedia.id);
+
+    await restoreMedia(createdMedia.id);
+
+    const fetchedMedia = await fetchActiveMedia(createdMedia.id);
+    expect(fetchedMedia).not.toBeNull();
+});
