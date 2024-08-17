@@ -703,3 +703,15 @@ test("should restore a soft-deleted media and verify it is restored correctly", 
     const fetchedMedia = await fetchActiveMedia(createdMedia.id);
     expect(fetchedMedia).not.toBeNull();
 });
+
+test("should restore a soft-deleted shareLink and verify it is restored correctly", async () => {
+    const createdEvent = await createEvent();
+    const createdShareLink = await createShareLink(createdEvent.id);
+
+    await softDeleteShareLink(createdShareLink.key);
+
+    await restoreShareLink(createdShareLink.key);
+
+    const fetchedShareLink = await fetchActiveShareLink(createdShareLink.key);
+    expect(fetchedShareLink).not.toBeNull();
+});
