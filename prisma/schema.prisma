@@ -14,6 +14,7 @@ model Event {
 
   scenes      Scene[]
   share_links ShareLink[]
+  deleted_at DateTime?
 }
 
 model Scene {
@@ -23,6 +24,7 @@ model Scene {
 
   events Event   @relation(references: [id], fields: [event_id], onDelete: Cascade, onUpdate: Cascade)
   media  Media[]
+  deleted_at DateTime?
 }
 
 model Media {
@@ -34,6 +36,7 @@ model Media {
   selected           Boolean   @default(false)
 
   scenes Scene @relation(references: [id], fields: [scene_id], onDelete: Cascade, onUpdate: Cascade)
+  deleted_at         DateTime?
 }
 
 model ShareLink {
@@ -46,4 +49,5 @@ model ShareLink {
   @@index(fields: [key])
 
   event Event @relation(references: [id], fields: [event_id], onDelete: Cascade, onUpdate: Cascade)
+  deleted_at DateTime?
 }
