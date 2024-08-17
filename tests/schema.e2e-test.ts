@@ -674,3 +674,19 @@ test("should restore a soft-deleted event and verify related scenes, media, and 
     const fetchedShareLink = await fetchActiveShareLink(createdShareLink.key);
     expect(fetchedShareLink).not.toBeNull();
 });
+
+test("should restore a soft-deleted scene and verify related media are also restored", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    const createdMedia = await createMedia(createdScene.id);
+
+    await softDeleteScene(createdScene.id);
+
+    await restoreScene(createdScene.id);
+
+    const fetchedScene = await fetchActiveScene(createdScene.id);
+    expect(fetchedScene).not.toBeNull();
+
+    const fetchedMedia = await fetchActiveMedia(createdMedia.id);
+    expect(fetchedMedia).not.toBeNull();
+});
