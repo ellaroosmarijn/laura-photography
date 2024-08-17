@@ -6,10 +6,6 @@ const prisma = new PrismaClient()
 
 
 // TODO, test:
-// getting scenes and media if it is pulled
-//
-// marking and unmarking media as selected
-//
 // soft deletions (setting date for deleted so it treats it as deleted and action can be undone)
 //
 // can you save an event with the same name
@@ -90,6 +86,102 @@ const createShareLink = async (eventId: number) => {
         }
     })
 }
+
+const softDeleteEvent = async (eventId: number) => {
+    await prisma.event.update({
+        where: { id: eventId },
+        data: { deleted_at: new Date() },
+    });
+
+    const scenes = await prisma.scene.findMany({
+        where: { event_id: eventId },
+    });
+
+    for (const scene of scenes) {
+        await softDeleteScene(scene.id);
+
+        const media = await prisma.media.findMany({
+            where: { scene_id: scene.id },
+        });
+
+        for (const item of media) {
+            await softDeleteMedia(item.id);
+        }
+    }
+
+    const shareLinks = await prisma.shareLink.findMany({
+        where: { event_id: eventId },
+    });
+
+    for (const link of shareLinks) {
+        await softDeleteShareLink(link.key);
+    }
+};
+
+const softDeleteScene = async (sceneId: number) => {
+    await prisma.scene.update({
+        where: { id: sceneId },
+        data: { deleted_at: new Date() },
+    });
+
+    const mediaItems = await prisma.media.findMany({
+        where: { scene_id: sceneId },
+    });
+
+    for (const media of mediaItems) {
+        await softDeleteMedia(media.id);
+    }
+};
+
+const softDeleteMedia = async (mediaId: number) => {
+    await prisma.media.update({
+        where: { id: mediaId },
+        data: { deleted_at: new Date() },
+    });
+};
+
+const softDeleteShareLink = async (key: string) => {
+    await prisma.shareLink.update({
+        where: { key },
+        data: { deleted_at: new Date() },
+    });
+};
+
+const fetchActiveEvent = async (eventId: number) => {
+    return await prisma.event.findFirst({
+        where: {
+            id: eventId,
+            deleted_at: null,
+        },
+    });
+};
+
+const fetchActiveScene = async (sceneId: number) => {
+    return await prisma.scene.findFirst({
+        where: {
+            id: sceneId,
+            deleted_at: null,
+        },
+    });
+};
+
+const fetchActiveMedia = async (mediaId: number) => {
+    return await prisma.media.findFirst({
+        where: {
+            id: mediaId,
+            deleted_at: null,
+        },
+    });
+};
+
+const fetchActiveShareLink = async (key: string) => {
+    return await prisma.shareLink.findFirst({
+        where: {
+            key: key,
+            deleted_at: null,
+        },
+    });
+};
 
 beforeEach(async () => {
     await prisma.shareLink.deleteMany();
