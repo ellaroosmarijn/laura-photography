@@ -24,24 +24,23 @@ model Scene {
   deleted_at DateTime?
 
   events Event   @relation(references: [id], fields: [event_id], onDelete: Cascade, onUpdate: Cascade)
-  media  Media[]
+  media   Media[] @relation("SceneMedia")
 
   @@unique([event_id, name])
 }
 
 model Media {
-  id                  Int    @id @default(autoincrement())
+  id                  Int      @id @default(autoincrement())
   image_order         Int
-  web_resolution_url  String @unique
-  high_resolution_url String @unique
+  web_resolution_url  String   @unique
+  high_resolution_url String   @unique
   scene_id            Int
-  selected            Boolean   @default(false)
+  selected            Boolean  @default(false)
   deleted_at          DateTime?
 
-  scenes Scene @relation(references: [id], fields: [scene_id], onDelete : Cascade, onUpdate: Cascade)
+  scene               Scene    @relation("SceneMedia", fields: [scene_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@unique([scene_id, web_resolution_url, high_resolution_url])
-  scene               Scene    @relation(fields: [scene_id], references: [id])
 }
 
 model ShareLink {
