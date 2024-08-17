@@ -41,6 +41,7 @@ model Media {
   scenes Scene @relation(references: [id], fields: [scene_id], onDelete : Cascade, onUpdate: Cascade)
 
   @@unique([scene_id, web_resolution_url, high_resolution_url])
+  scene               Scene    @relation(fields: [scene_id], references: [id])
 }
 
 model ShareLink {
