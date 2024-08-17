@@ -183,6 +183,58 @@ const fetchActiveShareLink = async (key: string) => {
     });
 };
 
+const restoreMedia = async (mediaId: number) => {
+    await prisma.media.update({
+        where: { id: mediaId },
+        data: { deleted_at: null },
+    });
+};
+
+const restoreScene = async (sceneId: number) => {
+    await prisma.scene.update({
+        where: { id: sceneId },
+        data: { deleted_at: null },
+    });
+
+    const mediaItems = await prisma.media.findMany({
+        where: { scene_id: sceneId },
+    });
+
+    for (const media of mediaItems) {
+        await restoreMedia(media.id);
+    }
+};
+
+const restoreShareLink = async (key: string) => {
+    await prisma.shareLink.update({
+        where: { key },
+        data: { deleted_at: null },
+    });
+};
+
+const restoreEvent = async (eventId: number) => {
+    await prisma.event.update({
+        where: { id: eventId },
+        data: { deleted_at: null },
+    });
+
+    const scenes = await prisma.scene.findMany({
+        where: { event_id: eventId },
+    });
+
+    for (const scene of scenes) {
+        await restoreScene(scene.id);
+    }
+
+    const shareLinks = await prisma.shareLink.findMany({
+        where: { event_id: eventId },
+    });
+
+    for (const link of shareLinks) {
+        await restoreShareLink(link.key);
+    }
+};
+
 beforeEach(async () => {
     await prisma.shareLink.deleteMany();
     await prisma.media.deleteMany();
@@ -598,4 +650,27 @@ test("should soft delete a shareLink and verify it is excluded from active queri
 
     const fetchedShareLink = await fetchActiveShareLink(createdShareLink.key);
     expect(fetchedShareLink).toBeNull();
+});
+
+test("should restore a soft-deleted event and verify related scenes, media, and shareLinks are also restored", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    const createdMedia = await createMedia(createdScene.id);
+    const createdShareLink = await createShareLink(createdEvent.id);
+
+    await softDeleteEvent(createdEvent.id);
+
+    await restoreEvent(createdEvent.id);
+
+    const fetchedEvent = await fetchActiveEvent(createdEvent.id);
+    expect(fetchedEvent).not.toBeNull();
+
+    const fetchedScene = await fetchActiveScene(createdScene.id);
+    expect(fetchedScene).not.toBeNull();
+
+    const fetchedMedia = await fetchActiveMedia(createdMedia.id);
+    expect(fetchedMedia).not.toBeNull();
+
+    const fetchedShareLink = await fetchActiveShareLink(createdShareLink.key);
+    expect(fetchedShareLink).not.toBeNull();
 });
