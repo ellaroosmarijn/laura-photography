@@ -362,3 +362,26 @@ test("should mark media as selected", async () => {
     expect(fetchedMedia).not.toBeNull();
     expect(fetchedMedia?.selected).toBe(true);
 });
+
+test("should unmark media as selected", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    const createdMedia = await createMedia(createdScene.id);
+
+    await prisma.media.update({
+        where: { id: createdMedia.id },
+        data: { selected: true },
+    });
+
+    await prisma.media.update({
+        where: { id: createdMedia.id },
+        data: { selected: false },
+    });
+
+    const fetchedMedia = await prisma.media.findUnique({
+        where: { id: createdMedia.id },
+    });
+
+    expect(fetchedMedia).not.toBeNull();
+    expect(fetchedMedia?.selected).toBe(false);
+});
