@@ -540,3 +540,25 @@ test("should retrieve only unselected media", async () => {
     expect(unselectedMedia[0].id).toBe(createdMedia2.id);
     expect(unselectedMedia[0].id).not.toBe(createdMedia1.id);
 });
+
+
+test("should soft delete an event and verify it and related scenes, media, and shareLink are excluded from active queries", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    const createdMedia = await createMedia(createdScene.id);
+    const createdShareLink = await createShareLink(createdEvent.id);
+
+    await softDeleteEvent(createdEvent.id);
+
+    const fetchedEvent = await fetchActiveEvent(createdEvent.id);
+    expect(fetchedEvent).toBeNull();
+
+    const fetchedScene = await fetchActiveScene(createdScene.id);
+    expect(fetchedScene).toBeNull();
+
+    const fetchedMedia = await fetchActiveMedia(createdMedia.id);
+    expect(fetchedMedia).toBeNull();
+
+    const fetchedShareLink = await fetchActiveShareLink(createdShareLink.key);
+    expect(fetchedShareLink).toBeNull();
+});
