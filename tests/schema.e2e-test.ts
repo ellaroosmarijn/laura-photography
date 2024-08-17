@@ -577,3 +577,16 @@ test("should soft delete a scene and verify it and related media are excluded fr
     const fetchedMedia = await fetchActiveMedia(createdMedia.id);
     expect(fetchedMedia).toBeNull();
 });
+
+
+test("should soft delete media and verify it is excluded from active queries", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    const createdMedia = await createMedia(createdScene.id);
+
+    await softDeleteMedia(createdMedia.id);
+
+    const fetchedMedia = await fetchActiveMedia(createdMedia.id);
+    expect(fetchedMedia).toBeNull();
+});
+
