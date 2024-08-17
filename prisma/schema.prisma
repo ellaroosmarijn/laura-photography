@@ -8,9 +8,9 @@ datasource db {
 }
 
 model Event {
-  id     Int      @id @default(autoincrement())
-  name   String
-  expiry DateTime @db.Date
+  id         Int       @id @default(autoincrement())
+  name       String    @unique
+  expiry     DateTime  @db.Date
   deleted_at DateTime?
 
   scenes      Scene[]
