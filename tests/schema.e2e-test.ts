@@ -590,3 +590,12 @@ test("should soft delete media and verify it is excluded from active queries", a
     expect(fetchedMedia).toBeNull();
 });
 
+test("should soft delete a shareLink and verify it is excluded from active queries", async () => {
+    const createdEvent = await createEvent();
+    const createdShareLink = await createShareLink(createdEvent.id);
+
+    await softDeleteShareLink(createdShareLink.key);
+
+    const fetchedShareLink = await fetchActiveShareLink(createdShareLink.key);
+    expect(fetchedShareLink).toBeNull();
+});
