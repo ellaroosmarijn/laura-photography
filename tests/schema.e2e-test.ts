@@ -427,3 +427,30 @@ test("should retrieve only selected media", async () => {
     expect(selectedMedia[0].id).toBe(createdMedia1.id);
     expect(selectedMedia[0].id).not.toBe(createdMedia2.id);
 });
+
+test("should retrieve only unselected media", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    const createdMedia1 = await createMedia(createdScene.id);
+    const createdMedia2 = await prisma.media.create({
+        data: {
+            ...mediaData2,
+            scene_id: createdScene.id,
+        },
+    });
+
+    await prisma.media.update({
+        where: { id: createdMedia1.id },
+        data: { selected: true },
+    });
+
+    const unselectedMedia = await prisma.media.findMany({
+        where: {
+            selected: false,
+        },
+    });
+
+    expect(unselectedMedia).toHaveLength(1);
+    expect(unselectedMedia[0].id).toBe(createdMedia2.id);
+    expect(unselectedMedia[0].id).not.toBe(createdMedia1.id);
+});
