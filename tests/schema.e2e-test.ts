@@ -21,6 +21,11 @@ const sceneData = {
     deleted_at: null
 };
 
+const sceneData2 = {
+    name: 'lunch',
+    deleted_at: null
+};
+
 const mediaData = {
     image_order: 1,
     web_resolution_url: 'http://example.com/web-res.jpg',
@@ -58,6 +63,15 @@ const createScene = async (eventId: number) => {
     return await prisma.scene.create({
         data: {
             ...sceneData,
+            event_id: eventId,
+        },
+    });
+};
+
+const createScene2 = async (eventId: number) => {
+    return await prisma.scene.create({
+        data: {
+            ...sceneData2,
             event_id: eventId,
         },
     });
@@ -745,4 +759,16 @@ test("should not allow duplicate media items within the same scene", async () =>
     await createMedia(createdScene.id);
     
     await expect(createMedia(createdScene.id)).rejects.toThrowError();
+});
+
+test("should allow duplicate media items across different scenes", async () => {
+    const event = await createEvent();
+    const scene1 = await createScene(event.id);
+    const scene2 = await createScene2(event.id);
+    
+    await createMedia(scene1.id);
+    
+    const mediaInScene2 = await createMedia(scene2.id);
+    
+    expect(mediaInScene2.web_resolution_url).toBe(mediaData.web_resolution_url);
 });
