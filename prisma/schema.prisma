@@ -32,8 +32,8 @@ model Scene {
 model Media {
   id                  Int      @id @default(autoincrement())
   image_order         Int
-  web_resolution_url  String   @unique
-  high_resolution_url String   @unique
+  web_resolution_url  String  
+  high_resolution_url String  
   scene_id            Int
   selected            Boolean  @default(false)
   deleted_at          DateTime?
