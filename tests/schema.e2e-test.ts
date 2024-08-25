@@ -737,3 +737,12 @@ test("should allow duplicate scene names across different events", async () => {
 
     expect(sceneInEvent2.name).toBe(sceneData.name);
 });
+
+test("should not allow duplicate media items within the same scene", async () => {
+    const createdEvent = await createEvent();
+    const createdScene = await createScene(createdEvent.id);
+    
+    await createMedia(createdScene.id);
+    
+    await expect(createMedia(createdScene.id)).rejects.toThrowError();
+});
