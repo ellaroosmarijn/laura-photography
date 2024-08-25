@@ -10,6 +10,12 @@ const eventData = {
     deleted_at: null
 };
 
+const eventData2 = {
+    name: 'Haley & Ben, Pynes House',
+    expiry: new Date("2300-12-12T00:00:00.000Z"),
+    deleted_at: null
+};
+
 const sceneData = {
     name: 'dinner',
     deleted_at: null
@@ -39,6 +45,12 @@ const shareLinkData = {
 const createEvent = async () => {
     return await prisma.event.create({
         data: eventData,
+    });
+};
+
+const createEvent2 = async () => {
+    return await prisma.event.create({
+        data: eventData2,
     });
 };
 
@@ -712,4 +724,16 @@ test("should not allow duplicate scene names within the same event", async () =>
     await createScene(createdEvent.id);
 
     await expect(createScene(createdEvent.id)).rejects.toThrowError();
+});
+
+
+test("should allow duplicate scene names across different events", async () => {
+    const event1 = await createEvent();
+    const event2 = await createEvent2();
+
+    await createScene(event1.id);
+
+    const sceneInEvent2 = await createScene(event2.id);
+
+    expect(sceneInEvent2.name).toBe(sceneData.name);
 });
