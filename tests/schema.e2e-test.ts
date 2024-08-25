@@ -276,18 +276,7 @@ test("should delete a shareLink and verify it is removed from the event", async 
 test("should not include expired shareLink in the list of valid shareLinks", async () => {
     const createdEvent = await createEvent();
 
-    const expiredShareLinkData = {
-        createdAt: new Date("2023-12-31 23:59:59"),
-        expiry: new Date("2000-01-01T00:00:00.000Z"),
-        key: uuidv6(),
-    };
-
-    await prisma.shareLink.create({
-        data: {
-            ...expiredShareLinkData,
-            event_id: createdEvent.id,
-        }
-    });
+    await createExpiredShareLink(createdEvent.id);
 
     const validShareLink = await createShareLink(createdEvent.id);
 
