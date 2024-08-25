@@ -772,3 +772,9 @@ test("should allow duplicate media items across different scenes", async () => {
     
     expect(mediaInScene2.web_resolution_url).toBe(mediaData.web_resolution_url);
 });
+
+test("should not allow creation of two events with the same name", async () => {
+await createEvent();
+
+await expect(createEvent()).rejects.toThrowError();;
+});
