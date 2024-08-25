@@ -4,15 +4,6 @@ import { v4 as uuidv4, v6 as uuidv6 } from 'uuid';
 
 const prisma = new PrismaClient()
 
-
-// TODO, test:
-// soft deletions (setting date for deleted so it treats it as deleted and action can be undone)
-//
-// can you save an event with the same name
-//
-// conjoin or composite key checks uniqueness of two fields combined e.g. custimer cannot have two events
-// with same name, but another customer can have an event with that name
-
 const eventData = {
     name: 'Ellen & Dave, Davenport House',
     expiry: new Date("2100-12-12T00:00:00.000Z"),
@@ -714,4 +705,11 @@ test("should restore a soft-deleted shareLink and verify it is restored correctl
 
     const fetchedShareLink = await fetchActiveShareLink(createdShareLink.key);
     expect(fetchedShareLink).not.toBeNull();
+});
+
+test("should not allow duplicate scene names within the same event", async () => {
+    const createdEvent = await createEvent();
+    await createScene(createdEvent.id);
+
+    await expect(createScene(createdEvent.id)).rejects.toThrowError();
 });
