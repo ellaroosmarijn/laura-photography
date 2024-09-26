@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "test": "vitest run -c vitest.unit.config.ts",
     "test:watch": "vitest -c vitest.unit.config.ts",
     "test:coverage": "vitest run -c vitest.unit.config.ts --coverage",
-    "test:e2e": "vitest run -c vitest.e2e.config.ts",
-    "test:e2e:watch": "vitest -c vitest.e2e.config.ts",
-    "test:e2e:coverage": "vitest run -c vitest.e2e.config.ts --coverage",
+    "test:e2e": "vitest run -c vitest.e2e.config.mts",
+    "test:e2e:watch": "vitest -c vitest.e2e.config.mts",
+    "test:e2e:coverage": "vitest run -c vitest.e2e.config.mts --coverage",
     "test:install-prisma-environment": "pnpm link ./prisma/vitest-environment-prisma",
     "pretest:e2e": "pnpm test:install-prisma-environment"
   },
@@ -30,8 +34,13 @@
     "@prisma/client": "^5.18.0",
     "@types/uuid": "^10.0.0",
     "dotenv": "^16.4.5",
+    "next": "^14.2.13",
     "prisma": "^5.18.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "uuid": "^10.0.0"
   },
-  "prettier": {}
+  "prettier": {
+    "semi": false
+  }
 }
