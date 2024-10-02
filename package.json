@@ -22,6 +22,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.14.10",
+    "@types/react": "18.3.10",
     "@vitest/coverage-v8": "^2.0.3",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
