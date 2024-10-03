@@ -8,14 +8,20 @@ export async function GET(
   req: Request,
   { params }: { params: { id: string } },
 ) {
-
   const id = parseInt(params.id)
+  try {
     const data = await prisma.event.findFirst({
-        where: {
-             id,
-        },
-    });
-  return Response.json({data})
+      where: {
+        id,
+      },
+    })
+    return Response.json({ data })
+  } catch (error) {
+    return new Response(JSON.stringify({ error: "Error fetching event" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    })
+  }
 }
 
 export async function DELETE(
