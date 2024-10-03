@@ -16,3 +16,27 @@ export async function GET(
     });
   return Response.json({data})
 }
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const id = parseInt(params.id);
+  try {
+    const deletedScene = await prisma.scene.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return new Response(JSON.stringify({ message: 'Scene deleted successfully', deletedScene }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: 'Scene not found or deletion failed' }), {
+      status: 404,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
