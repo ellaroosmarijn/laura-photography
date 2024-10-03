@@ -5,7 +5,8 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function GET(
-  { params }: { params: { id: string } }
+  req: Request,
+  { params }: { params: { id: string } },
 ) {
 
   const id = parseInt(params.id)
@@ -18,7 +19,8 @@ export async function GET(
 }
 
 export async function DELETE(
-  { params }: { params: { id: string } }
+  req: Request,
+  { params }: { params: { id: string } },
 ) {
 
   const id = parseInt(params.id);
