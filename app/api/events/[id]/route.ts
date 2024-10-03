@@ -16,5 +16,30 @@ export async function GET(
         },
     });
   return Response.json({data})
+}
 
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+
+  const id = parseInt(params.id);
+  
+  try {
+    const deletedEvent = await prisma.event.delete({
+      where: {
+        id: id,
+      },
+    });
+
+    return new Response(JSON.stringify({ message: 'Event deleted successfully', deletedEvent }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: 'Event not found or deletion failed' }), {
+      status: 404,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 }
