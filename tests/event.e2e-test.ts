@@ -34,6 +34,7 @@ afterEach(async () => {
 
 // TODO: Fix all tests that Get, delete, etc an event by name to do it by ID. 
 // TODO: Update all other test files as well.
+// TODO: add tests for updating/editing the event (e.g. adding scenes, renaming, etc)
 
 test("should create and retrieve an event by name", async () => {
     const createdEvent = await createEvent();
