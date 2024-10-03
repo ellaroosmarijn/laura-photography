@@ -31,6 +31,10 @@ afterEach(async () => {
     await prisma.event.deleteMany();
 });
 
+
+// TODO: Fix all tests that Get, delete, etc an event by name to do it by ID. 
+// TODO: Update all other test files as well.
+
 test("should create and retrieve an event by name", async () => {
     const createdEvent = await createEvent();
 
