@@ -92,6 +92,14 @@ export async function PATCH(
       )
     }
 
+    const eventWithSameName = await prisma.event.findUnique({
+      where: { name },
+    })
+
+    if (eventWithSameName && eventWithSameName.id !== id) {
+      return createErrorResponse("Event with this name already exists", 400)
+    }
+
     const updatedEvent = await prisma.event.update({
       where: { id },
       data: { name },
