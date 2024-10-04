@@ -53,12 +53,8 @@ export async function DELETE(
 
   try {
     const deletedEvent = await prisma.event.update({
-      where: {
-        id: id,
-      },
-      data: {
-        deleted_at: new Date(),
-      },
+      where: { id },
+      data: { deleted_at: new Date() },
     })
 
     return Response.json({ deletedEvent })
@@ -76,6 +72,10 @@ export async function PATCH(
 
   try {
     const { name } = await req.json()
+
+    if (!name || typeof name !== "string" || name.trim().length === 0) {
+      return createErrorResponse("Invalid input: Name cannot be empty", 400)
+    }
 
     const updatedEvent = await prisma.event.update({
       where: { id },
