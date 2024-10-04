@@ -35,7 +35,8 @@
     "vitest.e2e.config.mjs",
     "vitest.config.mts",
     "vitest.unit.config.mts",
-    "vitest.e2e.config.mts"
+    "vitest.e2e.config.mts",
+    "next.config.mjs"
   ],
   "exclude": ["node_modules"]
 }
