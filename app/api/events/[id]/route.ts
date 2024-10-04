@@ -35,8 +35,12 @@ export async function GET(
 
   try {
     const data = await prisma.event.findFirst({
-      where: { id },
+      where: { id, deleted_at: null },
     })
+
+    if (!data) {
+      return createErrorResponse("Event not found or has been deleted", 404)
+    }
 
     return Response.json({ data })
   } catch (error) {
