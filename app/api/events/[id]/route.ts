@@ -71,7 +71,7 @@ export async function PATCH(
   if (error) return error
 
   try {
-    const { name } = await req.json()
+    const { name, deleted_at } = await req.json()
 
     if (!name || typeof name !== "string" || name.trim().length === 0) {
       return createErrorResponse("Invalid input: Name cannot be empty", 400)
@@ -91,18 +91,29 @@ export async function PATCH(
         400,
       )
     }
+    if (name !== undefined) {
+      const eventWithSameName = await prisma.event.findUnique({
+        where: { name },
+      })
 
-    const eventWithSameName = await prisma.event.findUnique({
-      where: { name },
-    })
+      if (eventWithSameName && eventWithSameName.id !== id) {
+        return createErrorResponse("Event with this name already exists", 400)
+      }
+    }
 
-    if (eventWithSameName && eventWithSameName.id !== id) {
-      return createErrorResponse("Event with this name already exists", 400)
+    const updateData: { name?: string; deleted_at?: Date | null } = {}
+
+    if (name !== undefined) {
+      updateData.name = name
+    }
+
+    if (deleted_at === null) {
+      updateData.deleted_at = null
     }
 
     const updatedEvent = await prisma.event.update({
       where: { id },
-      data: { name },
+      data: updateData,
     })
 
     return Response.json({ updatedEvent })
