@@ -107,7 +107,7 @@ export async function PATCH(
 
     const updateData: { name?: string; deleted_at?: Date | null } = {}
 
-    if (name !== undefined) {
+    if (name) {
       updateData.name = name
     }
 
