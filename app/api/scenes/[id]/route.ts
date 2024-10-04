@@ -1,26 +1,32 @@
 // for when you do know the specific id of a scene
 import { PrismaClient } from "@prisma/client"
+import { createErrorResponse, validateId } from "tests/utlis/route-helpers"
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 export async function GET(
   req: Request,
   { params }: { params: { id: string } },
 ) {
-  const id = parseInt(params.id)
-  const data = await prisma.scene.findFirst({
+  const { id, error } = validateId(params.id)
+  if (error) return error
+
+  const fetchedEvent = await prisma.scene.findFirst({
     where: {
       id,
     },
   })
-  return Response.json({ data })
+
+  return Response.json({ fetchedEvent })
 }
 
 export async function DELETE(
   req: Request,
   { params }: { params: { id: string } },
 ) {
-  const id = parseInt(params.id)
+  const { id, error } = validateId(params.id)
+  if (error) return error
+
   try {
     const deletedScene = await prisma.scene.update({
       where: {
@@ -33,12 +39,6 @@ export async function DELETE(
 
     return Response.json({ deletedScene })
   } catch (error) {
-    return new Response(
-      JSON.stringify({ error: "Scene not found or deletion failed" }),
-      {
-        status: 404,
-        headers: { "Content-Type": "application/json" },
-      },
-    )
+    return createErrorResponse("Scene not found or deletion failed", 500)
   }
 }
