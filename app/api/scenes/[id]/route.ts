@@ -11,13 +11,17 @@ export async function GET(
   const { id, error } = validateId(params.id)
   if (error) return error
 
-  const fetchedEvent = await prisma.scene.findFirst({
-    where: {
-      id,
-    },
-  })
+  try {
+    const fetchedEvent = await prisma.scene.findFirst({
+      where: {
+        id,
+      },
+    })
 
-  return Response.json({ fetchedEvent })
+    return Response.json({ fetchedEvent })
+  } catch (error) {
+    return createErrorResponse("Error fetching scene", 500)
+  }
 }
 
 export async function DELETE(
