@@ -49,3 +49,23 @@ export async function DELETE(
     return createErrorResponse("Event not found or deletion failed", 404)
   }
 }
+
+export async function PATCH(
+  req: Request,
+  { params }: { params: { id: string } },
+) {
+  const id = parseInt(params.id)
+
+  try {
+    const { name } = await req.json()
+
+    const updatedEvent = await prisma.event.update({
+      where: { id },
+      data: { name },
+    })
+
+    return Response.json({ updatedEvent })
+  } catch (error) {
+    return createErrorResponse("Event update failed", 404)
+  }
+}
