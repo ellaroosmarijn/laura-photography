@@ -12,13 +12,17 @@ export async function GET(
   if (error) return error
 
   try {
-    const fetchedEvent = await prisma.scene.findFirst({
+    const fetchedScene = await prisma.scene.findFirst({
       where: {
         id,
       },
     })
 
-    return Response.json({ fetchedEvent })
+    if (!fetchedScene) {
+      return createErrorResponse("Scene not found or has been deleted", 404)
+    }
+
+    return Response.json({ fetchedScene })
   } catch (error) {
     return createErrorResponse("Error fetching scene", 500)
   }
