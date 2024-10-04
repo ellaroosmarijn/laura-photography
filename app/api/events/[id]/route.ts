@@ -11,17 +11,33 @@ function createErrorResponse(message: string, status: number) {
   })
 }
 
+function validateId(idString: string) {
+  const id = parseInt(idString)
+
+  if (isNaN(id) || id <= 0) {
+    return {
+      error: createErrorResponse(
+        "Invalid input: ID must be a positive integer",
+        400,
+      ),
+    }
+  }
+
+  return { id }
+}
+
 export async function GET(
   req: Request,
   { params }: { params: { id: string } },
 ) {
-  const id = parseInt(params.id)
+  const { id, error } = validateId(params.id)
+  if (error) return error
+
   try {
     const data = await prisma.event.findFirst({
-      where: {
-        id,
-      },
+      where: { id },
     })
+
     return Response.json({ data })
   } catch (error) {
     return createErrorResponse("Error fetching event", 500)
@@ -32,7 +48,8 @@ export async function DELETE(
   req: Request,
   { params }: { params: { id: string } },
 ) {
-  const id = parseInt(params.id)
+  const { id, error } = validateId(params.id)
+  if (error) return error
 
   try {
     const deletedEvent = await prisma.event.update({
@@ -54,7 +71,8 @@ export async function PATCH(
   req: Request,
   { params }: { params: { id: string } },
 ) {
-  const id = parseInt(params.id)
+  const { id, error } = validateId(params.id)
+  if (error) return error
 
   try {
     const { name } = await req.json()
