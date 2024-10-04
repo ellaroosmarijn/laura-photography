@@ -1,8 +1,15 @@
 // for when you do know the specific id of an event
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client"
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
+
+function createErrorResponse(message: string, status: number) {
+  return new Response(JSON.stringify({ error: message }), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  })
+}
 
 export async function GET(
   req: Request,
@@ -17,10 +24,7 @@ export async function GET(
     })
     return Response.json({ data })
   } catch (error) {
-    return new Response(JSON.stringify({ error: "Error fetching event" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    })
+    return createErrorResponse("Error fetching event", 500)
   }
 }
 
@@ -40,17 +44,8 @@ export async function DELETE(
       },
     })
 
-    return new Response(
-      JSON.stringify({ message: "Event deleted successfully", deletedEvent }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      },
-    )
+    return Response.json({ deletedEvent })
   } catch (error) {
-    return new Response(JSON.stringify({ error: 'Event not found or deletion failed' }), {
-      status: 404,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return createErrorResponse("Event not found or deletion failed", 404)
   }
 }
