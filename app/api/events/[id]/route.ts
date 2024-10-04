@@ -77,6 +77,21 @@ export async function PATCH(
       return createErrorResponse("Invalid input: Name cannot be empty", 400)
     }
 
+    const existingEvent = await prisma.event.findUnique({
+      where: { id },
+    })
+
+    if (!existingEvent) {
+      return createErrorResponse("Event not found", 404)
+    }
+
+    if (existingEvent.deleted_at) {
+      return createErrorResponse(
+        "Event has been deleted and cannot be updated",
+        400,
+      )
+    }
+
     const updatedEvent = await prisma.event.update({
       where: { id },
       data: { name },
