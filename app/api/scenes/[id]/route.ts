@@ -1,5 +1,5 @@
 // for when you do know the specific id of a scene
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient();
 
@@ -9,12 +9,12 @@ export async function GET(
 ) {
 
   const id = parseInt(params.id)
-    const data = await prisma.scene.findFirst({
-        where: {
-             id,
-        },
-    });
-  return Response.json({data})
+  const data = await prisma.scene.findFirst({
+    where: {
+      id,
+    },
+  })
+  return Response.json({ data })
 }
 
 export async function DELETE(
@@ -29,10 +29,7 @@ export async function DELETE(
       },
     });
 
-    return new Response(JSON.stringify({ message: 'Scene deleted successfully', deletedScene }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return Response.json({ deletedScene })
   } catch (error) {
     return new Response(JSON.stringify({ error: 'Scene not found or deletion failed' }), {
       status: 404,
