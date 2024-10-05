@@ -15,6 +15,7 @@ export async function GET(
     const fetchedScene = await prisma.scene.findFirst({
       where: {
         id,
+        deleted_at: null,
       },
     })
 
