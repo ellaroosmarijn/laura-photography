@@ -1,7 +1,7 @@
 // for when you do know the specific id of an event
 
 import { PrismaClient } from "@prisma/client"
-import { createErrorResponse, validateId } from "tests/utlis/route-helpers"
+import { createErrorResponse, validateId } from "utils/route-helpers"
 
 const prisma = new PrismaClient()
 

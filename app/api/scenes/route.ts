@@ -1,7 +1,7 @@
 // get all scenes (all scenes or all scenes within an event?)
 
 import { PrismaClient } from "@prisma/client"
-import { createErrorResponse } from "tests/utlis/route-helpers"
+import { createErrorResponse } from "utils/route-helpers"
 
 const prisma = new PrismaClient()
 

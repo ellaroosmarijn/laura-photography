@@ -2,7 +2,7 @@
 // don't forget about soft deleted events
 
 import { PrismaClient } from "@prisma/client"
-import { createErrorResponse } from "tests/utlis/route-helpers"
+import { createErrorResponse } from "utils/route-helpers"
 
 const prisma = new PrismaClient()
 
