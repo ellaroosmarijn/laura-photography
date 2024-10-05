@@ -5,13 +5,11 @@ const prisma = new PrismaClient()
 
 export const eventData = {
   name: "Ellen & Dave, Davenport House",
-  expiry: new Date(),
   deleted_at: null,
 }
 
 export const eventData2 = {
   name: "Haley & Ben, Pynes House",
-  expiry: new Date(),
   deleted_at: null,
 }
 
