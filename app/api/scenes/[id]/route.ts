@@ -22,7 +22,10 @@ export async function GET(
       return createErrorResponse("Scene not found or has been deleted", 404)
     }
 
-    return Response.json({ fetchedScene })
+    return new Response(JSON.stringify({ fetchedScene }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
   } catch (error) {
     return createErrorResponse("Error fetching scene", 500)
   }
@@ -45,7 +48,10 @@ export async function DELETE(
       },
     })
 
-    return Response.json({ deletedScene })
+    return new Response(JSON.stringify({ deletedScene }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
   } catch (error) {
     return createErrorResponse("Scene not found or deletion failed", 500)
   }

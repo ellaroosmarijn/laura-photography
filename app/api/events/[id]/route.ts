@@ -21,7 +21,10 @@ export async function GET(
       return createErrorResponse("Event not found or has been deleted", 404)
     }
 
-    return Response.json({ fetchedEvent })
+    return new Response(JSON.stringify({ fetchedEvent }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
   } catch (error) {
     return createErrorResponse("Error fetching event", 500)
   }
@@ -40,7 +43,10 @@ export async function DELETE(
       data: { deleted_at: new Date() },
     })
 
-    return Response.json({ deletedEvent })
+    return new Response(JSON.stringify({ deletedEvent }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
   } catch (error) {
     return createErrorResponse("Event not found or deletion failed", 404)
   }
@@ -99,7 +105,10 @@ export async function PATCH(
       data: updateEventData,
     })
 
-    return Response.json({ updatedEvent })
+    return new Response(JSON.stringify({ updatedEvent }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
   } catch (error) {
     return createErrorResponse("Event update failed", 404)
   }
