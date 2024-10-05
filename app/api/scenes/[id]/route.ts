@@ -56,3 +56,85 @@ export async function DELETE(
     return createErrorResponse("Scene not found or deletion failed", 500)
   }
 }
+
+export async function PATCH(
+  req: Request,
+  { params }: { params: { id: string; eventId: string } },
+) {
+  const { id, error } = validateId(params.id)
+  if (error) return error
+
+  const { id: eventId, error: eventError } = validateId(params.eventId)
+  if (eventError) return eventError
+
+  try {
+    const { name, deleted_at } = await req.json()
+
+    if (!name || typeof name !== "string" || name.trim().length === 0) {
+      return createErrorResponse("Invalid input: Name cannot be empty", 400)
+    }
+
+    const existingScene = await prisma.scene.findUnique({
+      where: { id },
+    })
+
+    if (!existingScene) {
+      return createErrorResponse("Scene not found", 404)
+    }
+
+    if (existingScene.deleted_at) {
+      return createErrorResponse(
+        "Scene has been deleted and cannot be updated",
+        400,
+      )
+    }
+    if (name !== undefined) {
+      const sceneWithSameName = await prisma.scene.findUnique({
+        where: { id },
+      })
+
+      if (sceneWithSameName && sceneWithSameName.id !== id) {
+        return createErrorResponse("Scene with this name already exists", 400)
+      }
+    }
+
+    if (name) {
+      const scenesWithSameName = await prisma.scene.findMany({
+        where: {
+          name,
+          event_id: eventId,
+          deleted_at: null,
+        },
+      })
+
+      if (scenesWithSameName.some((scene) => scene.id !== id)) {
+        return createErrorResponse(
+          "Scene with this name already exists in the event",
+          400,
+        )
+      }
+    }
+
+    const updateScene: { name?: string; deleted_at?: Date | null } = {}
+
+    if (name) {
+      updateScene.name = name
+    }
+
+    if (deleted_at === null) {
+      updateScene.deleted_at = null
+    }
+
+    const updatedScene = await prisma.scene.update({
+      where: { id },
+      data: updateScene,
+    })
+
+    return new Response(JSON.stringify({ updatedScene }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    })
+  } catch (error) {
+    return createErrorResponse("Scene update failed", 500)
+  }
+}
