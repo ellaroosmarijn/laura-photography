@@ -33,7 +33,6 @@ export async function POST(req: Request) {
     const createdEvent = await prisma.event.create({
       data: {
         name,
-        expiry: new Date(),
       },
     })
 
