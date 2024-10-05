@@ -13,15 +13,15 @@ export async function GET(
   if (error) return error
 
   try {
-    const data = await prisma.event.findFirst({
+    const fetchedEvent = await prisma.event.findFirst({
       where: { id, deleted_at: null },
     })
 
-    if (!data) {
+    if (!fetchedEvent) {
       return createErrorResponse("Event not found or has been deleted", 404)
     }
 
-    return Response.json({ data })
+    return Response.json({ fetchedEvent })
   } catch (error) {
     return createErrorResponse("Error fetching event", 500)
   }
@@ -84,19 +84,19 @@ export async function PATCH(
       }
     }
 
-    const updateData: { name?: string; deleted_at?: Date | null } = {}
+    const updateEventData: { name?: string; deleted_at?: Date | null } = {}
 
     if (name) {
-      updateData.name = name
+      updateEventData.name = name
     }
 
     if (deleted_at === null) {
-      updateData.deleted_at = null
+      updateEventData.deleted_at = null
     }
 
     const updatedEvent = await prisma.event.update({
       where: { id },
-      data: updateData,
+      data: updateEventData,
     })
 
     return Response.json({ updatedEvent })
