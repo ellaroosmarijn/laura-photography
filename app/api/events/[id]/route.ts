@@ -1,30 +1,9 @@
 // for when you do know the specific id of an event
 
 import { PrismaClient } from "@prisma/client"
+import { createErrorResponse, validateId } from "tests/utlis/route-helpers"
 
 const prisma = new PrismaClient()
-
-function createErrorResponse(message: string, status: number) {
-  return new Response(JSON.stringify({ error: message }), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  })
-}
-
-function validateId(idString: string) {
-  const id = parseInt(idString)
-
-  if (isNaN(id) || id <= 0) {
-    return {
-      error: createErrorResponse(
-        "Invalid input: ID must be a positive integer",
-        400,
-      ),
-    }
-  }
-
-  return { id }
-}
 
 export async function GET(
   req: Request,
