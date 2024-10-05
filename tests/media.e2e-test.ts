@@ -10,7 +10,7 @@ import {
   fetchActiveMedia,
   restoreMedia,
   mediaData,
-} from "./utlis/test-helpers"
+} from "../utils/test-helpers"
 
 const prisma = new PrismaClient()
 

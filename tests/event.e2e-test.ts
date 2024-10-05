@@ -13,7 +13,7 @@ import {
   fetchActiveShareLink,
   restoreEvent,
   softDeleteEvent,
-} from "./utlis/test-helpers"
+} from "../utils/test-helpers"
 
 const prisma = new PrismaClient()
 
