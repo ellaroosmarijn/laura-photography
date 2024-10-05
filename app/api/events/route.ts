@@ -8,7 +8,9 @@ const prisma = new PrismaClient()
 
 export async function GET() {
   try {
-    const fetchedEvents = await prisma.event.findMany()
+    const fetchedEvents = await prisma.event.findMany({
+      where: { deleted_at: null },
+    })
 
     return new Response(JSON.stringify({ fetchedEvents }), {
       status: 200,
