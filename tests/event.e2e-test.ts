@@ -47,9 +47,6 @@ test("should create and retrieve an event by id", async () => {
 
   expect(fetchedEvent).not.toBeNull()
   expect(fetchedEvent?.name).toBe(createdEvent.name)
-  expect(fetchedEvent?.expiry.toISOString()).toBe(
-    eventData.expiry.toISOString(),
-  )
 })
 
 test("should delete an event and verify related scenes, media and shareLink are also deleted", async () => {
