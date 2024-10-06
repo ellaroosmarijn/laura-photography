@@ -36,12 +36,12 @@ afterEach(async () => {
 // TODO: Update all other test files as well.
 // TODO: add tests for updating/editing the event (e.g. adding scenes, renaming, etc)
 
-test("should create and retrieve an event by name", async () => {
+test("should create and retrieve an event by id", async () => {
   const createdEvent = await createEvent()
 
   const fetchedEvent = await prisma.event.findFirst({
     where: {
-      name: eventData.name,
+      id: createdEvent.id,
     },
   })
 
