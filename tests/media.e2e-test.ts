@@ -35,7 +35,7 @@ test("should create and retrieve media and verify it belongs to the scene", asyn
 
   const fetchedMedia = await prisma.media.findFirst({
     where: {
-      web_resolution_url: mediaData.web_resolution_url,
+      id: createdMedia.id,
     },
   })
 
@@ -45,6 +45,7 @@ test("should create and retrieve media and verify it belongs to the scene", asyn
   expect(fetchedMedia?.high_resolution_url).toBe(
     createdMedia.high_resolution_url,
   )
+  expect(fetchedMedia?.id).toBe(createdMedia.id)
   expect(fetchedMedia?.scene_id).toBe(createdScene.id)
 
   const fetchedSceneWithMedia = await prisma.scene.findUnique({
