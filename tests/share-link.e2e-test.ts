@@ -7,6 +7,7 @@ import {
   softDeleteShareLink,
   fetchActiveShareLink,
   restoreShareLink,
+  createSoftDeletedShareLink,
 } from "../utils/test-helpers"
 
 const prisma = new PrismaClient()
@@ -40,6 +41,43 @@ test("should create and retrieve the shareLink, check it's validity & verify it 
   expect(fetchedShareLink?.expiry).toStrictEqual(createdShareLink.expiry)
   expect(fetchedShareLink?.key).toBe(createdShareLink.key)
   expect(fetchedShareLink?.event_id).toBe(createdEvent.id)
+})
+
+test("should update a soft-deleted share link and verify it still belongs to the same event", async () => {
+  const createdEvent = await createEvent()
+  const softDeletedShareLink = await createSoftDeletedShareLink(createdEvent.id)
+
+  const updatedShareLink = await prisma.shareLink.update({
+    where: {
+      id: softDeletedShareLink.id,
+    },
+    data: {
+      deleted_at: null,
+    },
+  })
+
+  expect(updatedShareLink).not.toBeNull()
+  expect(updatedShareLink.deleted_at).toBeNull()
+  expect(updatedShareLink.event_id).toBe(createdEvent.id)
+  expect(updatedShareLink.event_id).toBe(softDeletedShareLink.event_id)
+  expect(softDeletedShareLink).not.toBeNull()
+  expect(softDeletedShareLink?.id).toBe(updatedShareLink.id)
+  expect(softDeletedShareLink?.deleted_at).not.toBe(updatedShareLink.deleted_at)
+
+  const fetchedEventWithShareLinks = await prisma.event.findUnique({
+    where: {
+      id: createdEvent.id,
+    },
+    include: {
+      share_links: true,
+    },
+  })
+
+  expect(fetchedEventWithShareLinks).not.toBeNull()
+  expect(fetchedEventWithShareLinks?.share_links).toHaveLength(1)
+  expect(fetchedEventWithShareLinks?.share_links[0].id).toBe(
+    updatedShareLink.id,
+  )
 })
 
 test("should delete a shareLink and verify it is removed from the event", async () => {
