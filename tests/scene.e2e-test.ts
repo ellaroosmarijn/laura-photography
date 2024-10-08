@@ -10,6 +10,7 @@ import {
   fetchActiveMedia,
   restoreScene,
   sceneData,
+  createSoftDeletedScene,
 } from "../utils/test-helpers"
 
 const prisma = new PrismaClient()
@@ -54,6 +55,44 @@ test("should create and retrieve a scene by name and verify it belongs to the ev
   expect(fetchedEventWithScenes).not.toBeNull()
   expect(fetchedEventWithScenes?.scenes).toHaveLength(1)
   expect(fetchedEventWithScenes?.scenes[0].name).toBe(sceneData.name)
+})
+
+test("should update a soft-deleted scene and verify it still belongs to the same event", async () => {
+  const createdEvent = await createEvent()
+  const softDeletedScene = await createSoftDeletedScene(createdEvent.id)
+
+  const updatedScene = await prisma.scene.update({
+    where: {
+      id: softDeletedScene.id,
+    },
+    data: {
+      name: "Updated Scene",
+      deleted_at: null,
+    },
+  })
+
+  expect(updatedScene).not.toBeNull()
+  expect(updatedScene.name).toBe("Updated Scene")
+  expect(updatedScene.deleted_at).toBeNull()
+  expect(updatedScene.event_id).toBe(createdEvent.id)
+  expect(updatedScene.event_id).toBe(softDeletedScene.event_id)
+  expect(softDeletedScene).not.toBeNull()
+  expect(softDeletedScene?.id).toBe(updatedScene.id)
+  expect(softDeletedScene?.name).not.toBe(updatedScene.name)
+  expect(softDeletedScene?.deleted_at).not.toBe(updatedScene.deleted_at)
+
+  const fetchedEventWithScenes = await prisma.event.findUnique({
+    where: {
+      id: createdEvent.id,
+    },
+    include: {
+      scenes: true,
+    },
+  })
+
+  expect(fetchedEventWithScenes).not.toBeNull()
+  expect(fetchedEventWithScenes?.scenes).toHaveLength(1)
+  expect(fetchedEventWithScenes?.scenes[0].id).toBe(updatedScene.id)
 })
 
 test("should delete a scene and verify related media are also deleted", async () => {
