@@ -13,6 +13,11 @@ export const eventData2 = {
   deleted_at: null,
 }
 
+export const deletedEventData = {
+  name: "Ellen & Dave, Davenport House",
+  deleted_at: new Date("2023-12-31 23:59:59"),
+}
+
 export const sceneData = {
   name: "dinner",
   deleted_at: null,
@@ -44,7 +49,6 @@ export const shareLinkData = {
   deleted_at: null,
 }
 
-// Helper function to create an expired share link
 export const createExpiredShareLink = async (eventId: number) => {
   const expiredShareLinkData = {
     createdAt: new Date("2023-12-31 23:59:59"),
@@ -69,6 +73,12 @@ export const createEvent = async () => {
 export const createEvent2 = async () => {
   return await prisma.event.create({
     data: eventData2,
+  })
+}
+
+export const createSoftDeletedEvent = async () => {
+  return await prisma.event.create({
+    data: deletedEventData,
   })
 }
 
