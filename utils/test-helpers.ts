@@ -49,8 +49,7 @@ export const mediaData2 = {
 
 export const deletedMediaData = {
   image_order: 3,
-  web_resolution_url: "http://example.com/web-res2.jpg",
-  high_resolution_url: "http://example.com/high-res2.jpg",
+  ...mediaData,
   deleted_at: new Date("2023-12-31 23:59:59"),
 }
 
