@@ -47,6 +47,13 @@ export const mediaData2 = {
   deleted_at: null,
 }
 
+export const deletedMediaData = {
+  image_order: 3,
+  web_resolution_url: "http://example.com/web-res2.jpg",
+  high_resolution_url: "http://example.com/high-res2.jpg",
+  deleted_at: new Date("2023-12-31 23:59:59"),
+}
+
 export const shareLinkData = {
   createdAt: new Date("2023-12-31 23:59:59"),
   expiry: new Date("2100-12-12T00:00:00.000Z"),
@@ -126,6 +133,12 @@ export const createMedia2 = async (sceneId: number) => {
       ...mediaData2,
       scene_id: sceneId,
     },
+  })
+}
+
+export const createSoftDeletedMedia = async (sceneId: number) => {
+  return await prisma.media.create({
+    data: { ...deletedMediaData, scene_id: sceneId },
   })
 }
 
