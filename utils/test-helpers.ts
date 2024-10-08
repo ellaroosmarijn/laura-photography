@@ -60,6 +60,11 @@ export const shareLinkData = {
   deleted_at: null,
 }
 
+export const deletedShareLinkData = {
+  ...shareLinkData,
+  deleted_at: new Date("2024-01-01 11:11:11"),
+}
+
 export const createExpiredShareLink = async (eventId: number) => {
   const expiredShareLinkData = {
     createdAt: new Date("2023-12-31 23:59:59"),
@@ -145,6 +150,15 @@ export const createShareLink = async (eventId: number) => {
   return await prisma.shareLink.create({
     data: {
       ...shareLinkData,
+      event_id: eventId,
+    },
+  })
+}
+
+export const createSoftDeletedShareLink = async (eventId: number) => {
+  return await prisma.shareLink.create({
+    data: {
+      ...deletedShareLinkData,
       event_id: eventId,
     },
   })
