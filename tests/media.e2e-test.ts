@@ -10,6 +10,7 @@ import {
   fetchActiveMedia,
   restoreMedia,
   mediaData,
+  createSoftDeletedMedia,
 } from "../utils/test-helpers"
 
 const prisma = new PrismaClient()
@@ -62,6 +63,45 @@ test("should create and retrieve media and verify it belongs to the scene", asyn
   expect(fetchedSceneWithMedia?.media[0].web_resolution_url).toBe(
     mediaData.web_resolution_url,
   )
+})
+
+test("should update a soft-deleted media item and verify it still belongs to the same scene", async () => {
+  const createdEvent = await createEvent()
+  const createdScene = await createScene(createdEvent.id)
+  const softDeletedMedia = await createSoftDeletedMedia(createdScene.id)
+
+  const updatedMedia = await prisma.media.update({
+    where: {
+      id: softDeletedMedia.id,
+    },
+    data: {
+      image_order: 5,
+      deleted_at: null,
+    },
+  })
+
+  expect(updatedMedia).not.toBeNull()
+  expect(updatedMedia.image_order).toBe(5)
+  expect(updatedMedia.deleted_at).toBeNull()
+  expect(updatedMedia.scene_id).toBe(createdScene.id)
+  expect(updatedMedia.scene_id).toBe(softDeletedMedia.scene_id)
+  expect(softDeletedMedia).not.toBeNull()
+  expect(softDeletedMedia?.id).toBe(updatedMedia.id)
+  expect(softDeletedMedia?.image_order).not.toBe(updatedMedia.image_order)
+  expect(softDeletedMedia?.deleted_at).not.toBe(updatedMedia.deleted_at)
+
+  const fetchedSceneWithMedia = await prisma.scene.findUnique({
+    where: {
+      id: createdScene.id,
+    },
+    include: {
+      media: true,
+    },
+  })
+
+  expect(fetchedSceneWithMedia).not.toBeNull()
+  expect(fetchedSceneWithMedia?.media).toHaveLength(1)
+  expect(fetchedSceneWithMedia?.media[0].id).toBe(updatedMedia.id)
 })
 
 test("should delete media and verify it is removed from the scene", async () => {
