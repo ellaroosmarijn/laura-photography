@@ -31,7 +31,7 @@ test("should create and retrieve the shareLink, check it's validity & verify it 
 
   const fetchedShareLink = await prisma.shareLink.findFirst({
     where: {
-      key: createdShareLink.key,
+      id: createdShareLink.id,
     },
   })
 
@@ -48,13 +48,13 @@ test("should delete a shareLink and verify it is removed from the event", async 
 
   await prisma.shareLink.delete({
     where: {
-      key: createdShareLink.key,
+      id: createdShareLink.id,
     },
   })
 
   const fetchedShareLink = await prisma.shareLink.findUnique({
     where: {
-      key: createdShareLink.key,
+      id: createdShareLink.id,
     },
   })
 
