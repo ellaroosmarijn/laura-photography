@@ -6,6 +6,7 @@ import {
   createMedia,
   createScene,
   createShareLink,
+  createSoftDeletedEvent,
   eventData,
   fetchActiveEvent,
   fetchActiveMedia,
@@ -31,9 +32,6 @@ afterEach(async () => {
   await prisma.event.deleteMany()
 })
 
-
-// TODO: Fix all tests that Get, delete, etc an event by name to do it by ID. 
-// TODO: Update all other test files as well.
 // TODO: add tests for updating/editing the event (e.g. adding scenes, renaming, etc)
 
 test("should create and retrieve an event by id", async () => {
@@ -47,6 +45,29 @@ test("should create and retrieve an event by id", async () => {
 
   expect(fetchedEvent).not.toBeNull()
   expect(fetchedEvent?.name).toBe(createdEvent.name)
+})
+
+test("should update an event", async () => {
+  const createdEvent = await createSoftDeletedEvent()
+
+  await prisma.event.update({
+    where: { id: createdEvent.id },
+    data: { name: "Updated Event", deleted_at: null },
+  })
+
+  const fetchedUpdatedEvent = await prisma.event.findFirst({
+    where: {
+      id: createdEvent.id,
+    },
+  })
+
+  expect(createdEvent).not.toBeNull()
+  expect(createdEvent?.id).toBe(fetchedUpdatedEvent.id)
+  expect(createdEvent?.name).not.toBe(fetchedUpdatedEvent.name)
+  expect(createdEvent?.deleted_at).not.toBe(fetchedUpdatedEvent.deleted_at)
+  expect(fetchedUpdatedEvent).not.toBeNull()
+  expect(fetchedUpdatedEvent.name).toBe("Updated Event")
+  expect(fetchedUpdatedEvent.deleted_at).toBeNull()
 })
 
 test("should delete an event and verify related scenes, media and shareLink are also deleted", async () => {
