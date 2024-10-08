@@ -34,7 +34,7 @@ test("should create and retrieve a scene by name and verify it belongs to the ev
 
   const fetchedScene = await prisma.scene.findFirst({
     where: {
-      name: sceneData.name,
+      id: createdScene.id,
     },
   })
 
