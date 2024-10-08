@@ -28,6 +28,11 @@ export const sceneData2 = {
   deleted_at: null,
 }
 
+export const deletedSceneData = {
+  name: "lunch",
+  deleted_at: new Date("2023-12-31 23:59:59"),
+}
+
 export const mediaData = {
   image_order: 1,
   web_resolution_url: "http://example.com/web-res.jpg",
@@ -97,6 +102,12 @@ export const createScene2 = async (eventId: number) => {
       ...sceneData2,
       event_id: eventId,
     },
+  })
+}
+
+export const createSoftDeletedScene = async (eventId: number) => {
+  return await prisma.scene.create({
+    data: { ...deletedSceneData, event_id: eventId },
   })
 }
 
