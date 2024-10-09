@@ -32,7 +32,9 @@ afterEach(async () => {
   await prisma.event.deleteMany()
 })
 
-// TODO: add tests for updating/editing the event (e.g. adding scenes, renaming, etc)
+// TODO: add tests for updating/editing the event (e.g. adding
+// scenes/share links - I think this might already be covered in
+// the create scene/share link tests??)
 
 test("should create and retrieve an event by id", async () => {
   const createdEvent = await createEvent()
