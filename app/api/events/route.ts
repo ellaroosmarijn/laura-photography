@@ -29,6 +29,10 @@ export async function POST(req: Request) {
       return createErrorResponse("Invalid input: name cannot be empty", 400)
     }
 
+    if (name.toLowerCase() === "admin") {
+      return createErrorResponse("Event name 'admin' is not allowed", 400)
+    }
+
     const createdEvent = await prisma.event.create({
       data: {
         name,

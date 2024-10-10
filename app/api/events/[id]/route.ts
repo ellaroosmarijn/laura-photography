@@ -1,4 +1,5 @@
 // for when you do know the specific id of an event
+// event gets all scenes related to it, and the media - make sure to not return what you don't need (e.g. don't return deleted_at or id(?))
 
 import { PrismaClient } from "@prisma/client"
 import { createErrorResponse, validateId } from "utils/route-helpers"
@@ -64,6 +65,10 @@ export async function PATCH(
 
     if (!name || typeof name !== "string" || name.trim().length === 0) {
       return createErrorResponse("Invalid input: Name cannot be empty", 400)
+    }
+
+    if (name.toLowerCase() === "admin") {
+      return createErrorResponse("Event name 'admin' is not allowed", 400)
     }
 
     const existingEvent = await prisma.event.findUnique({
