@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     })
 
     return new Response(JSON.stringify({ createdEvent }), {
-      status: 200,
+      status: 201,
       headers: { "Content-Type": "application/json" },
     })
   } catch (error) {
