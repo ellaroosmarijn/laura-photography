@@ -14,10 +14,7 @@ export function GET() {
       headers: { "Content-Type": "application/json" },
     })
   } catch (error) {
-    return new Response(JSON.stringify({ error: "Error fetching scenes" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    })
+    return createErrorResponse("Error fetching scenes", 500)
   }
 }
 
