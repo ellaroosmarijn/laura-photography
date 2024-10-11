@@ -12,9 +12,9 @@ export function GalleryHero({ alt, src, title, subtitle }: GalleryHeroProps) {
   return (
     <div className={styles.heroContainer}>
       <img className={styles.image} alt={alt} src={src} />
-      <div>
-        <h1>{title}</h1>
-        <h2>{subtitle}</h2>
+      <div className={styles.textOverlay}>
+        <h1 className={styles.title}>{title}</h1>
+        <h2 className={styles.subtitle}>{subtitle}</h2>
       </div>
       <ChevronDown />
     </div>
