@@ -31,3 +31,15 @@
   font-size: 1.07vw;
   letter-spacing: 0.32vw;
 }
+
+.chevron {
+  position: absolute;
+  margin: 0 auto;
+  width: 55px;
+  height: 55px;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  color: white;
+  z-index: 1;
+}

@@ -16,7 +16,7 @@ export function GalleryHero({ alt, src, title, subtitle }: GalleryHeroProps) {
         <h1 className={styles.title}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
       </div>
-      <ChevronDown />
+      <ChevronDown className={styles.chevron} strokeWidth={0.5} />
     </div>
   )
 }
