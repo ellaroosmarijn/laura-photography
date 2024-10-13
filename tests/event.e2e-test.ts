@@ -35,6 +35,7 @@ afterEach(async () => {
 // TODO: add tests for updating/editing the event (e.g. adding
 // scenes/share links - I think this might already be covered in
 // the create scene/share link tests??)
+// TODO: add test so that event cannot be named 'admin'
 
 test("should create and retrieve an event by id", async () => {
   const createdEvent = await createEvent()
@@ -165,4 +166,14 @@ test("should allow creation of events with different names", async () => {
   const event2 = await createEvent2()
 
   expect(event1.name).not.toBe(event2.name)
+})
+
+test("should not allow event name to be 'admin'", async () => {
+  const createEventWithAdminName = async () => {
+    return prisma.event.create({ data: { name: "admin", deleted_at: null } })
+  }
+
+  await expect(createEventWithAdminName()).rejects.toThrowError(
+    "Event name 'admin' is not allowed",
+  )
 })
