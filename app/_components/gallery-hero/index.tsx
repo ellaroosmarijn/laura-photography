@@ -1,5 +1,5 @@
 import { ChevronDown } from "lucide-react"
-import styles from "./gallery-hero.module.css"
+import styles from "./index.module.css"
 
 type GalleryHeroProps = {
   alt: string
