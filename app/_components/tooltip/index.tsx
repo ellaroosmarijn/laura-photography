@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import styles from "./index.module.css"
 
 type TooltipProps = {
   children: ReactNode
@@ -12,9 +13,9 @@ export function Tooltip({
   direction = "bottom",
 }: TooltipProps) {
   return (
-    <div>
+    <div className={`${styles.tooltip} ${styles[direction]}`}>
       {children}
-      <span>{text}</span>
+      <span className={styles.tooltipText}>{text}</span>
     </div>
   )
 }
