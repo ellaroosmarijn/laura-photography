@@ -6,7 +6,7 @@
 .tooltipText {
   visibility: hidden;
   width: 120px;
-  background-color: black;
+  background-color: #C67A54;
   color: #fff;
   text-align: center;
   padding: 5px 0;
@@ -36,7 +36,7 @@
   margin-top: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent black transparent transparent;
+  border-color: transparent #C67A54 transparent transparent;
 }
 
 .tooltip.left .tooltipText {
@@ -53,7 +53,7 @@
   margin-top: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent transparent black;
+  border-color: transparent transparent transparent #C67A54;
 }
 
 .tooltip.top .tooltipText {
@@ -70,7 +70,7 @@
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent black transparent;
+  border-color: transparent transparent #C67A54 transparent;
 }
 
 .tooltip.bottom .tooltipText {
@@ -87,5 +87,5 @@
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: black transparent transparent transparent;
+  border-color: #C67A54 transparent transparent transparent;
 }
