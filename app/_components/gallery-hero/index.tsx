@@ -16,6 +16,8 @@ export function GalleryHero({ alt, src, title, subtitle }: GalleryHeroProps) {
         <h1 className={styles.title}>{title}</h1>
         <h2 className={styles.subtitle}>{subtitle}</h2>
       </div>
+      {/* // TODO: make chevron clickable, and direct you to beginning of 
+      the highlights section */}
       <ChevronDown className={styles.chevron} strokeWidth={0.5} />
     </div>
   )
