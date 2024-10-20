@@ -1,5 +1,6 @@
 import { ChevronDown } from "lucide-react"
 import styles from "./index.module.css"
+import Link from "next/link"
 
 type GalleryHeroProps = {
   alt: string
@@ -18,7 +19,9 @@ export function GalleryHero({ alt, src, title, subtitle }: GalleryHeroProps) {
       </div>
       {/* // TODO: make chevron clickable, and direct you to beginning of 
       the highlights section */}
-      <ChevronDown className={styles.chevron} strokeWidth={0.5} />
+      <Link href="">
+        <ChevronDown className={styles.chevron} strokeWidth={0.5} />
+      </Link>
     </div>
   )
 }
