@@ -19,6 +19,7 @@ export function Header() {
       >
         Photos by Laura Rosemary Photography
       </Link>
+      {/* // TODO: make links show or move into dropdown depending on screen size */}
       <nav className={styles.nav}>
         <ul className={styles.ul}>
           {links.map((link, index) => (
