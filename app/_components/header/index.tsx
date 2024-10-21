@@ -31,11 +31,19 @@ export function Header() {
         </ul>
       </nav>
       <div className={styles.icons}>
-        <ArrowDownToLine strokeWidth={0.8} />
-        <CornerUpRight strokeWidth={0.8} />
-        <Heart strokeWidth={0.8} />
+        <Tooltip text="Download Photos" direction="bottom">
+          <ArrowDownToLine strokeWidth={0.8} />
+        </Tooltip>
+        <Tooltip text="Share Photos" direction="bottom">
+          <CornerUpRight strokeWidth={0.8} />
+        </Tooltip>
+        <Tooltip text="Favourites" direction="bottom">
+          <Heart strokeWidth={0.8} />
+        </Tooltip>
         <div className={styles.divider} />
-        <UserRound strokeWidth={0.8} />
+        <Tooltip text="My Account" direction="bottom">
+          <UserRound strokeWidth={0.8} />
+        </Tooltip>
       </div>
     </header>
   )
