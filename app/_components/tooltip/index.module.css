@@ -6,86 +6,81 @@
 .tooltipText {
   visibility: hidden;
   width: 120px;
-  background-color: #C67A54;
+  background-color: #c67a54;
   color: #fff;
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
   position: absolute;
-  z-index: 1;
-  opacity: 0;
   transition: opacity 0.3s;
 }
 
 .tooltip:hover .tooltipText {
   visibility: visible;
-  opacity: 1;
 }
 
-.tooltip.right .tooltipText {
-  top: 50%;
-  left: 105%;
-  transform: translateY(-50%);
-}
+.tooltip {
+  & .tooltipText {
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
 
-.tooltip.right .tooltipText::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent #C67A54 transparent transparent;
-}
+    &::after {
+      content: "";
+      position: absolute;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent #c67a54 transparent;
+    }
+  }
 
-.tooltip.left .tooltipText {
-  top: 50%;
-  right: 105%;
-  transform: translateY(-50%);
-}
+  &.top {
+    & .tooltipText {
+      bottom: 120%;
 
-.tooltip.left .tooltipText::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent transparent #C67A54;
-}
+      &::after {
+        bottom: -9px;
+        transform: rotate(180deg);
+        left: 50%;
+      }
+    }
+  }
 
-.tooltip.top .tooltipText {
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-}
+  &.bottom {
+    & .tooltipText {
+      top: 120%;
 
-.tooltip.top .tooltipText::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent #C67A54 transparent;
-}
+      &::after {
+        top: -9px;
+        left: 50%;
+      }
+    }
+  }
 
-.tooltip.bottom .tooltipText {
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-}
+  &.left {
+    & .tooltipText {
+      top: 50%;
+      transform: translateY(-50%) translateX(-115%);
 
-.tooltip.bottom .tooltipText::after {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #C67A54 transparent transparent transparent;
+      &::after {
+        left: 99%;
+        margin: -5px 0 0 0;
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  &.right {
+    & .tooltipText {
+      top: 50%;
+      transform: translateY(-50%) translateX(15%);
+
+      &::after {
+        left: -8%;
+        margin: -5px 0 0 0;
+        transform: rotate(270deg);
+      }
+    }
+  }
 }
