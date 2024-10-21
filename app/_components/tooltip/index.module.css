@@ -9,8 +9,7 @@
   background-color: #c67a54;
   color: #fff;
   text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
+  padding: 5px;
   position: absolute;
   transition: opacity 0.3s;
 }
