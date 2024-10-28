@@ -1,4 +1,18 @@
 :root {
+  /* fonts */
+
+  /* font sizes (use rem (?)) */
+  --scale-0: 0.5rem;
+  --scale-1: 1rem;
+  --scale-2: 1.5rem;
+  --scale-3: 2rem;
+  --scale-4: 2.5rem;
+  --scale-5: 3rem;
+  --scale-6: 3.5rem;
+  --scale-7: 4rem;
+  --scale-8: 4.5rem;
+  --scale-9: 5rem;
+
   /* general sizes */
   --size-1: 2px;
   --size-2: 4px;
