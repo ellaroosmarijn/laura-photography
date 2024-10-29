@@ -90,4 +90,12 @@
   --size-136: 276px;
   --size-138: 280px;
   --size-140: 284px;
+
+  /* background colors */
+  --color-rust-dark: #c67a54;
+  --color-rust-mid: #f7d4bc;
+  --color-rust-light: #faf4ec;
+
+  --color-charcoal-dark: #6b6764;
+  --color-charcoal-light: #d3c9bd;
 }
