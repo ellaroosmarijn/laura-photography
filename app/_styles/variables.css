@@ -98,4 +98,9 @@
 
   --color-charcoal-dark: #6b6764;
   --color-charcoal-light: #d3c9bd;
+
+  /* text colors */
+  --color-text-dark: #3f4242;
+  --color-text-mid: #484848;
+  --color-text-light: #f5f3f0;
 }
