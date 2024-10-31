@@ -1,4 +1,4 @@
-import "normalize.css"
+import "./_styles"
 
 export default function RootLayout({
   children,
