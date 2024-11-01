@@ -5,13 +5,13 @@
 
 .tooltipText {
   position: absolute;
-  width: 100px;
+  width: var(--size-48);
   visibility: hidden;
-  font-size: 12px;
+  font-size: var(--size-6);
   text-align: center;
   color: var(--color-white);
   background-color: var(--color-rust-dark);
-  padding: 5px;
+  padding: var(--size-2);
   transition: opacity 0.3s;
 }
 
@@ -29,7 +29,7 @@
       content: "";
       position: absolute;
       margin-left: -5px;
-      border-width: 5px;
+      border-width: var(--size-3);
       border-style: solid;
       border-color: transparent transparent var(--color-rust-dark) transparent;
     }
