@@ -21,7 +21,7 @@
   text-align: left;
   color: white;
   z-index: 1;
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
 }
 
 .title {

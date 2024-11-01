@@ -11,7 +11,7 @@
   display: block;
   width: var(--size-98);
   font-size: var(--size-6);
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   text-decoration: none;
   color: var(--color-charcoal-light);
   letter-spacing: 0.1rem;
