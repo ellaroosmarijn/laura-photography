@@ -106,4 +106,10 @@
 
   --color-black: #000000;
   --color-white: #ffffff;
+
+  /* z-index layers */
+  --layer-1: 100;
+  --layer-2: 200;
+  --layer-3: 300;
+  --layer-4: 9999;
 }
