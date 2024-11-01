@@ -13,6 +13,11 @@
   --scale-8: 4.5rem;
   --scale-9: 5rem;
 
+  /* font weight */
+  --font-weight-light: 200;
+  --font-weight-regular: 400;
+  --font-weight-heavy: 600;
+
   /* general sizes */
   --size-px: 1px;
   --size-1: 2px;
