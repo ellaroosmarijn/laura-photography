@@ -9,8 +9,8 @@
   visibility: hidden;
   font-size: 12px;
   text-align: center;
-  color: #fff;
-  background-color: #c67a54;
+  color: var(--color-white);
+  background-color: var(--color-rust-dark);
   padding: 5px;
   transition: opacity 0.3s;
 }
@@ -31,7 +31,7 @@
       margin-left: -5px;
       border-width: 5px;
       border-style: solid;
-      border-color: transparent transparent #c67a54 transparent;
+      border-color: transparent transparent var(--color-rust-dark) transparent;
     }
   }
 
