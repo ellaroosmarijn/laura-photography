@@ -16,11 +16,11 @@
 
 .textOverlay {
   position: absolute;
-  left: calc(3.75vw - 20px);
-  bottom: calc(3.75vw - 20px);
+  left: calc(3.75vw - var(--size-10));
+  bottom: calc(3.75vw - var(--size-10));
   text-align: left;
   color: white;
-  z-index: 1;
+  z-index: var(--layer-1);
   font-weight: var(--font-weight-regular);
 }
 
@@ -37,13 +37,13 @@
 .chevron {
   position: absolute;
   margin: 0 auto;
-  width: 55px;
-  height: 55px;
-  bottom: 10px;
+  width: var(--size-26);
+  height: var(--size-26);
+  bottom: var(--size-5);
   left: 0;
   right: 0;
-  color: white;
-  z-index: 1;
+  color: var(--color-white);
+  z-index: var(--layer-1);
   animation: arrowAnimation 900ms infinite alternate running;
   animation-timing-function: ease-in-out;
 }
@@ -53,7 +53,7 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(calc(var(--size-10) * -1));
   }
   100% {
     transform: translateY(0);
