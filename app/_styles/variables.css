@@ -118,4 +118,12 @@
   --layer-2: 200;
   --layer-3: 300;
   --layer-4: 9999;
+
+  /* media queries */
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 1024px;
+  --breakpoint-lg: 1280px;
+  --breakpoint-xl: 1440px;
+  --breakpoint-xxl: 1920px;
 }
