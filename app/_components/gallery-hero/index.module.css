@@ -21,13 +21,13 @@
 }
 
 .title {
-  font-size: 2.67vw;
-  letter-spacing: 0.17vw;
+  font-size: var(--size-12);
+  letter-spacing: 2px;
 }
 
 .subtitle {
-  font-size: 1.07vw;
-  letter-spacing: 0.32vw;
+  font-size: var(--size-7);
+  letter-spacing: var(--size-2);
 }
 
 .chevron {
