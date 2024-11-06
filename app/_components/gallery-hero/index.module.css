@@ -12,8 +12,8 @@
 
 .textOverlay {
   position: absolute;
-  left: calc(3.75vw - var(--size-10));
-  bottom: calc(3.75vw - var(--size-10));
+  left: 3.75vw;
+  bottom: 3.75vw;
   text-align: left;
   color: white;
   z-index: var(--layer-1);
