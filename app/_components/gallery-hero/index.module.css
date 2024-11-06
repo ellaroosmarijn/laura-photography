@@ -26,8 +26,9 @@
 }
 
 .subtitle {
-  font-size: var(--size-7);
-  letter-spacing: var(--size-2);
+  font-size: var(--size-4);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
 }
 
 .chevron {
