@@ -67,10 +67,16 @@
   .title {
     font-size: var(--size-10);
   }
+  .subtitle {
+    font-size: var(--size-5);
+  }
 }
 
 @media (min-width: 1024px) {
   .title {
     font-size: var(--size-12);
+  }
+  .subtitle {
+    font-size: var(--size-7);
   }
 }
