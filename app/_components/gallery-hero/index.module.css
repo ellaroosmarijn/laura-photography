@@ -1,4 +1,3 @@
-/* // TODO: different screen size styling!!! */
 .heroContainer {
   height: 100vh;
   position: relative;
@@ -40,7 +39,7 @@
   margin: 0 auto;
   width: var(--size-16);
   height: var(--size-16);
-  bottom: var(--size-5);
+  bottom: 3.5vw;
   left: 0;
   right: 0;
   color: var(--color-white);
@@ -68,6 +67,7 @@
   .chevron {
     width: var(--size-20);
     height: var(--size-20);
+    bottom: 2vw;
   }
 }
 
@@ -77,6 +77,9 @@
   }
   .subtitle {
     font-size: var(--size-5);
+  }
+  .chevron {
+    bottom: 2.5vw;
   }
 }
 
@@ -90,5 +93,6 @@
   .chevron {
     width: var(--size-26);
     height: var(--size-26);
+    bottom: 3.5vw;
   }
 }
