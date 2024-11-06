@@ -44,8 +44,32 @@
   right: 0;
   color: var(--color-white);
   z-index: var(--layer-1);
-  animation: arrowAnimation 900ms infinite alternate running;
+  animation: mobileArrowAnimation 900ms infinite running;
   animation-timing-function: ease-in-out;
+}
+
+@keyframes mobileArrowAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(calc(var(--size-5) * -1));
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes tabletArrowAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(calc(var(--size-8) * -1));
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 @keyframes arrowAnimation {
@@ -80,6 +104,7 @@
   }
   .chevron {
     bottom: 2.5vw;
+    animation: tabletArrowAnimation 900ms infinite running;
   }
 }
 
@@ -94,5 +119,6 @@
     width: var(--size-26);
     height: var(--size-26);
     bottom: 3.5vw;
+    animation: arrowAnimation 900ms infinite running;
   }
 }
