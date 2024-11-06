@@ -34,8 +34,8 @@
 .chevron {
   position: absolute;
   margin: 0 auto;
-  width: var(--size-26);
-  height: var(--size-26);
+  width: var(--size-16);
+  height: var(--size-16);
   bottom: var(--size-5);
   left: 0;
   right: 0;
@@ -61,6 +61,10 @@
   .title {
     font-size: var(--size-9);
   }
+  .chevron {
+    width: var(--size-20);
+    height: var(--size-20);
+  }
 }
 
 @media (min-width: 768px) {
@@ -78,5 +82,9 @@
   }
   .subtitle {
     font-size: var(--size-7);
+  }
+  .chevron {
+    width: var(--size-26);
+    height: var(--size-26);
   }
 }
