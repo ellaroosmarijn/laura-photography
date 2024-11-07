@@ -5,6 +5,7 @@
   align-items: center;
   padding: 0 var(--size-5);
   text-transform: uppercase;
+  overflow-x: hidden;
 }
 
 .logo {
