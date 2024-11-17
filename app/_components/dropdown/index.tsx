@@ -2,6 +2,7 @@
 
 import { ChevronDown, ChevronUp } from "lucide-react"
 import { useState } from "react"
+import styles from "./index.module.css"
 
 type DropdownProps = {
   triggerText: string
@@ -13,7 +14,7 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
 
   return (
     <>
-      <div onClick={() => setOpen((open) => !open)}>
+      <div className={styles.trigger} onClick={() => setOpen((open) => !open)}>
         <div>{triggerText}</div>
         {open === true ? <ChevronDown /> : <ChevronUp />}
       </div>
