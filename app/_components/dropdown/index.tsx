@@ -15,7 +15,7 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
   return (
     <>
       <div className={styles.trigger} onClick={() => setOpen((open) => !open)}>
-        <div>{triggerText}</div>
+        <div className={styles.triggerText}>{triggerText}</div>
         {open === true ? <ChevronDown /> : <ChevronUp />}
       </div>
       {open === true && (
