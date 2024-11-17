@@ -10,3 +10,7 @@
   font-size: var(--size-8);
   color: var(--color-charcoal-light);
 }
+
+.chevron {
+  stroke: var(--color-charcoal-light);
+}
