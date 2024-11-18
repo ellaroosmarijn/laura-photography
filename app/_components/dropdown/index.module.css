@@ -1,9 +1,16 @@
+.wrapper {
+  --display: "none";
+  position: relative;
+  display: inline-block;
+}
+
 .trigger {
   display: flex;
-  width: 100%;
-  max-width: 100px;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  width: 100%;
+  max-width: 100px;
 }
 
 .triggerText {
@@ -13,4 +20,17 @@
 
 .chevron {
   stroke: var(--color-charcoal-light);
+}
+
+.dropdown {
+  position: absolute;
+  display: var(--display);
+  top: 100%;
+  left: 0;
+  background-color: var(--color-white);
+  box-shadow: 0 var(--size-2) var(--size-4) rgba(0, 0, 0, 0.3);
+  z-index: var(--layer-3);
+  padding: var(--size-4) 0;
+  min-width: var(--size-74);
+  white-space: nowrap;
 }
