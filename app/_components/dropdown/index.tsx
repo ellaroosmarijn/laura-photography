@@ -55,7 +55,7 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
         <div
           style={
             {
-              "--display": open ? "flex" : "none",
+              "--display": open ? "block" : "none",
               width: "0px",
               height: "0px",
               position: "absolute",
