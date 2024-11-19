@@ -42,7 +42,7 @@ export function Header() {
           <Heart strokeWidth={0.8} />
         </Tooltip>
         <div className={styles.divider} />
-        <Tooltip text="My Account" direction="bottom">
+        <Tooltip text="My Account" direction="left">
           <UserRound strokeWidth={0.8} />
         </Tooltip>
       </div>
