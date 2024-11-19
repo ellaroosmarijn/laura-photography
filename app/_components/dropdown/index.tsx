@@ -40,6 +40,19 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
     }
   }, [])
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
+
   return (
     <div className={styles.wrapper} {...{ ref }}>
       <div className={styles.trigger} onClick={() => setOpen((open) => !open)}>
