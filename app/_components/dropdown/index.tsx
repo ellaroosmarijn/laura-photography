@@ -20,6 +20,7 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
   }, [globalPositionState])
 
   const ref = useRef<HTMLDivElement>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const onResize = () => {
       const [globalPosition, setGlobalPosition] = globalPositionStateRef.current
@@ -42,7 +43,11 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target as Node) &&
+        !dropdownRef.current?.contains(event.target as Node)
+      ) {
         setOpen(false)
       }
     }
@@ -79,13 +84,21 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
           }
         >
           <div
+            ref={dropdownRef}
             className={styles.dropdown}
             style={{
               transform: "translate(-50%, 0)",
             }}
           >
             {contents.map((content, index) => (
-              <button key={index} onClick={content.onClick}>
+              <button
+                key={index}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  content.onClick()
+                  setOpen((open) => !open)
+                }}
+              >
                 {content.text}
               </button>
             ))}
