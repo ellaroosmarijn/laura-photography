@@ -14,13 +14,13 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
   const [open, setOpen] = useState(false)
   const globalPositionState = useState({ top: 0, left: 0 })
   const globalPositionStateRef = useRef(globalPositionState)
+  const ref = useRef<HTMLDivElement>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     globalPositionStateRef.current = globalPositionState
   }, [globalPositionState])
 
-  const ref = useRef<HTMLDivElement>(null)
-  const dropdownRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const onResize = () => {
       const [globalPosition, setGlobalPosition] = globalPositionStateRef.current
