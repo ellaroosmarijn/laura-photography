@@ -35,7 +35,6 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
           <ChevronDown className={styles.chevron} strokeWidth={1} />
         )}
       </div>
-
       <div
         style={
           {
