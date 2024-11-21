@@ -22,22 +22,31 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
   }, [globalPositionState])
 
   useEffect(() => {
-    const onResize = () => {
-      const [globalPosition, setGlobalPosition] = globalPositionStateRef.current
+    const calculateLayout = () => {
+      const [, setGlobalPosition] = globalPositionStateRef.current
       const rect = ref.current.getBoundingClientRect()
-      console.log(rect)
       const { top, left, width, height } = rect
-
+      console.log(top, window.scrollY)
       setGlobalPosition({
         top: top + window.scrollY + height,
         left: left + window.scrollX + width / 2,
       })
     }
 
+    const onResize = () => {
+      calculateLayout()
+    }
+
+    const onScroll = () => {
+      calculateLayout()
+    }
+
     window.addEventListener("resize", onResize)
-    onResize()
+    window.document.addEventListener("scroll", onScroll)
+    calculateLayout()
     return () => {
       window.removeEventListener("resize", onResize)
+      window.document.removeEventListener("scroll", onScroll)
     }
   }, [])
 
