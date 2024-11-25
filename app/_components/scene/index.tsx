@@ -1,3 +1,5 @@
+import styles from "./index.module.css"
+
 type SceneImageRes = {
   src: string
   width: number
@@ -48,7 +50,7 @@ export function Scene({}: SceneProps) {
   }
 
   return (
-    <>
+    <div className={styles.sceneWrapper}>
       <h2>{scene.name}</h2>
       <div>
         {scene.images.map(
