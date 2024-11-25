@@ -1,10 +1,13 @@
-import Image from "next/image"
+type SceneImageRes = {
+  src: string
+  width: number
+  height: number
+}
 
 type SceneImage = {
   id: string
-  src: string
   alt: string
-  res: { low: string; mid: string; high: string }
+  res: { low: SceneImageRes; mid: SceneImageRes; high: SceneImageRes }
 }
 
 type Scene = {
@@ -16,13 +19,52 @@ type SceneProps = {
   scene: Scene
 }
 
-export function Scene({ scene }: SceneProps) {
+export function Scene({}: SceneProps) {
+  const images = Array.from({ length: 30 }, (_, i) => ({
+    id: i.toString(),
+    alt: "",
+    res: {
+      low: {
+        src: "https://picsum.photos/id/29/500/333",
+        width: 500,
+        height: 333,
+      },
+      mid: {
+        src: "https://picsum.photos/id/29/500/333",
+        width: 500,
+        height: 333,
+      },
+      high: {
+        src: "https://picsum.photos/id/29/500/333",
+        width: 500,
+        height: 333,
+      },
+    },
+  }))
+
+  const scene = {
+    name: "Test Scene",
+    images,
+  }
+
   return (
     <>
       <h2>{scene.name}</h2>
-      {scene.images.map(({ id, src, alt }) => (
-        <Image key={id} src={src} alt={alt} />
-      ))}
-    </>
+      <div>
+        {scene.images.map(
+          ({
+            id,
+            res: {
+              low: { src, width, height },
+            },
+            alt,
+          }) => (
+            <div key={id}>
+              <img {...{ src, alt, width, height }} />
+            </div>
+          ),
+        )}
+      </div>
+    </div>
   )
 }
