@@ -1,5 +1,5 @@
 .sceneWrapper {
-  padding: 0px 61px 50px;
+  padding: 0px var(--size-28) var(--size-24);
 }
 
 .gridContainer {
