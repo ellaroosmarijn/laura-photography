@@ -97,6 +97,8 @@
   --size-138: 280px;
   --size-140: 284px;
 
+  --size-full: 100%;
+
   /* background colors */
   --color-rust-dark: #c67a54;
   --color-rust-mid: #f7d4bc;
