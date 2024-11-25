@@ -52,7 +52,7 @@ export function Scene({}: SceneProps) {
   return (
     <div className={styles.sceneWrapper}>
       <h2>{scene.name}</h2>
-      <div>
+      <div className={styles.gridContainer}>
         {scene.images.map(
           ({
             id,
@@ -61,7 +61,7 @@ export function Scene({}: SceneProps) {
             },
             alt,
           }) => (
-            <div key={id}>
+            <div key={id} className={styles.gridItem}>
               <img {...{ src, alt, width, height }} />
             </div>
           ),
