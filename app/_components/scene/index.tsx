@@ -1,4 +1,8 @@
+"use client"
+
+// import Image from "next/image"
 import styles from "./index.module.css"
+import { useEffect, useRef } from "react"
 
 type SceneImageRes = {
   src: string
@@ -22,6 +26,22 @@ type SceneProps = {
 }
 
 export function Scene({}: SceneProps) {
+  const gridRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const gridItems = gridRef.current?.querySelectorAll(".gridItem")
+
+    gridItems?.forEach((item) => {
+      const element = item as HTMLElement
+      const content = element.querySelector("img")
+      if (content) {
+        const rowHeight = content.naturalHeight / content.naturalWidth
+        const span = Math.ceil(rowHeight * 3)
+        element.style.setProperty("--row-span", span.toString())
+      }
+    })
+  }, [])
+
   const images = Array.from({ length: 30 }, (_, i) => ({
     id: i.toString(),
     alt: "",
@@ -52,7 +72,7 @@ export function Scene({}: SceneProps) {
   return (
     <div className={styles.sceneWrapper}>
       <h2>{scene.name}</h2>
-      <div className={styles.gridContainer}>
+      <div className={styles.gridContainer} ref={gridRef}>
         {scene.images.map(
           ({
             id,
@@ -62,7 +82,9 @@ export function Scene({}: SceneProps) {
             alt,
           }) => (
             <div key={id} className={styles.gridItem}>
-              <img {...{ src, alt, width, height }} />
+              <div>
+                <img {...{ src, alt, width, height }} />
+              </div>
             </div>
           ),
         )}
