@@ -14,7 +14,7 @@
 }
 
 .gridItem img {
-  width: 100%;
+  width: var(--size-full);
   height: auto;
   display: block;
 }
