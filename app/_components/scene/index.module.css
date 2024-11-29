@@ -6,7 +6,6 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(200px, 1fr));
   grid-auto-flow: dense;
-  gap: var(--size-3);
 }
 
 .gridItem {
