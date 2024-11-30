@@ -9,7 +9,7 @@ type SceneImageRes = {
   height: number
 }
 
-type SceneImage = {
+export type SceneImage = {
   id: string
   alt: string
   res: { low: SceneImageRes; mid: SceneImageRes; high: SceneImageRes }
