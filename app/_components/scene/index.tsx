@@ -33,18 +33,52 @@ export function Scene({}: SceneProps) {
           height: 300,
         },
       },
-      mid: {
-        src: "https://picsum.photos/id/29/500/333",
-        width: 500,
-        height: 333,
-      },
-      high: {
-        src: "https://picsum.photos/id/29/500/333",
-        width: 500,
-        height: 333,
+    },
+    {
+      id: "2",
+      alt: "",
+      res: {
+        low: {
+          src: "https://fastly.picsum.photos/id/866/700/300.jpg?hmac=XtL-UtEs4UPCBkzOZm9H4Nl7DAflaMpUaAkmIwKU8hU",
+          width: 700,
+          height: 300,
+        },
       },
     },
-  }))
+    {
+      id: "3",
+      alt: "",
+      res: {
+        low: {
+          src: "https://fastly.picsum.photos/id/866/300/300.jpg?hmac=9qmLpcaT9TgKd6PD37aZJZ_7QvgrVFMcvI3JQKWVUIQ",
+          width: 300,
+          height: 300,
+        },
+      },
+    },
+    {
+      id: "4",
+      alt: "",
+      res: {
+        low: {
+          src: "https://fastly.picsum.photos/id/866/400/200.jpg?hmac=RWo6-RXf6jQ7JOknMozr8Z8svD1i0F9m1XGfTlNyVKM",
+          width: 400,
+          height: 200,
+        },
+      },
+    },
+    {
+      id: "5",
+      alt: "",
+      res: {
+        low: {
+          src: "https://fastly.picsum.photos/id/866/800/300.jpg?hmac=sWj6Xpp9M0IkuJ7oC8WxihWonXSQ8vXPLO4jG8X7FBw",
+          width: 800,
+          height: 300,
+        },
+      },
+    },
+  ]
 
   const scene = {
     name: "Test Scene",
