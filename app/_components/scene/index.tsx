@@ -1,7 +1,4 @@
-"use client"
-
 import styles from "./index.module.css"
-import { useEffect, useRef } from "react"
 
 type SceneImageRes = {
   src: string
@@ -25,30 +22,16 @@ type SceneProps = {
 }
 
 export function Scene({}: SceneProps) {
-  const gridRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const gridItems = gridRef.current?.querySelectorAll(".gridItem")
-
-    gridItems?.forEach((item) => {
-      const element = item as HTMLElement
-      const content = element.querySelector("img")
-      if (content) {
-        const rowHeight = content.naturalHeight / content.naturalWidth
-        const span = Math.ceil(rowHeight * 3)
-        element.style.setProperty("--row-span", span.toString())
-      }
-    })
-  }, [])
-
-  const images = Array.from({ length: 30 }, (_, i) => ({
-    id: i.toString(),
-    alt: "",
-    res: {
-      low: {
-        src: "https://picsum.photos/id/29/500/333",
-        width: 500,
-        height: 333,
+  const images = [
+    {
+      id: "1",
+      alt: "",
+      res: {
+        low: {
+          src: "https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI",
+          width: 200,
+          height: 300,
+        },
       },
       mid: {
         src: "https://picsum.photos/id/29/500/333",
@@ -71,7 +54,7 @@ export function Scene({}: SceneProps) {
   return (
     <div className={styles.sceneWrapper}>
       <h2>{scene.name}</h2>
-      <div className={styles.gridContainer} ref={gridRef}>
+      <div className={styles.gridContainer}>
         {scene.images.map(
           ({
             id,
