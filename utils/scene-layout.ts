@@ -62,13 +62,7 @@ export function calculateSceneLayout(
       const shortestColumnIndex = columnHeights.indexOf(
         Math.min(...columnHeights),
       )
-      const imageAspectRatio = image.res.high.width / image.res.high.height
-      const columnWidth = layoutWidth / totalNumberOfColumns
-      const layoutImageWidth = columnWidth * 1
-      const layoutImageHeight = layoutImageWidth / imageAspectRatio
-
       placeAnImage(1, shortestColumnIndex)
-      distanceSinceLastTwoSpan[shortestColumnIndex] += layoutImageHeight
     })
 
     return placedImagesInLayout
@@ -86,18 +80,6 @@ export function calculateSceneLayout(
 
     if (minDistanceSinceLastTwoSpanCheck >= minDistanceBetweenTwoSpans) {
       placeAnImage(2, matchingIndex)
-
-      const imageAspectRatio =
-        images[0].res.high.width / images[0].res.high.height
-      const columnWidth = layoutWidth / totalNumberOfColumns
-      const layoutImageWidth = columnWidth * 2
-      const layoutImageHeight = layoutImageWidth / imageAspectRatio
-
-      columnHeights[matchingIndex] += layoutImageHeight
-      columnHeights[matchingIndex + 1] += layoutImageHeight
-
-      distanceSinceLastTwoSpan[matchingIndex] = 0
-      distanceSinceLastTwoSpan[matchingIndex + 1] = 0
     }
   }
 
