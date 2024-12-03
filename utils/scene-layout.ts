@@ -58,13 +58,11 @@ export function calculateSceneLayout(
         index < columnHeights.length - 1 && height === columnHeights[index + 1],
     )
   ) {
-    images.forEach((image) => {
-      const shortestColumnIndex = columnHeights.indexOf(
-        Math.min(...columnHeights),
-      )
+    images.forEach(() => {
+      const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights))
       placeAnImage(1, shortestColumnIndex)
     })
-
+  
     return placedImagesInLayout
   }
 
