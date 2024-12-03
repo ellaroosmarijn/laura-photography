@@ -12,7 +12,7 @@ export function calculateSceneLayout(
   const placedImagesInLayout = []
   const images = [...images_]
   const distanceSinceLastTwoSpan = new Array(totalNumberOfColumns).fill(0)
-  const minDistanceForTwoSpan = 1000
+  const minDistanceBetweenTwoSpans = 1000
 
   console.log(">>>>>>>", columnHeights)
 
@@ -53,53 +53,51 @@ export function calculateSceneLayout(
   }
 
   if (
-    columnHeights.some(
+    !columnHeights.some(
       (height, index) =>
         index < columnHeights.length - 1 && height === columnHeights[index + 1],
     )
   ) {
-    const matchingIndex = columnHeights.findIndex(
-      (height, index) =>
-        index < columnHeights.length - 1 && height === columnHeights[index + 1],
+    images.forEach((image) => {
+      const shortestColumnIndex = columnHeights.indexOf(
+        Math.min(...columnHeights),
+      )
+      const imageAspectRatio = image.res.high.width / image.res.high.height
+      const columnWidth = layoutWidth / totalNumberOfColumns
+      const layoutImageWidth = columnWidth * 1
+      const layoutImageHeight = layoutImageWidth / imageAspectRatio
+
+      placeAnImage(1, shortestColumnIndex)
+      distanceSinceLastTwoSpan[shortestColumnIndex] += layoutImageHeight
+    })
+
+    return placedImagesInLayout
+  }
+
+  const matchingIndex = columnHeights.findIndex(
+    (height, index) =>
+      index < columnHeights.length - 1 && height === columnHeights[index + 1],
+  )
+
+  if (matchingIndex !== -1) {
+    const minDistanceSinceLastTwoSpanCheck = Math.min(
+      ...distanceSinceLastTwoSpan.slice(matchingIndex, matchingIndex + 2),
     )
 
-    if (matchingIndex !== -1) {
-      if (
-        Math.min(
-          ...distanceSinceLastTwoSpan.slice(matchingIndex, matchingIndex + 2),
-        ) >= minDistanceForTwoSpan
-      ) {
-        placeAnImage(2, matchingIndex)
+    if (minDistanceSinceLastTwoSpanCheck >= minDistanceBetweenTwoSpans) {
+      placeAnImage(2, matchingIndex)
 
-        const imageAspectRatio =
-          images[0].res.high.width / images[0].res.high.height
-        const columnWidth = layoutWidth / totalNumberOfColumns
-        const layoutImageWidth = columnWidth * 2
-        const layoutImageHeight = layoutImageWidth / imageAspectRatio
+      const imageAspectRatio =
+        images[0].res.high.width / images[0].res.high.height
+      const columnWidth = layoutWidth / totalNumberOfColumns
+      const layoutImageWidth = columnWidth * 2
+      const layoutImageHeight = layoutImageWidth / imageAspectRatio
 
-        columnHeights[matchingIndex] += layoutImageHeight
-        columnHeights[matchingIndex + 1] += layoutImageHeight
+      columnHeights[matchingIndex] += layoutImageHeight
+      columnHeights[matchingIndex + 1] += layoutImageHeight
 
-        distanceSinceLastTwoSpan[matchingIndex] = 0
-        distanceSinceLastTwoSpan[matchingIndex + 1] = 0
-      }
-    } else {
-      // column 0, 1, 2
-      // span >= 1
-      for (let i = 0; i < images.length; i++) {
-        const shortestColumnIndex = columnHeights.indexOf(
-          Math.min(...columnHeights),
-        )
-        const imageAspectRatio =
-          images[i].res.high.width / images[i].res.high.height
-        const columnWidth = layoutWidth / totalNumberOfColumns
-        const layoutImageWidth = columnWidth * 1
-        const layoutImageHeight = layoutImageWidth / imageAspectRatio
-
-        placeAnImage(1, shortestColumnIndex)
-
-        distanceSinceLastTwoSpan[shortestColumnIndex] += layoutImageHeight
-      }
+      distanceSinceLastTwoSpan[matchingIndex] = 0
+      distanceSinceLastTwoSpan[matchingIndex + 1] = 0
     }
   }
 
