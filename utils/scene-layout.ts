@@ -49,8 +49,29 @@ export function calculateSceneLayout(
     return images.length > 0
   }
 
-  if (false) {
-    // if two columns are the same height
+  if (
+    columnHeights.some(
+      (height, index) =>
+        index < columnHeights.length - 1 && height === columnHeights[index + 1],
+    )
+  ) {
+    const matchingIndex = columnHeights.findIndex(
+      (height, index) =>
+        index < columnHeights.length - 1 && height === columnHeights[index + 1],
+    )
+
+    if (matchingIndex !== -1) {
+      placeAnImage(2, matchingIndex)
+
+      const imageAspectRatio =
+        images[0].res.high.width / images[0].res.high.height
+      const columnWidth = layoutWidth / totalNumberOfColumns
+      const layoutImageWidth = columnWidth * 2
+      const layoutImageHeight = layoutImageWidth / imageAspectRatio
+
+      columnHeights[matchingIndex] += layoutImageHeight
+      columnHeights[matchingIndex + 1] += layoutImageHeight
+    }
   } else {
     for (let i = 0; i < images.length; i++) {
       const shortestColumnIndex = columnHeights.indexOf(
