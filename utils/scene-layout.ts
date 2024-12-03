@@ -52,10 +52,12 @@ export function calculateSceneLayout(
   if (false) {
     // if two columns are the same height
   } else {
-    // column 0, 1, 2
-    // span >= 1
-    // which column it goes into?
-    while (placeAnImage(1, 1)) {}
+    for (let i = 0; i < images.length; i++) {
+      const shortestColumnIndex = columnHeights.indexOf(
+        Math.min(...columnHeights),
+      )
+      placeAnImage(1, shortestColumnIndex)
+    }
   }
 
   return placedImagesInLayout
