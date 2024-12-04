@@ -99,6 +99,7 @@ export function Scene({}: SceneProps) {
           }) => (
             <div key={id} className={styles.gridItem}>
               <div>
+                {/*// TODO: use Image from next */}
                 <img {...{ src, alt, width, height }} />
               </div>
             </div>
