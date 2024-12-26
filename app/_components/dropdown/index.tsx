@@ -43,6 +43,7 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
             height: "0px",
             position: "absolute",
             zIndex: "1000",
+            left: "50%",
           } as React.CSSProperties
         }
       >
