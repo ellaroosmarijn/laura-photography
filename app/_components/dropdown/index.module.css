@@ -25,14 +25,14 @@
 .dropdownArrow {
     display: var(--display);
     position: absolute;
-    left: 40%;
     border-width: 6px;
     border-style: solid;
     border-color: var(--color-charcoal-light) transparent transparent var(--color-charcoal-light);
     top: calc(var(--size-22) - 1px);
-    transform: rotate(45deg);
+    left: 50%;  
+    transform: translateX(-50%) rotate(45deg); 
     z-index: var(--layer-4);
-    
+
     &::after {
       content: "";
       border-color: var(--color-white) transparent transparent var(--color-white);
