@@ -47,7 +47,9 @@
 .dropdown {
   position: absolute;
   display: var(--display);
-  top: var(--size-12);
+  top: 7.5px;  
+  left: 50%;  
+  transform: translateX(-50%);
   background-color: var(--color-white);
   border: 1px solid var(--color-charcoal-light);
   z-index: var(--layer-3);
