@@ -46,9 +46,11 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
         />
         <div
           className={styles.dropdown}
-          style={{
-            transform: "translate(-50%, 0)",
-          }}
+          style={
+            {
+              "--display": open ? "block" : "none",
+            } as React.CSSProperties
+          }
         >
           {contents.map((content, index) => (
             <button
