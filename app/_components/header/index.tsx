@@ -33,17 +33,23 @@ export function Header() {
       </nav>
       <div className={styles.icons}>
         <Tooltip text="Download Photos" direction="bottom">
-          <ArrowDownToLine strokeWidth={0.8} />
+          <ArrowDownToLine
+            strokeWidth={0.8}
+            stroke="var(--color-charcoal-light)"
+          />
         </Tooltip>
         <Tooltip text="Share Photos" direction="bottom">
-          <CornerUpRight strokeWidth={0.8} />
+          <CornerUpRight
+            strokeWidth={0.8}
+            stroke="var(--color-charcoal-light)"
+          />
         </Tooltip>
         <Tooltip text="Favourites" direction="bottom">
-          <Heart strokeWidth={0.8} />
+          <Heart strokeWidth={0.8} stroke="var(--color-charcoal-light)" />
         </Tooltip>
         <div className={styles.divider} />
         <Tooltip text="My Account" direction="left">
-          <UserRound strokeWidth={0.8} />
+          <UserRound strokeWidth={0.8} stroke="var(--color-charcoal-light)" />
         </Tooltip>
       </div>
     </header>
