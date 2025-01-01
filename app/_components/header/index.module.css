@@ -37,6 +37,10 @@
   color: var(--color-rust-mid);
 }
 
+.link:active {
+  color: var(--color-rust-dark);
+}
+
 .ul {
   display: flex;
   list-style: none;
