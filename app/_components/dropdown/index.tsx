@@ -35,21 +35,15 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
           <ChevronDown className={styles.chevron} strokeWidth={1} />
         )}
       </div>
-      <div className={styles.dropdownArrow} style={
-          { "--display": open ? "block" : "none",
-          } as React.CSSProperties}/>
-      <div
-        style={
-          {
-            "--display": open ? "block" : "none",
-            width: "0px",
-            height: "0px",
-            position: "absolute",
-            zIndex: "1000",
-            left: "50%",
-          } as React.CSSProperties
-        }
-      >
+      <div className={styles.dropdownPositioner}>
+        <div
+          className={styles.dropdownArrow}
+          style={
+            {
+              "--display": open ? "block" : "none",
+            } as React.CSSProperties
+          }
+        />
         <div
           className={styles.dropdown}
           style={{
