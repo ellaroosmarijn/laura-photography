@@ -1,0 +1,4 @@
+:focus-visible {
+  outline: none; /* Removes the default outline */
+  border: 2px solid var(--color-rust-dark); /* Adds a custom border */
+}
