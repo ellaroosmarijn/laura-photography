@@ -23,8 +23,8 @@
 
 .trigger:hover .triggerText,
 .trigger:hover .chevron {
-  color: var(--color-rust-dark);
-  stroke: var(--color-rust-dark);
+  color: var(--color-rust-mid);
+  stroke: var(--color-rust-mid);
 }
 
 .chevron {
