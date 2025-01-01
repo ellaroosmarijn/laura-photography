@@ -75,3 +75,7 @@
   color: var(--color-charcoal-light);
   cursor: pointer;
 }
+
+.dropdown button:hover {
+  background: var(--color-rust-light);
+}
