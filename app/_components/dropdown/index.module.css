@@ -79,3 +79,8 @@
 .dropdown button:hover {
   background: var(--color-rust-light);
 }
+
+.dropdown button:active {
+  background: var(--color-rust-dark);
+  color: var(--color-white);
+}
