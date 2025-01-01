@@ -18,6 +18,12 @@
   color: var(--color-charcoal-light);
 }
 
+.trigger:hover .triggerText,
+.trigger:hover .chevron {
+  color: var(--color-rust-dark);
+  stroke: var(--color-rust-dark);
+}
+
 .chevron {
   stroke: var(--color-charcoal-light);
 }
