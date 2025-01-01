@@ -13,9 +13,9 @@ export function Tooltip({
   direction = "bottom",
 }: TooltipProps) {
   return (
-    <div className={`${styles.tooltip} ${styles[direction]}`}>
+    <button className={`${styles.tooltip} ${styles[direction]}`}>
       {children}
       <span className={styles.tooltipText}>{text}</span>
-    </div>
+    </button>
   )
 }

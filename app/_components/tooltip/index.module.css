@@ -1,6 +1,8 @@
 .tooltip {
   position: relative;
   display: inline-block;
+  border: none;
+  background: none;
 }
 
 .tooltipText {
@@ -13,6 +15,7 @@
   background-color: var(--color-rust-dark);
   padding: var(--size-2);
   transition: opacity 0.3s;
+  text-transform: uppercase;
 }
 
 .tooltip:hover .tooltipText {
