@@ -16,6 +16,9 @@
 .triggerText {
   font-size: var(--size-8);
   color: var(--color-charcoal-light);
+  border: none;
+  background: none;
+  text-transform: uppercase;
 }
 
 .trigger:hover .triggerText,

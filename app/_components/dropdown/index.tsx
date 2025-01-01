@@ -28,7 +28,7 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
   return (
     <div className={styles.wrapper} {...{ ref }}>
       <div className={styles.trigger} onClick={() => setOpen((open) => !open)}>
-        <div className={styles.triggerText}>{triggerText}</div>
+        <button className={styles.triggerText}>{triggerText}</button>
         {open === true ? (
           <ChevronUp className={styles.chevron} strokeWidth={1} />
         ) : (
