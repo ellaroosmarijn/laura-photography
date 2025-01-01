@@ -33,6 +33,10 @@
   letter-spacing: 0.1rem;
 }
 
+.link:hover {
+  color: var(--color-rust-mid);
+}
+
 .ul {
   display: flex;
   list-style: none;
