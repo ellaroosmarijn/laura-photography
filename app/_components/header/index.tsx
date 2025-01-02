@@ -50,6 +50,9 @@ export function Header() {
               </Link>
             </li>
           ))}
+          <li className={styles.moreLink}>
+            <Dropdown triggerText={"MORE"} contents={[]} />
+          </li>
         </ul>
       </nav>
       <div className={styles.icons}>
