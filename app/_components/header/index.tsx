@@ -27,6 +27,22 @@ export function Header() {
   useEffect(() => {
     if (navRef.current) {
       const navRightPosition = navRef.current.getBoundingClientRect().right
+      const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
+      const dropdownTriggerWidth = dropdownTrigger.getBoundingClientRect().width
+      const endOfLinksSpaceInNav = navRightPosition - dropdownTriggerWidth
+      const linkElements: HTMLElement[] = Array.from(
+        navRef.current.querySelectorAll(`.${styles.listItem}`),
+      )
+
+      linkElements.forEach((linkElement) => {
+        linkElement.classList.remove(styles.hidden)
+
+        const linkRightPosition = linkElement.getBoundingClientRect().right
+
+        if (linkRightPosition > endOfLinksSpaceInNav) {
+          linkElement.classList.add(styles.hidden)
+        }
+      })
     }
   }, [])
 
@@ -51,6 +67,8 @@ export function Header() {
             </li>
           ))}
           <li className={styles.moreLink}>
+            {/* // TODO: render all links in dropdown. Display none to links that fit in
+            header */}
             <Dropdown triggerText={"MORE"} contents={[]} />
           </li>
         </ul>

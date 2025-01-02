@@ -72,6 +72,10 @@
   list-style: none;
 }
 
+.hidden {
+  display: none;
+}
+
 .icons {
   color: var(--color-charcoal-light);
   display: flex;
