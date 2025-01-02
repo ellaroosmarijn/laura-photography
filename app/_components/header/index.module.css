@@ -23,7 +23,10 @@
 }
 
 .nav {
-  flex-grow: 1;
+  display: flex;
+  column-gap: var(--size-5);
+  justify-content: space-around;
+  overflow: hidden;
 }
 
 .link {
@@ -31,6 +34,8 @@
   color: var(--color-charcoal-light);
   text-decoration: none;
   letter-spacing: 0.1rem;
+  white-space: nowrap;
+  height: var(--size-10);
 }
 
 .link:hover {
@@ -46,7 +51,25 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  justify-content: space-evenly;
+  column-gap: var(--size-10);
+  height: var(--size-10);
+  overflow: hidden;
+  max-width: 1280px;
+  &:first-child {
+    overflow: unset;
+  }
+}
+
+.li {
+  flex: 0 0 auto;
+}
+
+.truncatedLink {
+  overflow-x: hidden;
+}
+
+.moreLink {
+  list-style: none;
 }
 
 .icons {
