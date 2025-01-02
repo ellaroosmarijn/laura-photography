@@ -41,8 +41,11 @@ export function Header() {
       <nav className={styles.nav} ref={navRef}>
         <ul className={styles.ul}>
           {links.map((link, index) => (
-            <li key={index}>
-              <Link href={link.path} className={styles.link}>
+            <li className={styles.listItem} key={index}>
+              <Link
+                href={link.path}
+                className={cx(styles.link, styles.truncatedLink)}
+              >
                 {link.name}
               </Link>
             </li>
