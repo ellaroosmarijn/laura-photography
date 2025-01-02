@@ -24,6 +24,7 @@
     "@types/node": "^20.14.10",
     "@types/react": "18.3.10",
     "@vitest/coverage-v8": "^2.0.3",
+    "classnames": "^2.5.1",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
     "tsx": "^4.16.2",
