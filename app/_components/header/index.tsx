@@ -1,3 +1,5 @@
+"use client"
+
 import { ArrowDownToLine, CornerUpRight, Heart, UserRound } from "lucide-react"
 import Link from "next/link"
 import styles from ".//index.module.css"
