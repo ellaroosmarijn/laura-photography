@@ -1,18 +1,35 @@
 "use client"
 
 import { ArrowDownToLine, CornerUpRight, Heart, UserRound } from "lucide-react"
+import classnames from "classnames/bind"
 import Link from "next/link"
-import styles from ".//index.module.css"
+import styles from "./index.module.css"
 import { Tooltip } from "components/tooltip"
+import { Dropdown } from "components/dropdown"
+import { useEffect, useRef } from "react"
+
+const cx = classnames.bind(styles)
 
 const links = [
   { name: "Gallery", path: "#" },
   { name: "Highlights", path: "#" },
   { name: "The Preparations", path: "#" },
   { name: "The Ceremony", path: "#" },
+  { name: "I'm a tester", path: "#" },
+  { name: "HElloooo", path: "#" },
+  { name: "blahhhhhhhh", path: "#" },
+  { name: "djbkliuhIUBHDUIUH", path: "#" },
 ]
 
 export function Header() {
+  const navRef = useRef(null)
+
+  useEffect(() => {
+    if (navRef.current) {
+      const navRightPosition = navRef.current.getBoundingClientRect().right
+    }
+  }, [])
+
   return (
     <header className={styles.header}>
       <Link
@@ -21,8 +38,7 @@ export function Header() {
       >
         Photos by Laura Rosemary Photography
       </Link>
-      {/* // TODO: make links show or move into dropdown depending on screen size */}
-      <nav className={styles.nav}>
+      <nav className={styles.nav} ref={navRef}>
         <ul className={styles.ul}>
           {links.map((link, index) => (
             <li key={index}>
