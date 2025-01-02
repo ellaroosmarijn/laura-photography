@@ -67,8 +67,6 @@ export function Header() {
             </li>
           ))}
           <li className={styles.moreLink}>
-            {/* // TODO: render all links in dropdown. Display none to links that fit in
-            header */}
             <Dropdown triggerText={"MORE"} contents={[]} />
           </li>
         </ul>
