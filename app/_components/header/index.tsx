@@ -55,7 +55,14 @@ export function Header() {
         Photos by Laura Rosemary Photography
       </Link>
       <nav className={styles.nav} ref={navRef}>
-        <ul className={styles.ul}>
+        <ul
+          className={styles.ul}
+          style={
+            {
+              "--column-gap": "var(--size-10)",
+            } as React.CSSProperties
+          }
+        >
           {links.map((link, index) => (
             <li className={styles.listItem} key={index}>
               <Link
