@@ -21,15 +21,22 @@ const links = [
   { name: "djbkliuhIUBHDUIUH", path: "#" },
 ]
 
+const COLUMN_GAP_VALUE = 20
+
 export function Header() {
   const navRef = useRef(null)
 
   useEffect(() => {
     if (navRef.current) {
       const navRightPosition = navRef.current.getBoundingClientRect().right
+
       const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
+
       const dropdownTriggerWidth = dropdownTrigger.getBoundingClientRect().width
-      const endOfLinksSpaceInNav = navRightPosition - dropdownTriggerWidth
+
+      const endOfLinksSpaceInNav =
+        navRightPosition - dropdownTriggerWidth - COLUMN_GAP_VALUE
+
       const linkElements: HTMLElement[] = Array.from(
         navRef.current.querySelectorAll(`.${styles.listItem}`),
       )
@@ -59,7 +66,7 @@ export function Header() {
           className={styles.ul}
           style={
             {
-              "--column-gap": "var(--size-10)",
+              "--column-gap": `${COLUMN_GAP_VALUE}px`,
             } as React.CSSProperties
           }
         >
