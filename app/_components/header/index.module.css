@@ -55,11 +55,6 @@
   margin: 0;
   column-gap: var(--column-gap);
   height: var(--size-10);
-  overflow: hidden;
-  max-width: 1280px;
-  &:first-child {
-    overflow: unset;
-  }
 }
 
 .listItem {
