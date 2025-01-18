@@ -81,6 +81,13 @@
   justify-content: space-evenly;
 }
 
+.dungeon {
+  position: absolute;
+  top: -99999px;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .divider {
   width: var(--size-px);
   background-color: var(--color-charcoal-light);
