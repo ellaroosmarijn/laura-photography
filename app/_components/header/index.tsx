@@ -24,7 +24,10 @@ const links = [
 const COLUMN_GAP_VALUE = 20
 
 export function Header() {
-  const navRef = useRef(null)
+  const navRef = useRef<Element>(null)
+  const dungeonRef = useRef<HTMLDivElement>(null)
+  // TODO: add resize listener to make sure links continue to fit when screen is
+  // resized/smaller/larger than on initial load
 
   useEffect(() => {
     if (navRef.current) {
@@ -106,6 +109,10 @@ export function Header() {
           <UserRound strokeWidth={0.8} stroke="var(--color-charcoal-light)" />
         </Tooltip>
       </div>
+      <div
+        ref={dungeonRef}
+        className={cx(styles.nav, styles.ul, styles.dungeon)}
+      />
     </header>
   )
 }
