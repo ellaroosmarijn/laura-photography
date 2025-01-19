@@ -2,16 +2,19 @@
 
 import { ChevronDown, ChevronUp } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
+import { createPortal } from "react-dom"
 import styles from "./index.module.css"
 
 type DropdownProps = {
   triggerText: string
   contents: { text: string; onClick: () => void }[]
+  target: HTMLElement | null
 }
 
-export function Dropdown({ triggerText, contents }: DropdownProps) {
+export function Dropdown({ triggerText, contents, target }: DropdownProps) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -26,7 +29,7 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
   }, [])
 
   return (
-    <div className={styles.wrapper} {...{ ref }}>
+    <div className={styles.wrapper} ref={ref}>
       <div className={styles.trigger} onClick={() => setOpen((open) => !open)}>
         <button className={styles.triggerText}>{triggerText}</button>
         {open === true ? (
@@ -35,37 +38,40 @@ export function Dropdown({ triggerText, contents }: DropdownProps) {
           <ChevronDown className={styles.chevron} strokeWidth={1} />
         )}
       </div>
-      <div className={styles.dropdownPositioner}>
-        <div
-          className={styles.dropdownArrow}
-          style={
-            {
-              "--display": open ? "block" : "none",
-            } as React.CSSProperties
-          }
-        />
-        <div
-          className={styles.dropdown}
-          style={
-            {
-              "--display": open ? "block" : "none",
-            } as React.CSSProperties
-          }
-        >
-          {contents.map((content, index) => (
-            <button
-              key={index}
-              onClick={(e) => {
-                e.stopPropagation()
-                content.onClick()
-                setOpen((open) => !open)
+
+      {open &&
+        target &&
+        createPortal(
+          <div className={styles.dropdownPositioner}>
+            <div
+              className={styles.dropdownArrow}
+              style={{
+                display: open ? "block" : "none",
+              }}
+            />
+            <div
+              className={styles.dropdown}
+              ref={dropdownRef}
+              style={{
+                display: open ? "block" : "none",
               }}
             >
-              {content.text}
-            </button>
-          ))}
-        </div>
-      </div>
+              {contents.map((content, index) => (
+                <button
+                  key={index}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    content.onClick()
+                    setOpen(false)
+                  }}
+                >
+                  {content.text}
+                </button>
+              ))}
+            </div>
+          </div>,
+          target,
+        )}
     </div>
   )
 }
