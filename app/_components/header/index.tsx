@@ -25,7 +25,7 @@ const COLUMN_GAP_VALUE = 20
 const ITEMS_PADDING_VALUE = 20
 
 export function Header() {
-  const navRef = useRef<Element>(null)
+  const navRef = useRef<HTMLDivElement>(null)
   const dungeonRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
