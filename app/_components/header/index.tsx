@@ -6,7 +6,7 @@ import Link from "next/link"
 import styles from "./index.module.css"
 import { Tooltip } from "components/tooltip"
 import { Dropdown } from "components/dropdown"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const cx = classnames.bind(styles)
 
@@ -29,6 +29,30 @@ export function Header() {
   const dungeonRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const updateDropdownPortalPosition = () => {
+      const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
+      if (dropdownTrigger) {
+        const dropdownRect = dropdownTrigger.getBoundingClientRect()
+        const header = document.querySelector(
+          `.${styles.header}`,
+        ) as HTMLElement
+        const nav = document.querySelector(`.${styles.nav}`) as HTMLElement
+        const portalTarget = document.querySelector(
+          `.${styles.dropdownPortalTarget}`,
+        ) as HTMLElement
+
+        if (header && nav && portalTarget) {
+          const headerHeight = header.getBoundingClientRect().height
+          const navHeight = nav.getBoundingClientRect().height
+          const remainingHeight = headerHeight - navHeight
+          const verticalPosition = remainingHeight
+          const portalTargetWidth = portalTarget.getBoundingClientRect().width
+          portalTarget.style.top = `${verticalPosition}px`
+          portalTarget.style.left = `${dropdownRect.left + dropdownRect.width / 2 - portalTargetWidth / 2}px`
+        }
+      }
+    }
+
     const checkLinksFitInNav = () => {
       const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
       const dropdownTriggerWidth = dropdownTrigger.getBoundingClientRect().width
@@ -94,6 +118,7 @@ export function Header() {
           }
         }
       }
+      updateDropdownPortalPosition()
     }
 
     window.addEventListener("resize", checkLinksFitInNav)
@@ -119,6 +144,7 @@ export function Header() {
       >
         Photos by Laura Rosemary Photography
       </Link>
+      <div className={styles.dropdownPortalTarget} />
       <nav
         className={styles.nav}
         ref={navRef}

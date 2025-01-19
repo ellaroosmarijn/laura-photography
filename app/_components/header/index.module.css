@@ -49,6 +49,14 @@
   color: var(--color-rust-dark);
 }
 
+.dropdownPortalTarget {
+  position: absolute;
+  background: tomato;
+  height: 10px;
+  width: 10px;
+  z-index: var(--layer-4);
+}
+
 .ul {
   display: flex;
   list-style: none;
