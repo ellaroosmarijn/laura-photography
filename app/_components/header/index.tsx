@@ -9,21 +9,15 @@ import { useEffect, useRef, useState } from "react"
 import styles from "./index.module.css"
 
 const cx = classnames.bind(styles)
-const links = [
-  { name: "Gallery", path: "#" },
-  { name: "Highlights", path: "#" },
-  { name: "The Preparations", path: "#" },
-  { name: "The Ceremony", path: "#" },
-  { name: "I'm a tester", path: "#" },
-  { name: "HElloooo", path: "#" },
-  { name: "blahhhhhhhh", path: "#" },
-  { name: "djbkliuhIUBHDUIUH", path: "#" },
-]
+
+type HeaderProps = {
+  links?: { name: string; path: string }[]
+}
 
 const COLUMN_GAP_VALUE = 20
 const ITEMS_PADDING_VALUE = 20
 
-export function Header() {
+export function Header({ links }: HeaderProps) {
   const navRef = useRef<HTMLDivElement>(null)
   const dropdownPortalTargetRef = useRef<HTMLDivElement>(null)
   const dungeonRef = useRef<HTMLDivElement>(null)
@@ -184,16 +178,17 @@ export function Header() {
             } as React.CSSProperties
           }
         >
-          {links.map((link, index) => (
-            <li className={styles.listItem} key={index}>
-              <Link
-                href={link.path}
-                className={cx(styles.link, styles.truncatedLink)}
-              >
-                {link.name}
-              </Link>
-            </li>
-          ))}
+          {links &&
+            links.map((link, index) => (
+              <li className={styles.listItem} key={index}>
+                <Link
+                  href={link.path}
+                  className={cx(styles.link, styles.truncatedLink)}
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
           {dungeonDropdownElements.length > 0 && (
             <li className={styles.moreLink}>
               <Dropdown
