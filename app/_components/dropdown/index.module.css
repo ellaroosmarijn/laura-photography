@@ -19,6 +19,7 @@
   border: none;
   background: none;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .trigger:hover .triggerText,
