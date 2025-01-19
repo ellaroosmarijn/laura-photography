@@ -1,15 +1,14 @@
 "use client"
 
-import { ArrowDownToLine, CornerUpRight, Heart, UserRound } from "lucide-react"
 import classnames from "classnames/bind"
-import Link from "next/link"
-import styles from "./index.module.css"
-import { Tooltip } from "components/tooltip"
 import { Dropdown } from "components/dropdown"
+import { Tooltip } from "components/tooltip"
+import { ArrowDownToLine, CornerUpRight, Heart, UserRound } from "lucide-react"
+import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
+import styles from "./index.module.css"
 
 const cx = classnames.bind(styles)
-
 const links = [
   { name: "Gallery", path: "#" },
   { name: "Highlights", path: "#" },
