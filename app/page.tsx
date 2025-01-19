@@ -15,6 +15,7 @@ export default function Page() {
       <div style={{ width: "100%", height: "1000px" }}>
         <Scene />
       </div>
+      <p id="highlights">Testing HIGHLIGHTS</p>
     </>
   )
 }
