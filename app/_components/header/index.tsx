@@ -32,23 +32,75 @@ export function Header() {
     const checkLinksFitInNav = () => {
       const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
       const dropdownTriggerWidth = dropdownTrigger.getBoundingClientRect().width
+      const linkElements: Element[] = [
+        ...navRef.current.querySelectorAll(`.${styles.listItem}`),
+      ]
+      const dunegonElements: Element[] = [
+        ...dungeonRef.current.querySelectorAll(`.${styles.listItem}`),
+      ]
+      const navRect = navRef.current.getBoundingClientRect()
+      const parent = navRef.current.parentElement
+      const [logoEl] = parent.getElementsByClassName(styles.logo)
+      const [iconsEl] = parent.getElementsByClassName(styles.icons)
+      const logoRight = logoEl.getBoundingClientRect().right
+      const iconsLeft = iconsEl.getBoundingClientRect().left
+      const navGap = iconsLeft - logoRight
 
-      const endOfLinksSpaceInNav =
-        navRightPosition - dropdownTriggerWidth - COLUMN_GAP_VALUE
+      const renderedLinksWidth = linkElements.length
+        ? linkElements[linkElements.length - 1].getBoundingClientRect().right -
+          navRect.left +
+          COLUMN_GAP_VALUE +
+          dropdownTriggerWidth
+        : dropdownTriggerWidth
 
-      const linkElements: HTMLElement[] = Array.from(
-        navRef.current.querySelectorAll(`.${styles.listItem}`),
-      )
+      let freeSpace = navGap - renderedLinksWidth
 
-      linkElements.forEach((linkElement) => {
-        linkElement.classList.remove(styles.hidden)
+      if (freeSpace < 0) {
+        while (freeSpace < 0 && linkElements.length > 0) {
+          const lastLinkElement = linkElements.pop() as HTMLElement
+          dungeonRef.current.prepend(lastLinkElement)
 
-        const linkRightPosition = linkElement.getBoundingClientRect().right
+          const newRenderedLinksWidth =
+            linkElements[linkElements.length - 1]?.getBoundingClientRect()
+              .right -
+            navRect.left +
+            COLUMN_GAP_VALUE +
+            dropdownTriggerWidth
 
-        if (linkRightPosition > endOfLinksSpaceInNav) {
-          linkElement.classList.add(styles.hidden)
+          const updatedFreeSpace = navGap - newRenderedLinksWidth
+          freeSpace = updatedFreeSpace
+
+          if (updatedFreeSpace >= 0) {
+            break
+          }
         }
-      })
+      } else if (freeSpace > 0) {
+        while (freeSpace > 0 && dunegonElements.length > 0) {
+          const firstDungeonElement = dunegonElements[0] as HTMLElement
+          const elementWidth =
+            firstDungeonElement.getBoundingClientRect().width + COLUMN_GAP_VALUE
+
+          if (elementWidth <= freeSpace) {
+            navRef.current.firstChild.insertBefore(
+              firstDungeonElement,
+              dropdownTrigger,
+            )
+
+            dunegonElements.shift()
+
+            freeSpace -= elementWidth
+          } else {
+            break
+          }
+        }
+      }
+    }
+
+    window.addEventListener("resize", checkLinksFitInNav)
+    checkLinksFitInNav()
+
+    return () => {
+      window.removeEventListener("resize", checkLinksFitInNav)
     }
   }, [])
 
