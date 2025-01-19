@@ -127,6 +127,16 @@ export function Header() {
           }
         }
       }
+      const dungeonContents = dunegonElements.map((el) => {
+        return {
+          text: el.textContent || "Unknown Link",
+          onClick: () => {
+            console.log(`Clicked ${el.textContent}`)
+          },
+        }
+      })
+      setDungeonDropdownElements(dungeonContents)
+
       updateDropdownPortalPosition()
     }
 
