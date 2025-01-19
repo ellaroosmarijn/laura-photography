@@ -25,30 +25,37 @@ const ITEMS_PADDING_VALUE = 20
 
 export function Header() {
   const navRef = useRef<HTMLDivElement>(null)
+  const dropdownPortalTargetRef = useRef<HTMLDivElement>(null)
   const dungeonRef = useRef<HTMLDivElement>(null)
+  const [dungeonDropdownElements, setDungeonDropdownElements] = useState<
+    {
+      text: string
+      onClick: () => void
+    }[]
+  >([])
 
   useEffect(() => {
     const updateDropdownPortalPosition = () => {
       const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
-      if (dropdownTrigger) {
+      const portalTarget = document.querySelector(
+        `.${styles.dropdownPortalTarget}`,
+      ) as HTMLElement
+
+      if (dropdownTrigger && portalTarget) {
         const dropdownRect = dropdownTrigger.getBoundingClientRect()
+        const portalTargetWidth = portalTarget.getBoundingClientRect().width
         const header = document.querySelector(
           `.${styles.header}`,
         ) as HTMLElement
         const nav = document.querySelector(`.${styles.nav}`) as HTMLElement
-        const portalTarget = document.querySelector(
-          `.${styles.dropdownPortalTarget}`,
-        ) as HTMLElement
 
-        if (header && nav && portalTarget) {
-          const headerHeight = header.getBoundingClientRect().height
-          const navHeight = nav.getBoundingClientRect().height
-          const remainingHeight = headerHeight - navHeight
-          const verticalPosition = remainingHeight
-          const portalTargetWidth = portalTarget.getBoundingClientRect().width
-          portalTarget.style.top = `${verticalPosition}px`
-          portalTarget.style.left = `${dropdownRect.left + dropdownRect.width / 2 - portalTargetWidth / 2}px`
-        }
+        const headerHeight = header.getBoundingClientRect().height
+        const navHeight = nav.getBoundingClientRect().height
+        const remainingHeight = headerHeight - navHeight / 2 + 2
+        const verticalPosition = remainingHeight
+
+        portalTarget.style.top = `${verticalPosition}px`
+        portalTarget.style.left = `${dropdownRect.left + dropdownRect.width / 2 - portalTargetWidth / 2}px`
       }
     }
 
@@ -143,7 +150,10 @@ export function Header() {
       >
         Photos by Laura Rosemary Photography
       </Link>
-      <div className={styles.dropdownPortalTarget} />
+      <div
+        className={styles.dropdownPortalTarget}
+        ref={dropdownPortalTargetRef}
+      />
       <nav
         className={styles.nav}
         ref={navRef}
@@ -172,7 +182,11 @@ export function Header() {
             </li>
           ))}
           <li className={styles.moreLink}>
-            <Dropdown triggerText={"MORE"} contents={[]} />
+            <Dropdown
+              triggerText={"MORE"}
+              contents={dungeonDropdownElements}
+              target={dropdownPortalTargetRef.current}
+            />
           </li>
         </ul>
       </nav>
