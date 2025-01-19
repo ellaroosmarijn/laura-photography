@@ -27,8 +27,6 @@ const ITEMS_PADDING_VALUE = 20
 export function Header() {
   const navRef = useRef<Element>(null)
   const dungeonRef = useRef<HTMLDivElement>(null)
-  // TODO: add resize listener to make sure links continue to fit when screen is
-  // resized/smaller/larger than on initial load
 
   useEffect(() => {
     if (navRef.current) {
