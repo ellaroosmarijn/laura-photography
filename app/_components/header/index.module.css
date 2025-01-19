@@ -22,6 +22,7 @@
   letter-spacing: 0.1rem;
   flex-shrink: 0;
   flex-grow: 0;
+  padding-right: var(--items-padding);
 }
 
 .nav {
@@ -78,6 +79,7 @@
   display: flex;
   width: var(--size-98);
   justify-content: space-evenly;
+  padding-left: var(--items-padding);
 }
 
 .dungeon {

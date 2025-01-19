@@ -22,6 +22,7 @@ const links = [
 ]
 
 const COLUMN_GAP_VALUE = 20
+const ITEMS_PADDING_VALUE = 20
 
 export function Header() {
   const navRef = useRef<Element>(null)
@@ -57,7 +58,14 @@ export function Header() {
   }, [])
 
   return (
-    <header className={styles.header}>
+    <header
+      className={styles.header}
+      style={
+        {
+          "--items-padding": `${ITEMS_PADDING_VALUE}px`,
+        } as React.CSSProperties
+      }
+    >
       <Link
         className={styles.logo}
         href={"https://www.laurarosemaryphotography.co.uk/"}
