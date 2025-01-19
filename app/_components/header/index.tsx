@@ -64,7 +64,15 @@ export function Header() {
       >
         Photos by Laura Rosemary Photography
       </Link>
-      <nav className={styles.nav} ref={navRef}>
+      <nav
+        className={styles.nav}
+        ref={navRef}
+        style={
+          {
+            "--column-gap": `${COLUMN_GAP_VALUE}px`,
+          } as React.CSSProperties
+        }
+      >
         <ul
           className={styles.ul}
           style={
