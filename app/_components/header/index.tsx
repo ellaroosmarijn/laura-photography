@@ -61,7 +61,10 @@ export function Header() {
 
     const checkLinksFitInNav = () => {
       const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
-      const dropdownTriggerWidth = dropdownTrigger.getBoundingClientRect().width
+      const dropdownTriggerWidth = dropdownTrigger
+        ? dropdownTrigger.getBoundingClientRect().width
+        : 0
+
       const linkElements: Element[] = [
         ...navRef.current.querySelectorAll(`.${styles.listItem}`),
       ]
@@ -181,13 +184,15 @@ export function Header() {
               </Link>
             </li>
           ))}
-          <li className={styles.moreLink}>
-            <Dropdown
-              triggerText={"MORE"}
-              contents={dungeonDropdownElements}
-              target={dropdownPortalTargetRef.current}
-            />
-          </li>
+          {dungeonDropdownElements.length > 0 && (
+            <li className={styles.moreLink}>
+              <Dropdown
+                triggerText={"MORE"}
+                contents={dungeonDropdownElements}
+                target={dropdownPortalTargetRef.current}
+              />
+            </li>
+          )}
         </ul>
       </nav>
       <div className={styles.icons}>
