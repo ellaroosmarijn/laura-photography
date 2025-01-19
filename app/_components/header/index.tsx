@@ -29,11 +29,8 @@ export function Header() {
   const dungeonRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (navRef.current) {
-      const navRightPosition = navRef.current.getBoundingClientRect().right
-
+    const checkLinksFitInNav = () => {
       const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
-
       const dropdownTriggerWidth = dropdownTrigger.getBoundingClientRect().width
 
       const endOfLinksSpaceInNav =
