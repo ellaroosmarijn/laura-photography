@@ -24,7 +24,12 @@ export default function Page() {
       />
       <Header links={links} />
       <div style={{ width: "100%", height: "1000px" }}>
-        <Scene />
+        <Scene
+          scene={{
+            name: "First Test",
+            images: [],
+          }}
+        />
       </div>
       <p id="highlights">Testing HIGHLIGHTS</p>
     </>
