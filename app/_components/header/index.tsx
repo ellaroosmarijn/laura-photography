@@ -78,10 +78,15 @@ export function Header({ links }: HeaderProps) {
 
       let freeSpace = navGap - renderedLinksWidth
 
+      const dropdownLinks: Element[] = [
+        ...document.querySelectorAll(`.moreDropdown button`),
+      ]
+
       if (freeSpace < 0) {
         while (freeSpace < 0 && linkElements.length > 0) {
           const lastLinkElement = linkElements.pop() as HTMLElement
           dungeonRef.current.prepend(lastLinkElement)
+          dropdownLinks[linkElements.length].classList.remove(styles.hidden)
 
           const newRenderedLinksWidth =
             linkElements[linkElements.length - 1]?.getBoundingClientRect()
@@ -108,6 +113,7 @@ export function Header({ links }: HeaderProps) {
               firstDungeonElement,
               dropdownTrigger,
             )
+            dropdownLinks[linkElements.length].classList.add(styles.hidden)
 
             dungeonElements.shift()
 
