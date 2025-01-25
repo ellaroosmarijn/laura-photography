@@ -1,14 +1,14 @@
 "use client"
 
 import { ChevronDown, ChevronUp } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { RefObject, useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import styles from "./index.module.css"
 
 type DropdownProps = {
   triggerText: string
   contents: { name: string; path: string }[]
-  target: HTMLElement | null
+  target: RefObject<HTMLElement | null>
 }
 
 export function Dropdown({ triggerText, contents, target }: DropdownProps) {
@@ -40,7 +40,7 @@ export function Dropdown({ triggerText, contents, target }: DropdownProps) {
       </div>
 
       {open &&
-        target &&
+        target.current &&
         createPortal(
           <div className={styles.dropdownPositioner}>
             <div
@@ -70,7 +70,7 @@ export function Dropdown({ triggerText, contents, target }: DropdownProps) {
               ))}
             </div>
           </div>,
-          target,
+          target.current,
         )}
     </div>
   )

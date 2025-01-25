@@ -178,7 +178,7 @@ export function Header({ links }: HeaderProps) {
           <li className={cx(styles.moreLink)}>
             <Dropdown
               triggerText={"MORE"}
-              target={dropdownPortalTargetRef.current}
+              target={dropdownPortalTargetRef}
               contents={links}
             />
           </li>
