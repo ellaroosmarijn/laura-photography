@@ -58,7 +58,7 @@ export function Header({ links }: HeaderProps) {
       const linkElements: Element[] = [
         ...navRef.current.querySelectorAll(`.${styles.listItem}`),
       ]
-      const dunegonElements: Element[] = [
+      const dungeonElements: Element[] = [
         ...dungeonRef.current.querySelectorAll(`.${styles.listItem}`),
       ]
       const navRect = navRef.current.getBoundingClientRect()
@@ -98,8 +98,8 @@ export function Header({ links }: HeaderProps) {
           }
         }
       } else if (freeSpace > 0) {
-        while (freeSpace > 0 && dunegonElements.length > 0) {
-          const firstDungeonElement = dunegonElements[0] as HTMLElement
+        while (freeSpace > 0 && dungeonElements.length > 0) {
+          const firstDungeonElement = dungeonElements[0] as HTMLElement
           const elementWidth =
             firstDungeonElement.getBoundingClientRect().width + COLUMN_GAP_VALUE
 
@@ -109,7 +109,7 @@ export function Header({ links }: HeaderProps) {
               dropdownTrigger,
             )
 
-            dunegonElements.shift()
+            dungeonElements.shift()
 
             freeSpace -= elementWidth
           } else {
@@ -118,10 +118,10 @@ export function Header({ links }: HeaderProps) {
         }
       }
 
-      if (dunegonElements.length <= 0) {
+      if (dungeonElements.length <= 0) {
         const hideMoreLink = document.querySelector(`.${styles.moreLink}`)
         hideMoreLink.classList.add(`${styles.hidden}`)
-      } else if (dunegonElements.length > 0) {
+      } else if (dungeonElements.length > 0) {
         const hideMoreLink = document.querySelector(`.${styles.moreLink}`)
         hideMoreLink.classList.remove(`${styles.hidden}`)
       }
