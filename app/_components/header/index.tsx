@@ -30,27 +30,29 @@ export function Header({ links }: HeaderProps) {
 
   useEffect(() => {
     const updateDropdownPortalPosition = () => {
-      const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
-      const portalTarget = document.querySelector(
-        `.${styles.dropdownPortalTarget}`,
-      ) as HTMLElement
-
-      if (dropdownTrigger && portalTarget) {
-        const dropdownRect = dropdownTrigger.getBoundingClientRect()
-        const portalTargetWidth = portalTarget.getBoundingClientRect().width
-        const header = document.querySelector(
-          `.${styles.header}`,
+      setTimeout(() => {
+        const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
+        const portalTarget = document.querySelector(
+          `.${styles.dropdownPortalTarget}`,
         ) as HTMLElement
-        const nav = document.querySelector(`.${styles.nav}`) as HTMLElement
 
-        const headerHeight = header.getBoundingClientRect().height
-        const navHeight = nav.getBoundingClientRect().height
-        const remainingHeight = headerHeight - navHeight / 2 + 2
-        const verticalPosition = remainingHeight
+        if (dropdownTrigger && portalTarget) {
+          const dropdownRect = dropdownTrigger.getBoundingClientRect()
+          const portalTargetWidth = portalTarget.getBoundingClientRect().width
+          const header = document.querySelector(
+            `.${styles.header}`,
+          ) as HTMLElement
+          const nav = document.querySelector(`.${styles.nav}`) as HTMLElement
 
-        portalTarget.style.top = `${verticalPosition}px`
-        portalTarget.style.left = `${dropdownRect.left + dropdownRect.width / 2 - portalTargetWidth / 2}px`
-      }
+          const headerHeight = header.getBoundingClientRect().height
+          const navHeight = nav.getBoundingClientRect().height
+          const remainingHeight = headerHeight - navHeight / 2 + 2
+          const verticalPosition = remainingHeight
+
+          portalTarget.style.top = `${verticalPosition}px`
+          portalTarget.style.left = `${dropdownRect.left + dropdownRect.width / 2 - portalTargetWidth / 2}px`
+        }
+      }, 10)
     }
 
     const checkLinksFitInNav = () => {
