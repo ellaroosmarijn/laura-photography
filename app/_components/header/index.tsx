@@ -161,15 +161,7 @@ export function Header({ links }: HeaderProps) {
         className={styles.dropdownPortalTarget}
         ref={dropdownPortalTargetRef}
       />
-      <nav
-        className={styles.nav}
-        ref={navRef}
-        style={
-          {
-            "--column-gap": `${COLUMN_GAP_VALUE}px`,
-          } as React.CSSProperties
-        }
-      >
+      <nav className={styles.nav} ref={navRef}>
         <ul
           className={styles.ul}
           style={
