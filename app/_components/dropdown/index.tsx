@@ -61,8 +61,8 @@ export function Dropdown({ triggerText, contents, target }: DropdownProps) {
                   key={index}
                   onClick={(e) => {
                     e.stopPropagation()
-                    content.onClick()
                     setOpen(false)
+                    window.location.hash = content.path
                   }}
                 >
                   {content.name}
