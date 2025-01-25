@@ -5,7 +5,7 @@ import { Dropdown } from "components/dropdown"
 import { Tooltip } from "components/tooltip"
 import { ArrowDownToLine, CornerUpRight, Heart, UserRound } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import styles from "./index.module.css"
 
 const cx = classnames.bind(styles)
@@ -21,12 +21,6 @@ export function Header({ links }: HeaderProps) {
   const navRef = useRef<HTMLDivElement>(null)
   const dropdownPortalTargetRef = useRef<HTMLDivElement>(null)
   const dungeonRef = useRef<HTMLDivElement>(null)
-  const [dungeonDropdownElements, setDungeonDropdownElements] = useState<
-    {
-      text: string
-      onClick: () => void
-    }[]
-  >([])
 
   useEffect(() => {
     const updateDropdownPortalPosition = () => {
@@ -123,16 +117,14 @@ export function Header({ links }: HeaderProps) {
           }
         }
       }
-      const dungeonContents = dunegonElements.map((el) => {
-        return {
-          text: el.textContent || "Unknown Link",
-          onClick: () => {
-            console.log(`Clicked ${el.textContent}`)
-          },
-        }
-      })
-      setDungeonDropdownElements(dungeonContents)
 
+      if (dunegonElements.length <= 0) {
+        const hideMoreLink = document.querySelector(`.${styles.moreLink}`)
+        hideMoreLink.classList.add(`${styles.hidden}`)
+      } else if (dunegonElements.length > 0) {
+        const hideMoreLink = document.querySelector(`.${styles.moreLink}`)
+        hideMoreLink.classList.remove(`${styles.hidden}`)
+      }
       updateDropdownPortalPosition()
     }
 
@@ -183,15 +175,13 @@ export function Header({ links }: HeaderProps) {
                 </Link>
               </li>
             ))}
-          {dungeonDropdownElements.length > 0 && (
-            <li className={styles.moreLink}>
-              <Dropdown
-                triggerText={"MORE"}
-                contents={dungeonDropdownElements}
-                target={dropdownPortalTargetRef.current}
-              />
-            </li>
-          )}
+          <li className={cx(styles.moreLink)}>
+            <Dropdown
+              triggerText={"MORE"}
+              target={dropdownPortalTargetRef.current}
+              contents={links}
+            />
+          </li>
         </ul>
       </nav>
       <div className={styles.icons}>
