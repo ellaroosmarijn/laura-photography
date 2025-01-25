@@ -4,14 +4,25 @@ import { ChevronDown, ChevronUp } from "lucide-react"
 import { RefObject, useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import styles from "./index.module.css"
+import classNames from "classnames"
+
+const cx = classNames.bind(styles)
 
 type DropdownProps = {
   triggerText: string
   contents: { name: string; path: string }[]
   target: RefObject<HTMLElement | null>
+  dropdownClassName?: string
+  itemClassName?: string
 }
 
-export function Dropdown({ triggerText, contents, target }: DropdownProps) {
+export function Dropdown({
+  triggerText,
+  contents,
+  target,
+  dropdownClassName,
+  itemClassName,
+}: DropdownProps) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -53,6 +64,7 @@ export function Dropdown({ triggerText, contents, target }: DropdownProps) {
               {contents.map((content, index) => (
                 <button
                   key={index}
+                  className={cx(itemClassName)}
                   onClick={(e) => {
                     e.stopPropagation()
                     setOpen(false)

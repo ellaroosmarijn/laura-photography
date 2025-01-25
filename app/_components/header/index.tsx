@@ -129,7 +129,13 @@ export function Header({ links }: HeaderProps) {
     }
 
     window.addEventListener("resize", checkLinksFitInNav)
-    checkLinksFitInNav()
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        checkLinksFitInNav()
+        // TODO: notify here that loading is done when adding global loading screen
+      })
+    })
 
     return () => {
       window.removeEventListener("resize", checkLinksFitInNav)
@@ -180,6 +186,8 @@ export function Header({ links }: HeaderProps) {
               triggerText={"MORE"}
               target={dropdownPortalTargetRef}
               contents={links}
+              dropdownClassName="moreDropdown"
+              itemClassName={styles.hidden}
             />
           </li>
         </ul>
