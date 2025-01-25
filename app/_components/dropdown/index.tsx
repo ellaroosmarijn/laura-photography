@@ -15,8 +15,10 @@ export function Dropdown({ triggerText, contents, target }: DropdownProps) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
+    setReady(true)
     const handleClickOutside = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         setOpen(false)
@@ -39,23 +41,15 @@ export function Dropdown({ triggerText, contents, target }: DropdownProps) {
         )}
       </div>
 
-      {open &&
-        target.current &&
+      {ready &&
         createPortal(
-          <div className={styles.dropdownPositioner}>
-            <div
-              className={styles.dropdownArrow}
-              style={{
-                display: open ? "block" : "none",
-              }}
-            />
-            <div
-              className={styles.dropdown}
-              ref={dropdownRef}
-              style={{
-                display: open ? "block" : "none",
-              }}
-            >
+          <div
+            className={cx(styles.dropdownPositioner, dropdownClassName, {
+              [styles.show]: open,
+            })}
+          >
+            <div className={styles.dropdownArrow} />
+            <div className={styles.dropdown} ref={dropdownRef}>
               {contents.map((content, index) => (
                 <button
                   key={index}
