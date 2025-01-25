@@ -7,7 +7,7 @@ import styles from "./index.module.css"
 
 type DropdownProps = {
   triggerText: string
-  contents: { text: string; onClick: () => void }[]
+  contents: { name: string; path: string }[]
   target: HTMLElement | null
 }
 
@@ -65,7 +65,7 @@ export function Dropdown({ triggerText, contents, target }: DropdownProps) {
                     setOpen(false)
                   }}
                 >
-                  {content.text}
+                  {content.name}
                 </button>
               ))}
             </div>
