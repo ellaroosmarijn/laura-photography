@@ -25,18 +25,22 @@ export function Header({ links }: HeaderProps) {
   useEffect(() => {
     const updateDropdownPortalPosition = () => {
       requestAnimationFrame(() => {
-        const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
-        const portalTarget = document.querySelector(
-          `.${styles.dropdownPortalTarget}`,
-        ) as HTMLElement
+        const [dropdownTrigger] = document.getElementsByClassName(
+          styles.moreLink,
+        )
+        const [portalTarget] = [
+          ...document.getElementsByClassName(styles.dropdownPortalTarget),
+        ] as HTMLElement[]
 
         if (dropdownTrigger && portalTarget) {
           const dropdownRect = dropdownTrigger.getBoundingClientRect()
           const portalTargetWidth = portalTarget.getBoundingClientRect().width
-          const header = document.querySelector(
-            `.${styles.header}`,
-          ) as HTMLElement
-          const nav = document.querySelector(`.${styles.nav}`) as HTMLElement
+          const [header] = [
+            ...document.getElementsByClassName(styles.header),
+          ] as HTMLElement[]
+          const [nav] = [
+            ...document.getElementsByClassName(styles.nav),
+          ] as HTMLElement[]
 
           const headerHeight = header.getBoundingClientRect().height
           const navHeight = nav.getBoundingClientRect().height
@@ -50,16 +54,17 @@ export function Header({ links }: HeaderProps) {
     }
 
     const checkLinksFitInNav = () => {
-      const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
+      const [dropdownTrigger] = document.getElementsByClassName(styles.moreLink)
+      console.log(dropdownTrigger)
       const dropdownTriggerWidth = dropdownTrigger
         ? dropdownTrigger.getBoundingClientRect().width
         : 0
 
       const linkElements: Element[] = [
-        ...navRef.current.querySelectorAll(`.${styles.listItem}`),
+        ...navRef.current.getElementsByClassName(styles.listItem),
       ]
       const dungeonElements: Element[] = [
-        ...dungeonRef.current.querySelectorAll(`.${styles.listItem}`),
+        ...dungeonRef.current.getElementsByClassName(styles.listItem),
       ]
       const navRect = navRef.current.getBoundingClientRect()
       const parent = navRef.current.parentElement
@@ -125,11 +130,11 @@ export function Header({ links }: HeaderProps) {
       }
 
       if (dungeonElements.length <= 0) {
-        const hideMoreLink = document.querySelector(`.${styles.moreLink}`)
-        hideMoreLink.classList.add(`${styles.hidden}`)
+        const [hideMoreLink] = document.getElementsByClassName(styles.moreLink)
+        hideMoreLink.classList.add(styles.hidden)
       } else if (dungeonElements.length > 0) {
-        const hideMoreLink = document.querySelector(`.${styles.moreLink}`)
-        hideMoreLink.classList.remove(`${styles.hidden}`)
+        const [hideMoreLink] = document.getElementsByClassName(styles.moreLink)
+        hideMoreLink.classList.remove(styles.hidden)
       }
       updateDropdownPortalPosition()
     }
