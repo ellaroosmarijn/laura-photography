@@ -24,7 +24,7 @@ export function Header({ links }: HeaderProps) {
 
   useEffect(() => {
     const updateDropdownPortalPosition = () => {
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         const dropdownTrigger = document.querySelector(`.${styles.moreLink}`)
         const portalTarget = document.querySelector(
           `.${styles.dropdownPortalTarget}`,
@@ -46,7 +46,7 @@ export function Header({ links }: HeaderProps) {
           portalTarget.style.top = `${verticalPosition}px`
           portalTarget.style.left = `${dropdownRect.left + dropdownRect.width / 2 - portalTargetWidth / 2}px`
         }
-      }, 10)
+      })
     }
 
     const checkLinksFitInNav = () => {
