@@ -1,3 +1,4 @@
+import { LoadingState } from "components/loadingState"
 import "./_styles"
 
 export default function RootLayout({
@@ -16,6 +17,7 @@ export default function RootLayout({
           overscrollBehavior: "none",
         }}
       >
+        <LoadingState />
         {children}
       </body>
     </html>
