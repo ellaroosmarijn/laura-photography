@@ -55,7 +55,6 @@ export function Header({ links }: HeaderProps) {
 
     const checkLinksFitInNav = () => {
       const [dropdownTrigger] = document.getElementsByClassName(styles.moreLink)
-      console.log(dropdownTrigger)
       const dropdownTriggerWidth = dropdownTrigger
         ? dropdownTrigger.getBoundingClientRect().width
         : 0
