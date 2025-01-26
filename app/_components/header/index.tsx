@@ -24,7 +24,7 @@ export function Header({ links }: HeaderProps) {
   const navRef = useRef<HTMLDivElement>(null)
   const dropdownPortalTargetRef = useRef<HTMLDivElement>(null)
   const dungeonRef = useRef<HTMLDivElement>(null)
-  const [loaded, setLoaded] = useState(false)
+  const [_, setLoaded] = useState(false)
 
   useEffect(() => {
     loading.then(() => {
