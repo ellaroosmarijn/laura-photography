@@ -1,5 +1,6 @@
 import { GalleryHero } from "components/gallery-hero"
 import { Header } from "components/header"
+import { MobileHeader } from "components/mobileHeader"
 import { Scene } from "components/scene"
 
 export default function Page() {
@@ -23,6 +24,7 @@ export default function Page() {
         subtitle="May 18, 2024"
       />
       <Header links={links} />
+      <MobileHeader />
       <div style={{ width: "100%", height: "1000px" }}>
         <Scene
           scene={{
