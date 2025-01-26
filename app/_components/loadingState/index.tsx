@@ -27,7 +27,7 @@ export function LoadingState() {
   })
 
   return (
-    loaded === true && (
+    loaded === false && (
       <div className={styles.background}>
         {loaderVisible && (
           <LoaderCircleIcon
