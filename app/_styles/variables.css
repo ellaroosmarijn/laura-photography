@@ -121,7 +121,8 @@
   --layer-1: 100;
   --layer-2: 200;
   --layer-3: 300;
-  --layer-4: 9999;
+  --layer-4: 400;
+  --layer-5: 9999;
 
   /* media queries */
   --breakpoint-mobile: 480px;
