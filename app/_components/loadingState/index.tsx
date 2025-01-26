@@ -7,8 +7,10 @@ import styles from "./index.module.css"
 
 export function LoadingState() {
   const [loaded, setLoaded] = useState(false)
+  const [loaderVisible, setLoaderVisible] = useState(false)
 
   useEffect(() => {
+    setTimeout(() => setLoaderVisible(true), 500)
     document.body.style.overflow = "hidden"
 
     loading.then(() => {
@@ -24,11 +26,13 @@ export function LoadingState() {
   return (
     loaded === false && (
       <div className={styles.background}>
-        <LoaderCircleIcon
-          className={styles.loadingIcon}
-          stroke="var(--color-charcoal-light)"
-          size={90}
-        />
+        {loaderVisible && (
+          <LoaderCircleIcon
+            className={styles.loadingIcon}
+            stroke="var(--color-charcoal-light)"
+            size={90}
+          />
+        )}
       </div>
     )
   )
