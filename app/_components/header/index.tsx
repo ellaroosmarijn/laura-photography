@@ -5,8 +5,11 @@ import { Dropdown } from "components/dropdown"
 import { Tooltip } from "components/tooltip"
 import { ArrowDownToLine, CornerUpRight, Heart, UserRound } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useRef } from "react"
+import { use, useEffect, useRef, useState } from "react"
 import styles from "./index.module.css"
+import { registerLoader, loading, loaderHasLoaded } from "app/_utils/loader"
+
+registerLoader("header")
 
 const cx = classnames.bind(styles)
 
@@ -21,8 +24,12 @@ export function Header({ links }: HeaderProps) {
   const navRef = useRef<HTMLDivElement>(null)
   const dropdownPortalTargetRef = useRef<HTMLDivElement>(null)
   const dungeonRef = useRef<HTMLDivElement>(null)
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
+    loading.then(() => {
+      setLoaded(true)
+    })
     const updateDropdownPortalPosition = () => {
       requestAnimationFrame(() => {
         const [dropdownTrigger] = document.getElementsByClassName(
@@ -136,6 +143,7 @@ export function Header({ links }: HeaderProps) {
         hideMoreLink.classList.remove(styles.hidden)
       }
       updateDropdownPortalPosition()
+      loaderHasLoaded("header")
     }
 
     window.addEventListener("resize", checkLinksFitInNav)
