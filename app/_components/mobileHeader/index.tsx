@@ -4,6 +4,10 @@ import { ChevronRight, Menu, X } from "lucide-react"
 import styles from "./index.module.css"
 import { useState } from "react"
 import { HeaderProps } from "components/header"
+import Link from "next/link"
+import classNames from "classnames"
+
+const cx = classNames.bind(styles)
 
 export function MobileHeader({ links }: HeaderProps) {
   const [open, setOpen] = useState(false)
@@ -54,7 +58,21 @@ export function MobileHeader({ links }: HeaderProps) {
           />
         )}
       </div>
-      <div className={styles.linksSection}></div>
+      <div className={styles.linksSection}>
+        <ul>
+          {links &&
+            links.map((link, index) => (
+              <li className={styles.listItem} key={index}>
+                <Link
+                  href={link.path}
+                  className={cx(styles.link, styles.truncatedLink)}
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+        </ul>
+      </div>
     </div>
   )
 }
