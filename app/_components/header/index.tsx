@@ -137,10 +137,10 @@ export function Header({ links }: HeaderProps) {
 
       if (dungeonElements.length <= 0) {
         const [hideMoreLink] = document.getElementsByClassName(styles.moreLink)
-        hideMoreLink.classList.add(styles.hidden)
+        hideMoreLink.classList.add(styles.hideMoreLink)
       } else if (dungeonElements.length > 0) {
         const [hideMoreLink] = document.getElementsByClassName(styles.moreLink)
-        hideMoreLink.classList.remove(styles.hidden)
+        hideMoreLink.classList.remove(styles.hideMoreLink)
       }
       updateDropdownPortalPosition()
       loaderHasLoaded("header")

@@ -78,7 +78,11 @@
   list-style: none;
 }
 
-.hidden {
+button.hidden {
+  display: none;
+}
+
+.hideMoreLink {
   visibility: hidden;
 }
 
