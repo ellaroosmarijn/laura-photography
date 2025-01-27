@@ -7,7 +7,7 @@ import { useState } from "react"
 export function MobileHeader() {
   const [open, setOpen] = useState(false)
   const [selectIsActive, setSelectIsActive] = useState(false)
-  let selected = [1, 0]
+  let selected = []
 
   return (
     <div className={styles.wrapper}>
@@ -36,7 +36,7 @@ export function MobileHeader() {
             <ChevronRight strokeWidth={0.75} size={18} />
           </button>
         )}
-        {selectIsActive && <p>Select photos</p>}
+        {selectIsActive && selected.length <= 0 && <p>Select photos</p>}
         {!selectIsActive ? (
           <p
             className={styles.select}
