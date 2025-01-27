@@ -15,14 +15,14 @@ export function MobileHeader({ links }: HeaderProps) {
       <div className={styles.topSection}>
         {open ? (
           <X
-            className={styles.hamburger}
+            className={styles.menuIcon}
             size={28}
             strokeWidth={0.75}
             onClick={() => setOpen(!open)}
           />
         ) : (
           <Menu
-            className={styles.hamburger}
+            className={styles.menuIcon}
             size={28}
             strokeWidth={0.75}
             onClick={() => setOpen(!open)}
@@ -47,7 +47,7 @@ export function MobileHeader({ links }: HeaderProps) {
           </p>
         ) : (
           <X
-            className={styles.hamburger}
+            className={styles.menuIcon}
             size={28}
             strokeWidth={0.75}
             onClick={() => setSelectIsActive(!selectIsActive)}
