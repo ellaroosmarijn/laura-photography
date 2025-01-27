@@ -13,7 +13,7 @@ registerLoader("header")
 
 const cx = classnames.bind(styles)
 
-type HeaderProps = {
+export type HeaderProps = {
   links?: { name: string; path: string }[]
 }
 

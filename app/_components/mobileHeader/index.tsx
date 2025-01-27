@@ -3,8 +3,9 @@
 import { ChevronRight, Menu, X } from "lucide-react"
 import styles from "./index.module.css"
 import { useState } from "react"
+import { HeaderProps } from "components/header"
 
-export function MobileHeader() {
+export function MobileHeader({ links }: HeaderProps) {
   const [open, setOpen] = useState(false)
   const [selectIsActive, setSelectIsActive] = useState(false)
   let selected = []
