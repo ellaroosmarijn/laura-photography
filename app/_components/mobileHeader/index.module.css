@@ -19,7 +19,17 @@
 }
 
 .linksSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
   height: var(--size-22);
+  overflow-x: scroll;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.linksSection::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Edge */
 }
 
 .topSection p {
