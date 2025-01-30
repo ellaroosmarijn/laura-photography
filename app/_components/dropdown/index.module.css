@@ -14,7 +14,8 @@
 }
 
 .triggerText {
-  font-size: var(--size-8);
+  /* font-size: var(--size-8); */
+  font-size: 7px;
   color: var(--color-charcoal-light);
   border: none;
   background: none;
