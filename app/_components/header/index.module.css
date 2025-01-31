@@ -106,4 +106,15 @@ button.hidden {
   background-color: var(--color-charcoal-light);
 }
 
-/* // TODO: add media queries */
+/* 
+// TODO: add media queries
+@media (hover: none) {
+  a {
+    background: yellow;
+  }
+}
+@media (pointer: coarse) {
+  a {
+    background: yellow;
+  }
+} */
