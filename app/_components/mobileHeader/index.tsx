@@ -85,7 +85,7 @@ export function MobileHeader({ links }: HeaderProps) {
           >
             {links &&
               links.map((link, index) => (
-                <li className={styles.listItem} key={index}>
+                <li key={index}>
                   <Link
                     href={link.path}
                     className={cx(styles.link, styles.truncatedLink)}

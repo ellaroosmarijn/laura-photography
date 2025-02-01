@@ -77,10 +77,6 @@
   height: var(--size-10);
 }
 
-.link:hover {
-  color: var(--color-rust-mid);
-}
-
 .link:active {
   color: var(--color-rust-dark);
 }
