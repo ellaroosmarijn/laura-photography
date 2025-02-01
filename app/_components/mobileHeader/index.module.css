@@ -7,6 +7,7 @@
   width: 100vw;
   height: var(--size-46);
   text-transform: uppercase;
+  z-index: var(--layer-4);
 }
 
 .topSection {
