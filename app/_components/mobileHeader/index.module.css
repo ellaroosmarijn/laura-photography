@@ -22,6 +22,7 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  padding: 0 var(--column-gap);
   height: var(--size-22);
   overflow-x: scroll;
   scrollbar-width: none; /* For Firefox */
@@ -55,6 +56,34 @@
 
 .select {
   font-size: var(--scale-1);
+}
+
+.ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  column-gap: var(--column-gap);
+  height: var(--size-10);
+  align-items: center;
+}
+
+.link {
+  display: block;
+  font-size: var(--size-8);
+  color: var(--color-charcoal-light);
+  text-decoration: none;
+  letter-spacing: 0.1rem;
+  white-space: nowrap;
+  height: var(--size-10);
+}
+
+.link:hover {
+  color: var(--color-rust-mid);
+}
+
+.link:active {
+  color: var(--color-rust-dark);
 }
 
 @keyframes wrapper {

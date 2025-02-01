@@ -8,6 +8,7 @@ import Link from "next/link"
 import classNames from "classnames"
 
 const cx = classNames.bind(styles)
+const COLUMN_GAP_VALUE = 20
 
 export function MobileHeader({ links }: HeaderProps) {
   const [open, setOpen] = useState(false)
@@ -58,8 +59,22 @@ export function MobileHeader({ links }: HeaderProps) {
           />
         )}
       </div>
-      <div className={styles.linksSection}>
-        <ul>
+      <div
+        className={styles.linksSection}
+        style={
+          {
+            "--column-gap": `${COLUMN_GAP_VALUE / 2}px`,
+          } as React.CSSProperties
+        }
+      >
+        <ul
+          className={styles.ul}
+          style={
+            {
+              "--column-gap": `${COLUMN_GAP_VALUE}px`,
+            } as React.CSSProperties
+          }
+        >
           {links &&
             links.map((link, index) => (
               <li className={styles.listItem} key={index}>
