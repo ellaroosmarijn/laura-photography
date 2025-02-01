@@ -38,8 +38,8 @@ const createMockSceneImages = (
   })
 }
 
-describe("scene layout", () => {
-  it("calculateSceneLayout", () => {
+describe("calculateSceneLayout", () => {
+  it("uniform dimensions", () => {
     const images = createMockSceneImages([
       [850, 333],
       [850, 333],
@@ -52,6 +52,12 @@ describe("scene layout", () => {
     const processedImages = calculateSceneLayout(images, {
       totalNumberOfColumns: 3,
     })
+
+    console.log(
+      JSON.stringify(
+        processedImages.map(({ image, ...returnvalue }) => returnvalue),
+      ),
+    )
 
     expect(processedImages).toMatchObject([
       {
@@ -76,13 +82,7 @@ describe("scene layout", () => {
         leftPosition: 0,
         topPosition: 13.058823529411766,
         imageAspectRatio: 2.5525525525525525,
-        layoutImageWidth: 33.333333333333336,
-      },
-      {
-        leftPosition: 33.333333333333336,
-        topPosition: 13.058823529411766,
-        imageAspectRatio: 2.5525525525525525,
-        layoutImageWidth: 33.333333333333336,
+        layoutImageWidth: 66.66666666666667,
       },
       {
         leftPosition: 66.66666666666667,
@@ -91,9 +91,81 @@ describe("scene layout", () => {
         layoutImageWidth: 33.333333333333336,
       },
       {
-        leftPosition: 0,
+        leftPosition: 66.66666666666667,
         topPosition: 26.117647058823533,
         imageAspectRatio: 2.5525525525525525,
+        layoutImageWidth: 33.333333333333336,
+      },
+      {
+        leftPosition: 0,
+        topPosition: 39.1764705882353,
+        imageAspectRatio: 2.5525525525525525,
+        layoutImageWidth: 66.66666666666667,
+      },
+    ])
+  })
+
+  it("random dimensions", () => {
+    const images = createMockSceneImages([
+      [320, 570], // 16:9
+      [500, 889], // 16:9
+      [400, 533], // 4:3
+      [300, 400], // 4:3
+      [450, 800], // 16:9
+      [375, 500], // 4:3
+      [600, 1067], // 16:9
+    ])
+    const processedImages = calculateSceneLayout(images, {
+      totalNumberOfColumns: 3,
+    })
+
+    console.log(
+      JSON.stringify(
+        processedImages.map(({ image, ...returnvalue }) => returnvalue),
+      ),
+    )
+
+    expect(processedImages).toMatchObject([
+      {
+        leftPosition: 0,
+        topPosition: 0,
+        imageAspectRatio: 0.5614035087719298,
+        layoutImageWidth: 33.333333333333336,
+      },
+      {
+        leftPosition: 33.333333333333336,
+        topPosition: 0,
+        imageAspectRatio: 0.562429696287964,
+        layoutImageWidth: 33.333333333333336,
+      },
+      {
+        leftPosition: 66.66666666666667,
+        topPosition: 0,
+        imageAspectRatio: 0.7504690431519699,
+        layoutImageWidth: 33.333333333333336,
+      },
+      {
+        leftPosition: 66.66666666666667,
+        topPosition: 44.41666666666667,
+        imageAspectRatio: 0.75,
+        layoutImageWidth: 33.333333333333336,
+      },
+      {
+        leftPosition: 0,
+        topPosition: 59.37500000000001,
+        imageAspectRatio: 0.5625,
+        layoutImageWidth: 66.66666666666667,
+      },
+      {
+        leftPosition: 66.66666666666667,
+        topPosition: 88.86111111111111,
+        imageAspectRatio: 0.75,
+        layoutImageWidth: 33.333333333333336,
+      },
+      {
+        leftPosition: 66.66666666666667,
+        topPosition: 133.30555555555557,
+        imageAspectRatio: 0.5623242736644799,
         layoutImageWidth: 33.333333333333336,
       },
     ])
