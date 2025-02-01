@@ -97,7 +97,7 @@ export function MobileHeader({ links }: HeaderProps) {
           </ul>
         </div>
       ) : (
-        open && <SecondaryMobileHeader />
+        open && <SecondaryMobileHeader settingLinks={links} />
       )}
     </div>
   )
