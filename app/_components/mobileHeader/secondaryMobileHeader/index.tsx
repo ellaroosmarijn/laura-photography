@@ -15,8 +15,10 @@ export function SecondaryMobileHeader({
       <ul className={styles.ul}>
         {settingLinks &&
           settingLinks.map((link, index) => (
-            <li key={index}>
-              <Link href={link.path}>{link.name}</Link>
+            <li className={styles.listItem} key={index}>
+              <Link href={link.path} className={cx(styles.link)}>
+                {link.name}
+              </Link>
             </li>
           ))}
       </ul>

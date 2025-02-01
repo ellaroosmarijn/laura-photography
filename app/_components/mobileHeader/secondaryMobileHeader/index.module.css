@@ -9,4 +9,20 @@
 
 .ul {
   list-style: none;
+  padding-left: var(--size-7);
+  margin-top: var(--size-11);
+}
+
+.link {
+  display: block;
+  font-size: var(--size-8);
+  color: var(--color-charcoal-light);
+  text-decoration: none;
+  letter-spacing: 0.1rem;
+  white-space: nowrap;
+  height: var(--size-10);
+}
+
+.link:active {
+  color: var(--color-rust-dark);
 }
