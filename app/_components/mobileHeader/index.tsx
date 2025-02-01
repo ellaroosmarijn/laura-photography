@@ -2,7 +2,7 @@
 
 import { ChevronRight, Menu, X } from "lucide-react"
 import styles from "./index.module.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { HeaderProps } from "components/header"
 import Link from "next/link"
 import classNames from "classnames"
@@ -15,6 +15,12 @@ export function MobileHeader({ links }: HeaderProps) {
   const [open, setOpen] = useState(false)
   const [selectIsActive, setSelectIsActive] = useState(false)
   let selected = []
+
+  useEffect(() => {
+    open
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "auto")
+  }, [open])
 
   return (
     <div className={styles.wrapper}>
