@@ -4,82 +4,87 @@ const layoutWidth = 100
 
 type SceneLayoutCalculationOptions = { totalNumberOfColumns: number }
 
+const MIN_DISTANCE_BETWEEN_TWO_SPANS = 10
+const MAX_DISTANCE_DIFFERENCE_BETWEEN_COLUMNS = 100
+
 export function calculateSceneLayout(
   images_: SceneImage[],
   { totalNumberOfColumns }: SceneLayoutCalculationOptions,
 ) {
   const columnHeights = new Array(totalNumberOfColumns).fill(0)
-  const placedImagesInLayout = []
-  const images = [...images_]
-  const distanceSinceLastTwoSpan = new Array(totalNumberOfColumns).fill(0)
-  const minDistanceBetweenTwoSpans = 1000
+  const unprocessedImages = [...images_]
+  const processedImages = []
+  let lastTwoSpanBottomPosition = MIN_DISTANCE_BETWEEN_TWO_SPANS * 2
 
-  console.log(">>>>>>>", columnHeights)
-
-  const placeAnImage = (spanColumns: number, atLeftMostColumnIndex: number) => {
-    if (images.length === 0) {
+  const placeAnImage = (spanColumns: number, leftColIndex: number) => {
+    if (unprocessedImages.length === 0) {
       return false
     }
 
-    const image = images.shift()
+    const image = unprocessedImages.shift()
 
     const columnWidth = layoutWidth / totalNumberOfColumns
-    const leftPosition = columnWidth * atLeftMostColumnIndex
+    const leftPosition = columnWidth * leftColIndex
     const layoutImageWidth = columnWidth * spanColumns
-    const topPosition = columnHeights[atLeftMostColumnIndex]
+    const topPosition = columnHeights[leftColIndex]
     const imageAspectRatio = image.res.high.width / image.res.high.height
     const layoutImageHeight = layoutImageWidth / imageAspectRatio
 
-    columnHeights[atLeftMostColumnIndex]
-
-    for (
-      let i = atLeftMostColumnIndex;
-      i < atLeftMostColumnIndex + spanColumns;
-      i++
-    ) {
+    for (let i = leftColIndex; i < leftColIndex + spanColumns; i++) {
       columnHeights[i] += layoutImageHeight
-      distanceSinceLastTwoSpan[i] = 0
     }
 
-    placedImagesInLayout.push({
+    processedImages.push({
       image,
       leftPosition,
       topPosition,
       imageAspectRatio,
       layoutImageWidth,
     })
-
-    return images.length > 0
   }
 
-  if (
-    !columnHeights.some(
-      (height, index) =>
-        index < columnHeights.length - 1 && height === columnHeights[index + 1],
-    )
-  ) {
-    images.forEach(() => {
-      const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights))
-      placeAnImage(1, shortestColumnIndex)
+  let i = 0
+  while (i < 10 && unprocessedImages.length > 0) {
+    let placementIndex = -1
+    let spanColumns = 1
+    let adjacentTopPosition = 0
+    const adjacentPlacementIndex = columnHeights.findIndex((height, i) => {
+      const nextHeight = columnHeights[i + 1]
+      if (nextHeight == null) {
+        return false
+      }
+      const isNearEnough = Math.abs(nextHeight - height) < 0.2
+      if (isNearEnough) {
+        adjacentTopPosition = height
+        return true
+      }
     })
-  
-    return placedImagesInLayout
-  }
+    const canTwoSpan =
+      adjacentPlacementIndex != null && adjacentTopPosition !== 0
+    if (canTwoSpan) {
+      const twoSpanGap = lastTwoSpanBottomPosition - adjacentTopPosition
+      const isTwoSpanGapBigEnough = twoSpanGap >= MIN_DISTANCE_BETWEEN_TWO_SPANS
+      const isTwoSpanNotLongestColumn =
+        adjacentTopPosition !== Math.max(...columnHeights) ||
+        Math.max(...columnHeights) - Math.min(...columnHeights) <=
+          MAX_DISTANCE_DIFFERENCE_BETWEEN_COLUMNS
+      const canPlaceTwoSpan = isTwoSpanGapBigEnough && isTwoSpanNotLongestColumn
 
-  const matchingIndex = columnHeights.findIndex(
-    (height, index) =>
-      index < columnHeights.length - 1 && height === columnHeights[index + 1],
-  )
-
-  if (matchingIndex !== -1) {
-    const minDistanceSinceLastTwoSpanCheck = Math.min(
-      ...distanceSinceLastTwoSpan.slice(matchingIndex, matchingIndex + 2),
-    )
-
-    if (minDistanceSinceLastTwoSpanCheck >= minDistanceBetweenTwoSpans) {
-      placeAnImage(2, matchingIndex)
+      if (canPlaceTwoSpan) {
+        placementIndex = adjacentPlacementIndex
+        spanColumns = 2
+      }
+    }
+    if (placementIndex === -1) {
+      placementIndex = columnHeights.indexOf(Math.min(...columnHeights))
+    }
+    placeAnImage(spanColumns, placementIndex)
+    if (canTwoSpan) {
+      const twoSpan = processedImages[processedImages.length - 1]
+      lastTwoSpanBottomPosition =
+        twoSpan.topPosition +
+        twoSpan.layoutImageWidth * twoSpan.imageAspectRatio
     }
   }
-
-  return placedImagesInLayout
+  return processedImages
 }
