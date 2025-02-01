@@ -5,7 +5,7 @@ import { Dropdown } from "components/dropdown"
 import { Tooltip } from "components/tooltip"
 import { ArrowDownToLine, CornerUpRight, Heart, UserRound } from "lucide-react"
 import Link from "next/link"
-import { use, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import styles from "./index.module.css"
 import { registerLoader, loading, loaderHasLoaded } from "app/_utils/loader"
 
