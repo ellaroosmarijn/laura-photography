@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import { Link } from "lucide-react"
+import Link from "next/link"
 import styles from "./index.module.css"
 
 const cx = classNames.bind(styles)
