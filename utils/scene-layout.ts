@@ -88,5 +88,7 @@ export function calculateSceneLayout(
       twoSpan.layout.width * twoSpan.layout.aspect
     }
   }
-  return processedImages
+  const totalHeight = Math.max(...columnHeights)
+  const layoutAspectRatio = totalHeight / LAYOUT_WIDTH
+  return { images: processedImages, layoutAspectRatio }
 }
