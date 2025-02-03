@@ -1,9 +1,7 @@
 import styles from "./index.module.css"
 
-type SceneImageRes = {
-  src: string
-  width: number
-  height: number
+type SceneProps = {
+  scene: Scene
 }
 
 export type SceneImage = {
