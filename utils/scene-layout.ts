@@ -1,6 +1,7 @@
-import { SceneImage } from "components/scene"
+import { M_PLUS_1 } from "next/font/google"
+import { SceneImage, SceneImageWithLayout } from "shared/scene"
 
-const layoutWidth = 100
+const LAYOUT_WIDTH = 100
 
 type SceneLayoutCalculationOptions = { totalNumberOfColumns: number }
 
@@ -12,8 +13,8 @@ export function calculateSceneLayout(
   { totalNumberOfColumns }: SceneLayoutCalculationOptions,
 ) {
   const columnHeights = new Array(totalNumberOfColumns).fill(0)
-  const unprocessedImages = [...images_]
-  const processedImages = []
+  const unprocessedImages: SceneImage[] = [...images_]
+  const processedImages: SceneImageWithLayout[] = []
   let lastTwoSpanBottomPosition = MIN_DISTANCE_BETWEEN_TWO_SPANS * 2
 
   const placeAnImage = (spanColumns: number, leftColIndex: number) => {
@@ -23,23 +24,25 @@ export function calculateSceneLayout(
 
     const image = unprocessedImages.shift()
 
-    const columnWidth = layoutWidth / totalNumberOfColumns
-    const leftPosition = columnWidth * leftColIndex
-    const layoutImageWidth = columnWidth * spanColumns
-    const topPosition = columnHeights[leftColIndex]
-    const imageAspectRatio = image.res.high.width / image.res.high.height
-    const layoutImageHeight = layoutImageWidth / imageAspectRatio
+    const columnWidth = LAYOUT_WIDTH / totalNumberOfColumns
+    const left = columnWidth * leftColIndex
+    const width = columnWidth * spanColumns
+    const top = columnHeights[leftColIndex]
+    const aspect = image.res.high.width / image.res.high.height
+    const height = width / aspect
 
     for (let i = leftColIndex; i < leftColIndex + spanColumns; i++) {
-      columnHeights[i] += layoutImageHeight
+      columnHeights[i] += height
     }
 
     processedImages.push({
       image,
-      leftPosition,
-      topPosition,
-      imageAspectRatio,
-      layoutImageWidth,
+      layout: {
+        left,
+        top,
+        width,
+        aspect,
+      },
     })
   }
 
@@ -81,9 +84,8 @@ export function calculateSceneLayout(
     placeAnImage(spanColumns, placementIndex)
     if (canTwoSpan) {
       const twoSpan = processedImages[processedImages.length - 1]
-      lastTwoSpanBottomPosition =
-        twoSpan.topPosition +
-        twoSpan.layoutImageWidth * twoSpan.imageAspectRatio
+      lastTwoSpanBottomPosition = twoSpan.layout.top
+      twoSpan.layout.width * twoSpan.layout.aspect
     }
   }
   return processedImages
