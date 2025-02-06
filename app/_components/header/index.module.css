@@ -96,7 +96,8 @@ button.hidden {
 
 .dungeon {
   position: absolute;
-  top: var(--layer-0);
+  top: -99999px;
+  left: -99999px;
   visibility: hidden;
   pointer-events: none;
 }
