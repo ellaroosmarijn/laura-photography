@@ -10,7 +10,7 @@ type SecondaryMobileHeaderProps = {
 export function SecondaryMobileHeader({
   settingLinks,
 }: SecondaryMobileHeaderProps) {
-  return (
+  return ( 
     <div className={styles.wrapper}>
       <ul className={styles.ul}>
         {settingLinks &&
