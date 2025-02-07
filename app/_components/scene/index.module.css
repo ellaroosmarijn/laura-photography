@@ -2,18 +2,25 @@
   padding: 0px var(--size-28) var(--size-24);
 }
 
-.gridContainer {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(200px, 1fr));
-  grid-auto-flow: dense;
-}
+.images {
+  --aspect: 0;
 
-.gridItem {
-  grid-row-end: span var(--row-span, 1);
-}
+  position: relative;
+  aspect-ratio: var(--aspect);
 
-.gridItem img {
-  width: var(--size-full);
-  height: auto;
-  display: block;
+  top: 0;
+  left: 0;
+
+  & img {
+    --top: 0;
+    --left: 0;
+    --width: 0;
+    --aspect: 0;
+
+    position: absolute;
+    top: var(--top);
+    width: var(--width);
+    aspect-ratio: var(--aspect);
+    left: var(--left);
+  }
 }
