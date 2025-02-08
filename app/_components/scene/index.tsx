@@ -1,6 +1,6 @@
 "use client"
 
-import { CSSProperties, useEffect, useMemo, useRef, useState } from "react"
+import { CSSProperties, useMemo, useState } from "react"
 import { calculateSceneLayout } from "utils/scene-layout"
 import { SceneImage, SceneImageWithLayout, type Scene } from "shared/scene"
 import styles from "./index.module.css"
